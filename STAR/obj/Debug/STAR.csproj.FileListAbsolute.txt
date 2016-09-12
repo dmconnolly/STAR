@@ -1,0 +1,8 @@
+c:\users\danielconnolly\Documents\Visual Studio 2013\Projects\STAR\STAR\bin\Debug\STAR.exe.config
+c:\users\danielconnolly\Documents\Visual Studio 2013\Projects\STAR\STAR\bin\Debug\STAR.exe
+c:\users\danielconnolly\Documents\Visual Studio 2013\Projects\STAR\STAR\bin\Debug\STAR.pdb
+c:\users\danielconnolly\Documents\Visual Studio 2013\Projects\STAR\STAR\obj\Debug\STAR.csprojResolveAssemblyReference.cache
+c:\users\danielconnolly\Documents\Visual Studio 2013\Projects\STAR\STAR\obj\Debug\STAR.Properties.Resources.resources
+c:\users\danielconnolly\Documents\Visual Studio 2013\Projects\STAR\STAR\obj\Debug\STAR.csproj.GenerateResource.Cache
+c:\users\danielconnolly\Documents\Visual Studio 2013\Projects\STAR\STAR\obj\Debug\STAR.exe
+c:\users\danielconnolly\Documents\Visual Studio 2013\Projects\STAR\STAR\obj\Debug\STAR.pdb
