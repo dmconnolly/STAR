@@ -1,29 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace STAR {
-    public class Packet {
-        private DateTime timestamp;
+    class Packet : Message {
         private Byte protocolID;
         private Byte[] address;
         private Byte[] cargo;
-        private bool error;
+        private bool valid;
 
-        // Packet constructor
-        public Packet(String dateString, List<Byte> packet, bool error) {
-            // Take date as string and store as DateTime
-            this.timestamp = parseDateString(dateString);
+        // Takes date string in the form dd-MM-yyyy HH:mm:ss.FFFF
+        // List of bytes which make up the packet, including address bytes and protocol ID
+        // and whether the packet ended with EOP and not EEP
+        public Packet(String dateString, String packetByteString, bool valid) : base(dateString) {
+            String[] packetByteStringSplit = packetByteString.Split(' ');
 
-            int packetBytes = packet.Count();
+            int byteCount = packetByteStringSplit.Count();
+
+            Byte[] packetBytes = new Byte[byteCount];
+            for(int i=0; i<byteCount; ++i) {
+                packetBytes[i] = Convert.ToByte(packetByteStringSplit[i], 16);
+            }
 
             // Parse packet bytes for address (up to and including first byte >= 32)
             List<Byte> addressBytes = new List<Byte>();
-            for(int i=0; i<packetBytes; ++i) {
-                Byte curByte = packet[i];
+            for(int i=0; i<byteCount; ++i) {
+                Byte curByte = packetBytes[i];
 
                 // Add current byte to the temporary list
                 addressBytes.Add(curByte);
@@ -34,30 +38,37 @@ namespace STAR {
                     address = addressBytes.ToArray();
 
                     // Next byte is the protocol ID
-                    protocolID = packet[++i];
+                    protocolID = packetBytes[++i];
 
                     // Store the rest of the packet bytes in address class member array
-                    cargo = packet.Skip<Byte>(++i).ToArray();
+                    cargo = packetBytes.Skip<Byte>(++i).ToArray();
 
                     break;
                 }
             }
 
-            this.error = error;
+            this.valid = valid;
         }
 
-        // Parse the date string and return a DateTime
-        private DateTime parseDateString(String dateString) {
-            DateTime timestamp = new DateTime();
+        // Accessor for protocol ID
+        public Byte Protocol() {
+            return protocolID;
+        }
 
-            CultureInfo provider = CultureInfo.InvariantCulture;
-            const String format = "dd-mm-yyyy HH:mm:ss.FFFF";
+        // Accessor for address bytes
+        public Byte[] AddressBytes() {
+            return address;
+        }
 
-            if(!DateTime.TryParseExact(dateString, format, null, DateTimeStyles.None, out timestamp)) {
-                Console.WriteLine("Unable to convert '{0}' to a date and time.", dateString);
-            }
+        // Accessor for cargo bytes
+        public Byte[] CargoBytes() {
+            return cargo;
+        }
 
-            return timestamp;
+        // Returns true if the packet was valid
+        // i.e. ended with EOP rather than EEP
+        public bool Valid() {
+            return valid;
         }
     }
 }
