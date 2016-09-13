@@ -9,12 +9,13 @@ namespace STAR {
         private Byte protocolID;
         private Byte[] address;
         private Byte[] cargo;
+        private String endCode;
         private bool valid;
 
         // Takes date string in the form dd-MM-yyyy HH:mm:ss.FFFF
         // List of bytes which make up the packet, including address bytes and protocol ID
         // and whether the packet ended with EOP and not EEP
-        public Packet(String dateString, String packetByteString, bool valid) : base(dateString) {
+        public Packet(String dateString, String packetByteString, String endCode) : base(dateString) {
             String[] packetByteStringSplit = packetByteString.Split(' ');
 
             int byteCount = packetByteStringSplit.Count();
@@ -47,7 +48,11 @@ namespace STAR {
                 }
             }
 
-            this.valid = valid;
+            //End code - EEP, EOP, None
+            this.endCode = endCode;
+
+            //Only valid if endCode is EOP
+            valid = endCode == "EOP";
         }
 
         // Accessor for protocol ID
@@ -67,8 +72,8 @@ namespace STAR {
 
         // Returns true if the packet was valid
         // i.e. ended with EOP rather than EEP
-        public bool Valid() {
-            return valid;
+        public String EndCode() {
+            return endCode;
         }
     }
 }
