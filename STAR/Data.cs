@@ -4,23 +4,27 @@ using System.IO;
 using System.Linq;
 
 namespace STAR {
-    // Read in all the data in this class
     class Data {
-        // Stores the port all the data stream is coming from
+        private const double ticksPerSecond = 10000000;
+
         private byte port;
-
-        //Start and end timestamps
-        private DateTime startTimeStamp;
-        private DateTime endTimeStamp;
-
-        // List of packets and error messages
+        private DateTime startTime;
+        private DateTime endTime;
         private List<Message> messages;
+
+        private long packetCount = 0;
+        private long validPacketCount = 0;
+        private long invalidPacketCount = 0;
+        private long errorMessageCount = 0;
+        private double measurementTimeSeconds = 0;
+        private double totalPacketsPerSecond = 0;
+        private double totalErrorsPerSecond = 0;
 
         public Data() {
             messages = new List<Message>();
         }
 
-        // Reads and sorts a file
+        // Reads and processes a file
         public void processFile(string path) {
             // Clear anything in the message list
             messages.Clear();
@@ -28,8 +32,8 @@ namespace STAR {
             string[] lines = File.ReadLines(@path).ToArray();
 
             // First two lines are timestamp for measurement start and port
-            startTimeStamp = Message.parseDateString(lines[0]);
-            port = Convert.ToByte(lines[1]);
+            startTime = Message.parseDateString(lines[0].Trim());
+            port = Convert.ToByte(lines[1].Trim());
 
             int lineIndex = 3;
             while(lineIndex < lines.Length-1) {
@@ -46,7 +50,7 @@ namespace STAR {
                 // If blank line is after the timestamp
                 if(lineIndex >= lines.Length || string.IsNullOrWhiteSpace(lines[lineIndex])) {
                     // This is end of the file
-                    endTimeStamp = Message.parseDateString(time);
+                    endTime = Message.parseDateString(time);
                     break;
                 }
 
@@ -54,13 +58,13 @@ namespace STAR {
 
                 if(startCode.Equals("E", StringComparison.Ordinal)) {
                     // This is an error message
-                    errorText = lines[++lineIndex];
+                    errorText = lines[++lineIndex].Trim();
                     ErrorMessage errorMessage = new ErrorMessage(time, errorText);
                     messages.Add(errorMessage);
                 } else if(startCode.Equals("P", StringComparison.Ordinal)) {
                     // This is a packet
-                    bytes = lines[++lineIndex];
-                    endCode = lines[++lineIndex];
+                    bytes = lines[++lineIndex].Trim();
+                    endCode = lines[++lineIndex].Trim();
                     Packet packet = new Packet(time, bytes, endCode);
                     messages.Add(packet);
                 } else {
@@ -70,19 +74,18 @@ namespace STAR {
 
                 lineIndex++;
             }
+
+            collectStatistics();
         }
 
-        public void printSummary() {
+        public void collectStatistics() {
             if(messages.Count == 0) {
                 return;
             }
 
-            int validPacketCount = 0;
-            int invalidPacketCount = 0;
-            int errorMessageCount = 0;
-
             foreach(Message message in messages) {
                 if(message is Packet) {
+                    packetCount++;
                     if(((Packet)message).Valid) {
                         validPacketCount++;
                     } else {
@@ -93,13 +96,23 @@ namespace STAR {
                 }
             }
 
+            measurementTimeSeconds = endTime.Subtract(startTime).Ticks / ticksPerSecond;
+            totalPacketsPerSecond = packetCount / measurementTimeSeconds;
+            totalErrorsPerSecond = errorMessageCount / measurementTimeSeconds;
+        }
+
+        public void printSummary() {
             Console.WriteLine();
             Console.WriteLine("Port: " + port);
-            Console.WriteLine("Start time: " + Message.timeString(startTimeStamp));
-            Console.WriteLine("End time: " + Message.timeString(endTimeStamp));
+            Console.WriteLine("Start time: " + Message.timeString(startTime));
+            Console.WriteLine("End time: " + Message.timeString(endTime));
+            Console.WriteLine("Measurement time: " + measurementTimeSeconds + " seconds");
+            Console.WriteLine("Total packets: " + packetCount);
             Console.WriteLine("Valid Packets: " + validPacketCount);
             Console.WriteLine("Invalid Packets: " + invalidPacketCount);
             Console.WriteLine("Errors: " + errorMessageCount);
+            Console.WriteLine("Total packet rate: " + totalPacketsPerSecond + " packets/second");
+            Console.WriteLine("Total error rate: " + totalErrorsPerSecond + " errors/second");
             Console.WriteLine();
         }
     }

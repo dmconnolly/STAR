@@ -30,10 +30,10 @@ namespace STAR {
         // Accessors for class member variables
         public byte Protocol { get { return m_protocolID; }}
         public byte[] AddressBytes { get { return m_address; }}
-        //public byte ID { get { return m_packetID;  } }
+        //public byte ID { get { return m_packetID;  }}
         public byte[] CargoBytes { get {return m_cargo; }}
         public bool Valid { get { return m_valid; }}
-        public string EndCode { get { return m_endCode;  } }
+        public string EndCode { get { return m_endCode; }}
 
         // Takes date string in the form dd-MM-yyyy HH:mm:ss.fff
         // List of bytes which make up the packet, including address bytes and protocol ID
