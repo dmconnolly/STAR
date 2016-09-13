@@ -6,29 +6,54 @@ using System.Threading.Tasks;
 
 namespace STAR {
     class Packet : Message {
-        private Byte protocolID;
-        private Byte[] address;
-        private Byte[] cargo;
-        private String endCode;
-        private bool valid;
+        private byte m_protocolID;
+        private byte[] m_address;
+        //private byte m_packetID;
+        private byte[] m_cargo;
+        private string m_endCode;
+        private bool m_valid;
 
-        // Takes date string in the form dd-MM-yyyy HH:mm:ss.FFFF
+        // Accessor for all packet bytes
+        public byte[] Bytes {
+            get {
+                // Possibly refactor to store full packet data in class at all times
+                // depends if avoiding data duplication or speed is more important
+
+                //List<Byte> list = new List<Byte>(m_address.Length + 2 + m_cargo.Length);
+                List<Byte> list = new List<Byte>(m_address.Length + 1 + m_cargo.Length);
+                list.AddRange(m_address);
+                list.Add(m_protocolID);
+                //list.Add(m_packetID);
+                list.AddRange(m_cargo);
+                return list.ToArray();
+            }
+        }
+
+        // Accessors for class member variables
+        public byte Protocol { get { return m_protocolID; }}
+        public byte[] AddressBytes { get { return m_address; }}
+        //public byte ID { get { return m_packetID;  } }
+        public byte[] CargoBytes { get {return m_cargo; }}
+        public bool Valid { get { return m_valid; }}
+        public string EndCode { get { return m_endCode;  } }
+
+        // Takes date string in the form dd-MM-yyyy HH:mm:ss.fff
         // List of bytes which make up the packet, including address bytes and protocol ID
         // and whether the packet ended with EOP and not EEP
-        public Packet(String dateString, String packetByteString, String endCode) : base(dateString) {
-            String[] packetByteStringSplit = packetByteString.Split(' ');
+        public Packet(string dateString, string packetByteString, string endCode) : base(dateString) {
+            string[] packetByteStringSplit = packetByteString.Split(' ');
 
             int byteCount = packetByteStringSplit.Count();
 
-            Byte[] packetBytes = new Byte[byteCount];
+            byte[] packetBytes = new byte[byteCount];
             for(int i=0; i<byteCount; ++i) {
                 packetBytes[i] = Convert.ToByte(packetByteStringSplit[i], 16);
             }
 
             // Parse packet bytes for address (up to and including first byte >= 32)
-            List<Byte> addressBytes = new List<Byte>();
+            List<byte> addressBytes = new List<byte>();
             for(int i=0; i<byteCount; ++i) {
-                Byte curByte = packetBytes[i];
+                byte curByte = packetBytes[i];
 
                 // Add current byte to the temporary list
                 addressBytes.Add(curByte);
@@ -36,44 +61,46 @@ namespace STAR {
                 // If the byte is 32 or larger, this is the last byte of the address
                 if(curByte >= 32) {
                     // Store address bytes in address class member array
-                    address = addressBytes.ToArray();
+                    m_address = addressBytes.ToArray();
 
                     // Next byte is the protocol ID
-                    protocolID = packetBytes[++i];
+                    m_protocolID = packetBytes[++i];
+
+                    // Next byte is packet ID
+                    //m_packetID = packetBytes[++i];
 
                     // Store the rest of the packet bytes in address class member array
-                    cargo = packetBytes.Skip<Byte>(++i).ToArray();
+                    m_cargo = packetBytes.Skip<byte>(++i).ToArray();
 
                     break;
                 }
             }
 
             //End code - EEP, EOP, None
-            this.endCode = endCode;
+            m_endCode = endCode;
 
             //Only valid if endCode is EOP
-            valid = endCode == "EOP";
+            m_valid = m_endCode == "EOP";
         }
 
-        // Accessor for protocol ID
-        public Byte Protocol() {
-            return protocolID;
-        }
+        public void printFields() {
+            byte[] addressBytes = AddressBytes;
+            Console.Write("Address: ");
+            for(int i=0; i<addressBytes.Length; i++) {
+                Console.Write(addressBytes[i].ToString("x2") + " ");
+            }
 
-        // Accessor for address bytes
-        public Byte[] AddressBytes() {
-            return address;
-        }
+            Console.WriteLine("\nProtocol: " + Protocol.ToString("x2"));
 
-        // Accessor for cargo bytes
-        public Byte[] CargoBytes() {
-            return cargo;
-        }
+            //Console.WriteLine("ID: " + ID.ToString("x2"));
 
-        // Returns true if the packet was valid
-        // i.e. ended with EOP rather than EEP
-        public String EndCode() {
-            return endCode;
+            byte[] cargoBytes = CargoBytes;
+            Console.Write("Cargo: ");
+            for(int i=0; i<cargoBytes.Length; i++) {
+                Console.Write(cargoBytes[i].ToString("x2") + " ");
+            }
+
+            Console.WriteLine();
         }
     }
 }
