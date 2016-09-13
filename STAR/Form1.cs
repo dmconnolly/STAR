@@ -27,12 +27,9 @@ namespace STAR {
             openFileDialog.RestoreDirectory = false;
 
             if(openFileDialog.ShowDialog() == DialogResult.OK) {
-                // Run in thread so as not to lock up window
-                new Thread(() => {
-                    Thread.CurrentThread.IsBackground = true;
-                    data.ReadFile(openFileDialog.FileName);
-                    // TODO: display data on screen
-                }).Start();
+                // TODO: Use thread so as not to lock up window
+                data.processFile(openFileDialog.FileName);
+                data.printSummary();
             }
         }
     }

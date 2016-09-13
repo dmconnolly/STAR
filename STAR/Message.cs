@@ -25,6 +25,10 @@ namespace STAR {
             }
         }
 
+        public static String timeString(DateTime dateTime) {
+            return String.Format("{0:" + timeFormat + "}", dateTime);
+        }
+
         // Takes date string in the form dd-MM-yyyy HH:mm:ss.fff
         public Message(String dateString) {
             // Take date as string and store as DateTime
@@ -32,7 +36,7 @@ namespace STAR {
         }
 
         // Parse the date string and return a DateTime
-        private DateTime parseDateString(String dateString) {
+        public static DateTime parseDateString(String dateString) {
             DateTime timestamp = new DateTime();
 
             try {

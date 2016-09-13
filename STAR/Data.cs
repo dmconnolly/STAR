@@ -5,80 +5,106 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace STAR
-{
-    class Data
-    {
-        //Read in all the data in this class
-
-        //Stores the port all the data stream is coming from
-        int port;
+namespace STAR {
+    // Read in all the data in this class
+    class Data {
+        // Stores the port all the data stream is coming from
+        private byte port;
 
         //Start and end timestamps
-        DateTime startTimeStamp;
-        DateTime endTimeStamp;
+        private DateTime startTimeStamp;
+        private DateTime endTimeStamp;
 
-        //All the data in string format
-        string fileText;
+        // All the data in string format
+        private string fileText;
 
-        //List of packets and errors
-        List<Message> messages = new List<Message>();
+        // List of packets and error messages
+        private List<Message> messages;
 
-        //Reads the entirety of the data file into a string
-        public void ReadFile(string path)
-        {
-            //DON'T READ THE WHOLE TEXT FILE, DO IT LINE BY LINE YA PLEB
-            FileStream fs = new FileStream(@path, FileMode.Open, FileAccess.Read);
-            
-            using (var streamReader = new StreamReader(fs, Encoding.UTF8))
-            {
-                fileText = streamReader.ReadToEnd();
-            }
-
-            Console.WriteLine(fileText);
-
-            //Delete this
-            ProcessFile();
+        public Data() {
+            messages = new List<Message>();
         }
 
-        //Sorts the file into messages after it's been read
-        public void ProcessFile()
-        {
-            string currentLine;
+        // Reads and sorts a file
+        public void processFile(string path) {
+            // Clear anything in the message list
+            messages.Clear();
 
-            using (StringReader reader = new StringReader(fileText))
-            {
-                string line;
-                while ((fileText = reader.ReadLine()) != null)
-                {
-                    Console.WriteLine(":)");
+            string[] lines = File.ReadLines(@path).ToArray();
+
+            // First two lines are timestamp for measurement start and port
+            startTimeStamp = Message.parseDateString(lines[0]);
+            port = Convert.ToByte(lines[1]);
+
+            int lineIndex = 3;
+            while(lineIndex < lines.Length-1) {
+                string time, startCode, endCode, bytes, errorText;
+
+                // Skip whitespace
+                while(String.IsNullOrWhiteSpace(lines[lineIndex])) {
+                    ++lineIndex;
+                }
+
+                // Next line is a timestamp
+                time = lines[lineIndex++].Trim();
+
+                // If blank line is after the timestamp
+                if(lineIndex >= lines.Length || String.IsNullOrWhiteSpace(lines[lineIndex])) {
+                    // This is end of the file
+                    endTimeStamp = Message.parseDateString(time);
+                    break;
+                }
+
+                startCode = lines[lineIndex].Trim();
+
+                if(startCode.Equals("E", StringComparison.Ordinal)) {
+                    // This is an error message
+                    errorText = lines[++lineIndex];
+                    ErrorMessage errorMessage = new ErrorMessage(time, errorText);
+                    messages.Add(errorMessage);
+                } else if(startCode.Equals("P", StringComparison.Ordinal)) {
+                    // This is a packet
+                    bytes = lines[++lineIndex];
+                    endCode = lines[++lineIndex];
+                    Packet packet = new Packet(time, bytes, endCode);
+                    messages.Add(packet);
+                } else {
+                    // Unknown start code
+                    // throw error?
+                }
+
+                lineIndex++;
+            }
+        }
+
+        public void printSummary() {
+            if(messages.Count == 0) {
+                return;
+            }
+
+            int validPacketCount = 0;
+            int invalidPacketCount = 0;
+            int errorMessageCount = 0;
+            foreach(Message message in messages) {
+                if(message is Packet) {
+                    if(((Packet)message).Valid) {
+                        validPacketCount++;
+                    } else {
+                        invalidPacketCount++;
+                    }
+                } else {
+                    errorMessageCount++;
                 }
             }
+
+            Console.WriteLine();
+            Console.WriteLine("Port: " + port);
+            Console.WriteLine("Start time: " + Message.timeString(startTimeStamp));
+            Console.WriteLine("End time: " + Message.timeString(endTimeStamp));
+            Console.WriteLine("Valid Packets: " + validPacketCount);
+            Console.WriteLine("Invalid Packets: " + invalidPacketCount);
+            Console.WriteLine("Errors: " + errorMessageCount);
+            Console.WriteLine();
         }
-
     }
-
-    //Create list of messages 
-    //Read in first line and store in startTimeStamp
-    //Read in port and store in port
-    //ERROR packets to go packet, error messages go to message->errormessage
-    //Note: Packets are of type message
-
-    //Ignore blank lines
-    //Store temp variables - timestamp
-    //If it's a packet 'P' - get cargo on next line, then EOP or EEP or None
-    //If it's E, that's an ErrorMessage. Error message on next line (e.g. Disconnect)
-    //Add all the data to the message list, with the temp variables passed into the constructor
-    //If the line was disconnect, skip a line then store endTimeStamp
-
-    //So the loop is:
-
-    //Read line by line
-    //if timestamp - store current timestamp
-    //elseif P (of E or P) - store as P, create new packet
-    //elseif Ptext = P, store as cargo, then end of packet
-    //elseif E (or E or P) - store as E
-    //
-    //Add to message
-
 }

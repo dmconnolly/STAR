@@ -64,13 +64,19 @@ namespace STAR {
                     m_address = addressBytes.ToArray();
 
                     // Next byte is the protocol ID
-                    m_protocolID = packetBytes[++i];
+                    if(++i < byteCount) {
+                        m_protocolID = packetBytes[i];
+                    }
 
                     // Next byte is packet ID
-                    //m_packetID = packetBytes[++i];
+                    // if(++i < byteCount) {
+                    //     m_packetID = packetBytes[i];
+                    // }
 
                     // Store the rest of the packet bytes in address class member array
-                    m_cargo = packetBytes.Skip<byte>(++i).ToArray();
+                    if(++i < byteCount) {
+                        m_cargo = packetBytes.Skip<byte>(i).ToArray();
+                    }
 
                     break;
                 }
