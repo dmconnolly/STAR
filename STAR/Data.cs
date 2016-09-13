@@ -24,18 +24,11 @@ namespace STAR
         //List of packets and errors
         List<Message> messages = new List<Message>();
 
-
-
-        //Hard-coded file location - change later
-        private string fileLoc =
-            @"C:\Users\Lewis\Documents\My Documents\University\Fourth Year\Industrial Project\team_project_example_files\test1_link1.rec";
-
         //Reads the entirety of the data file into a string
-        public void ReadFile()
+        public void ReadFile(string path)
         {
-
             //DON'T READ THE WHOLE TEXT FILE, DO IT LINE BY LINE YA PLEB
-            FileStream fs = new FileStream(@fileLoc, FileMode.Open, FileAccess.Read);
+            FileStream fs = new FileStream(@path, FileMode.Open, FileAccess.Read);
             
             using (var streamReader = new StreamReader(fs, Encoding.UTF8))
             {
@@ -44,14 +37,14 @@ namespace STAR
 
             Console.WriteLine(fileText);
 
-            //Delet this
+            //Delete this
             ProcessFile();
         }
 
         //Sorts the file into messages after it's been read
         public void ProcessFile()
         {
-            String currentLine;
+            string currentLine;
 
             using (StringReader reader = new StringReader(fileText))
             {
