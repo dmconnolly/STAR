@@ -21,9 +21,13 @@ namespace STAR
         //All the data in string format
         string fileText;
 
+        //List of packets and errors
+        List<Message> messages = new List<Message>();
+
         //Reads the entirety of the data file into a string
         public void ReadFile(string path)
         {
+            //DON'T READ THE WHOLE TEXT FILE, DO IT LINE BY LINE YA PLEB
             FileStream fs = new FileStream(@path, FileMode.Open, FileAccess.Read);
             
             using (var streamReader = new StreamReader(fs, Encoding.UTF8))
@@ -32,6 +36,24 @@ namespace STAR
             }
 
             Console.WriteLine(fileText);
+
+            //Delete this
+            ProcessFile();
+        }
+
+        //Sorts the file into messages after it's been read
+        public void ProcessFile()
+        {
+            string currentLine;
+
+            using (StringReader reader = new StringReader(fileText))
+            {
+                string line;
+                while ((fileText = reader.ReadLine()) != null)
+                {
+                    Console.WriteLine(":)");
+                }
+            }
         }
 
     }
@@ -49,7 +71,14 @@ namespace STAR
     //Add all the data to the message list, with the temp variables passed into the constructor
     //If the line was disconnect, skip a line then store endTimeStamp
 
+    //So the loop is:
 
-
+    //Read line by line
+    //if timestamp - store current timestamp
+    //elseif P (of E or P) - store as P, create new packet
+    //elseif Ptext = P, store as cargo, then end of packet
+    //elseif E (or E or P) - store as E
+    //
+    //Add to message
 
 }
