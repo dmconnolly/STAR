@@ -96,7 +96,7 @@ namespace STAR {
                 }
             }
 
-            measurementTimeSeconds = endTime.Subtract(startTime).Ticks / ticksPerSecond;
+            measurementTimeSeconds = (endTime.Ticks - startTime.Ticks) / ticksPerSecond;
             totalPacketsPerSecond = packetCount / measurementTimeSeconds;
             totalErrorsPerSecond = errorMessageCount / measurementTimeSeconds;
         }
