@@ -5,12 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace STAR {
-    class Error : Message {
+    class ErrorMessage : Message {
         private String errorString;
 
         // Takes date string in the form dd-MM-yyyy HH:mm:ss.FFFF
         // and a string containing the error message
-        public Error(String dateString, String errorString) : base(dateString) {
+        public ErrorMessage(String dateString, String errorString) : base(dateString) {
             this.errorString = errorString;
         }
 
