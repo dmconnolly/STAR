@@ -21,14 +21,10 @@ namespace STAR
         //All the data in string format
         string fileText;
 
-        //Hard-coded file location - change later
-        private string fileLoc =
-            @"C:\Users\Lewis\Documents\My Documents\University\Fourth Year\Industrial Project\team_project_example_files\test1_link1.rec";
-
         //Reads the entirety of the data file into a string
-        public void ReadFile()
+        public void ReadFile(string path)
         {
-            FileStream fs = new FileStream(@fileLoc, FileMode.Open, FileAccess.Read);
+            FileStream fs = new FileStream(@path, FileMode.Open, FileAccess.Read);
             
             using (var streamReader = new StreamReader(fs, Encoding.UTF8))
             {
