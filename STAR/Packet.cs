@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace STAR {
     class Packet : Message {
@@ -20,7 +18,7 @@ namespace STAR {
                 // depends if avoiding data duplication or speed is more important
 
                 //List<Byte> list = new List<Byte>(m_address.Length + 2 + m_cargo.Length);
-                List<Byte> list = new List<Byte>(m_address.Length + 1 + m_cargo.Length);
+                List<byte> list = new List<byte>(m_address.Length + 1 + m_cargo.Length);
                 list.AddRange(m_address);
                 list.Add(m_protocolID);
                 //list.Add(m_packetID);

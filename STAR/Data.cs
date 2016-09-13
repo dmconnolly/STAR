@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace STAR {
     // Read in all the data in this class
@@ -14,9 +12,6 @@ namespace STAR {
         //Start and end timestamps
         private DateTime startTimeStamp;
         private DateTime endTimeStamp;
-
-        // All the data in string format
-        private string fileText;
 
         // List of packets and error messages
         private List<Message> messages;
@@ -41,7 +36,7 @@ namespace STAR {
                 string time, startCode, endCode, bytes, errorText;
 
                 // Skip whitespace
-                while(String.IsNullOrWhiteSpace(lines[lineIndex])) {
+                while(string.IsNullOrWhiteSpace(lines[lineIndex])) {
                     ++lineIndex;
                 }
 
@@ -49,7 +44,7 @@ namespace STAR {
                 time = lines[lineIndex++].Trim();
 
                 // If blank line is after the timestamp
-                if(lineIndex >= lines.Length || String.IsNullOrWhiteSpace(lines[lineIndex])) {
+                if(lineIndex >= lines.Length || string.IsNullOrWhiteSpace(lines[lineIndex])) {
                     // This is end of the file
                     endTimeStamp = Message.parseDateString(time);
                     break;
@@ -85,6 +80,7 @@ namespace STAR {
             int validPacketCount = 0;
             int invalidPacketCount = 0;
             int errorMessageCount = 0;
+
             foreach(Message message in messages) {
                 if(message is Packet) {
                     if(((Packet)message).Valid) {
