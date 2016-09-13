@@ -10,6 +10,7 @@ namespace STAR {
         private byte[] m_address;
         //private byte m_packetID;
         private byte[] m_cargo;
+        private string m_endCode;
         private bool m_valid;
 
         // Accessor for all packet bytes
@@ -34,11 +35,12 @@ namespace STAR {
         //public byte ID { get { return m_packetID;  } }
         public byte[] CargoBytes { get {return m_cargo; }}
         public bool Valid { get { return m_valid; }}
+        public string EndCode { get { return m_endCode;  } }
 
         // Takes date string in the form dd-MM-yyyy HH:mm:ss.fff
         // List of bytes which make up the packet, including address bytes and protocol ID
         // and whether the packet ended with EOP and not EEP
-        public Packet(string dateString, string packetByteString, bool valid) : base(dateString) {
+        public Packet(string dateString, string packetByteString, string endCode) : base(dateString) {
             string[] packetByteStringSplit = packetByteString.Split(' ');
 
             int byteCount = packetByteStringSplit.Count();
@@ -74,7 +76,11 @@ namespace STAR {
                 }
             }
 
-            m_valid = valid;
+            //End code - EEP, EOP, None
+            m_endCode = endCode;
+
+            //Only valid if endCode is EOP
+            m_valid = m_endCode == "EOP";
         }
 
         public void printFields() {

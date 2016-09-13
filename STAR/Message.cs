@@ -19,7 +19,7 @@ namespace STAR {
         }
 
         // Gets the timestamp as a formatted string
-        public String getTimeString {
+        public String TimeString {
             get {
                 return String.Format("{0:" + timeFormat + "}", timestamp);
             }
