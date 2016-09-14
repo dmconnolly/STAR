@@ -15,9 +15,6 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace STAR {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window {
         private Data data;
 
@@ -34,7 +31,7 @@ namespace STAR {
             openFileDialog.RestoreDirectory = false;
 
             if(openFileDialog.ShowDialog() == true) {
-                // TODO: Use thread so as not to lock up window
+                // TODO: Use thread so as not to lock up window?
                 data.processFile(openFileDialog.FileName);
                 data.printSummary();
             }
