@@ -10,11 +10,19 @@ using System.Windows.Forms;
 
 namespace Industrial_Project_Interface_Ideas
 {
-    public partial class Form5 : Form
+    public partial class ErrorForm : Form
     {
-        public Form5()
+        public ErrorForm()
         {
             InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            TrafficDataForm newForm = new TrafficDataForm();
+            newForm.Show();
+            Hide();
+            
         }
     }
 }

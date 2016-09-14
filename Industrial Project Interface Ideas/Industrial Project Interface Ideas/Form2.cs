@@ -21,5 +21,19 @@ namespace Industrial_Project_Interface_Ideas
         {
 
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            VisualisationGeneration newForm = new VisualisationGeneration();
+            newForm.Show();
+            Hide();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            TrafficDataForm newForm = new TrafficDataForm();
+            newForm.Show();
+            Hide();
+        }
     }
 }

@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.VisualisationExample = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
@@ -40,16 +40,16 @@
             // 
             // VisualisationExample
             // 
-            chartArea4.Name = "ChartArea1";
-            this.VisualisationExample.ChartAreas.Add(chartArea4);
-            legend4.Name = "Legend1";
-            this.VisualisationExample.Legends.Add(legend4);
+            chartArea2.Name = "ChartArea1";
+            this.VisualisationExample.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.VisualisationExample.Legends.Add(legend2);
             this.VisualisationExample.Location = new System.Drawing.Point(104, 35);
             this.VisualisationExample.Name = "VisualisationExample";
-            series4.ChartArea = "ChartArea1";
-            series4.Legend = "Legend1";
-            series4.Name = "Series1";
-            this.VisualisationExample.Series.Add(series4);
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.VisualisationExample.Series.Add(series2);
             this.VisualisationExample.Size = new System.Drawing.Size(883, 295);
             this.VisualisationExample.TabIndex = 0;
             this.VisualisationExample.Text = "Visualisation Chart";
@@ -62,6 +62,7 @@
             this.button1.TabIndex = 2;
             this.button1.Text = "System Traffic";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
@@ -71,6 +72,7 @@
             this.button2.TabIndex = 3;
             this.button2.Text = "Back";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // label1
             // 

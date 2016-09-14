@@ -1,6 +1,6 @@
 ﻿namespace Industrial_Project_Interface_Ideas
 {
-    partial class Form5
+    partial class ErrorForm
     {
         /// <summary>
         /// Required designer variable.
@@ -59,8 +59,9 @@
             this.button1.TabIndex = 2;
             this.button1.Text = "System Traffic";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // Form5
+            // ErrorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -68,7 +69,7 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.ErrorCodes);
             this.Controls.Add(this.ErrorTable);
-            this.Name = "Form5";
+            this.Name = "ErrorForm";
             this.Text = "Errors";
             this.ResumeLayout(false);
             this.PerformLayout();
