@@ -1,24 +1,32 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Forms;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 
 namespace STAR {
-    public partial class Form1 : Form {
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window {
         private Data data;
 
-        public Form1() {
+        public MainWindow() {
             InitializeComponent();
             data = new Data();
         }
 
-        private void menuBarOpenFile_Click(object sender, EventArgs e) {
+        private void OpenFileButton_Click(object sender, RoutedEventArgs e) {
             OpenFileDialog openFileDialog = new OpenFileDialog();
 
             openFileDialog.InitialDirectory = "c:\\";
@@ -26,7 +34,7 @@ namespace STAR {
             openFileDialog.FilterIndex = 1;
             openFileDialog.RestoreDirectory = false;
 
-            if(openFileDialog.ShowDialog() == DialogResult.OK) {
+            if(openFileDialog.ShowDialog() == true) {
                 // TODO: Use thread so as not to lock up window
                 data.processFile(openFileDialog.FileName);
                 data.printSummary();
