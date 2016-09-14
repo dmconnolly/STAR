@@ -31,5 +31,19 @@ namespace Industrial_Project_Interface_Ideas
         {
 
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            PacketDataForm newForm = new PacketDataForm();
+            newForm.Show();
+            Hide();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            ErrorForm newForm = new ErrorForm();
+            newForm.Show();
+            Hide();
+        }
     }
 }

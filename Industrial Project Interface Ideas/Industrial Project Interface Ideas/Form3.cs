@@ -16,5 +16,20 @@ namespace Industrial_Project_Interface_Ideas
         {
             InitializeComponent();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            VisualisationForm newForm = new VisualisationForm();
+            newForm.Show();
+            Hide();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            TrafficDataForm newForm = new TrafficDataForm();
+            newForm.Show();
+            Hide();
+
+        }
     }
 }

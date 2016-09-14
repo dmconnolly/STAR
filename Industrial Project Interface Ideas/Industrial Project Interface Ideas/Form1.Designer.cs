@@ -104,9 +104,9 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(564, 409);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(89, 13);
+            this.label4.Size = new System.Drawing.Size(121, 13);
             this.label4.TabIndex = 6;
-            this.label4.Text = "Dataset average:";
+            this.label4.Text = "Average Errors in Traffic";
             // 
             // button1
             // 
@@ -125,6 +125,7 @@
             this.button2.TabIndex = 8;
             this.button2.Text = "View Packet(s)";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button3
             // 
@@ -134,6 +135,7 @@
             this.button3.TabIndex = 9;
             this.button3.Text = "View Error(s)";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // TrafficDataForm
             // 
