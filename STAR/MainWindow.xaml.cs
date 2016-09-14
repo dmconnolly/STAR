@@ -29,7 +29,6 @@ namespace STAR {
         private void OpenFileButton_Click(object sender, RoutedEventArgs e) {
             OpenFileDialog openFileDialog = new OpenFileDialog();
 
-            openFileDialog.InitialDirectory = "c:\\";
             openFileDialog.Filter = "Capture files (*.rec)|*.rec|All files (*.*)|*.*";
             openFileDialog.FilterIndex = 1;
             openFileDialog.RestoreDirectory = false;
