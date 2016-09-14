@@ -35,6 +35,10 @@
             this.label4 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.button2 = new System.Windows.Forms.Button();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.textBox5 = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label1
@@ -67,12 +71,13 @@
             // 
             // button1
             // 
+            this.button1.BackColor = System.Drawing.SystemColors.HighlightText;
             this.button1.Location = new System.Drawing.Point(266, 367);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(356, 41);
             this.button1.TabIndex = 3;
             this.button1.Text = "Graphical Analysis";
-            this.button1.UseVisualStyleBackColor = true;
+            this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // label4
@@ -95,19 +100,57 @@
             // 
             // button2
             // 
+            this.button2.BackColor = System.Drawing.SystemColors.HighlightText;
             this.button2.Location = new System.Drawing.Point(266, 511);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(356, 51);
             this.button2.TabIndex = 7;
             this.button2.Text = "Return to Traffic";
-            this.button2.UseVisualStyleBackColor = true;
+            this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // textBox2
+            // 
+            this.textBox2.BackColor = System.Drawing.Color.Lime;
+            this.textBox2.Location = new System.Drawing.Point(195, 426);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(71, 20);
+            this.textBox2.TabIndex = 8;
+            // 
+            // textBox3
+            // 
+            this.textBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.textBox3.Location = new System.Drawing.Point(642, 426);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(71, 20);
+            this.textBox3.TabIndex = 9;
+            // 
+            // textBox4
+            // 
+            this.textBox4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.textBox4.Location = new System.Drawing.Point(642, 457);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(71, 20);
+            this.textBox4.TabIndex = 10;
+            // 
+            // textBox5
+            // 
+            this.textBox5.BackColor = System.Drawing.Color.Red;
+            this.textBox5.Location = new System.Drawing.Point(195, 457);
+            this.textBox5.Name = "textBox5";
+            this.textBox5.Size = new System.Drawing.Size(71, 20);
+            this.textBox5.TabIndex = 11;
             // 
             // PacketDataForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.Info;
             this.ClientSize = new System.Drawing.Size(886, 611);
+            this.Controls.Add(this.textBox5);
+            this.Controls.Add(this.textBox4);
+            this.Controls.Add(this.textBox3);
+            this.Controls.Add(this.textBox2);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label4);
@@ -131,5 +174,9 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox textBox5;
     }
 }
