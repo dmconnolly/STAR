@@ -33,7 +33,7 @@ namespace STAR {
             if(openFileDialog.ShowDialog() == true) {
                 // TODO: Use thread so as not to lock up window?
                 data.processFile(openFileDialog.FileName);
-                data.printSummary();
+                data.Stats.print();
             }
         }
     }

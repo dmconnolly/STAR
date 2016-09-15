@@ -1,5 +1,5 @@
 ﻿namespace STAR {
-    class ErrorMessage : Message {
+    class ErrorPacket : Packet {
         private string errorString;
 
         // Accessor for error string
@@ -10,8 +10,8 @@
         }
 
         // Takes date string in the form dd-MM-yyyy HH:mm:ss.fff
-        // and a string containing the error message
-        public ErrorMessage(string dateString, string errorString) : base(dateString) {
+        // and a string containing the error packet
+        public ErrorPacket(string dateString, string errorString) : base(dateString) {
             this.errorString = errorString;
         }
     }
