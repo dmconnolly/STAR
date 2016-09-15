@@ -8,26 +8,22 @@ namespace STAR {
     class Statistics {
         private const double ticksPerSecond = 10000000;
 
-        private long packetCount = 0;
-        private long validPacketCount = 0;
-        private long invalidPacketCount = 0;
-        private long errorMessageCount = 0;
-        private long totalByteCount = 0;
-        private double measurementTimeSeconds = 0;
-        private double totalPacketsPerSecond = 0;
-        private double totalErrorsPerSecond = 0;
-        private double totalBytesPerSecond = 0;
+        private long packetCount;
+        private long validPacketCount;
+        private long invalidPacketCount;
+        private long errorMessageCount;
+        private long totalByteCount;
+        private double measurementTimeSeconds;
+        private double totalPacketsPerSecond;
+        private double totalErrorsPerSecond;
+        private double totalBytesPerSecond;
+
+        public Statistics() {
+            clear();
+        }
 
         public void collect(DateTime startTime, DateTime endTime, List<Packet> packets) {
-            packetCount = 0;
-            validPacketCount = 0;
-            invalidPacketCount = 0;
-            errorMessageCount = 0;
-            totalByteCount = 0;
-            measurementTimeSeconds = 0;
-            totalPacketsPerSecond = 0;
-            totalErrorsPerSecond = 0;
-            totalBytesPerSecond = 0;
+            clear();
 
             if(packets.Count == 0) {
                 return;
@@ -65,6 +61,18 @@ namespace STAR {
             Console.WriteLine("Bytes transferred: " + totalByteCount);
             Console.WriteLine("Data rate: " + string.Format("{0:0.000}", totalBytesPerSecond) + " bytes/second");
             Console.WriteLine();
+        }
+
+        private void clear() {
+            packetCount = 0;
+            validPacketCount = 0;
+            invalidPacketCount = 0;
+            errorMessageCount = 0;
+            totalByteCount = 0;
+            measurementTimeSeconds = 0;
+            totalPacketsPerSecond = 0;
+            totalErrorsPerSecond = 0;
+            totalBytesPerSecond = 0;
         }
     }
 }
