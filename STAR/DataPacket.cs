@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace STAR {
     class DataPacket : Packet {
+        private byte m_port;
         private byte m_protocolID;
         private byte[] m_address;
         //private byte m_packetID;
@@ -28,6 +29,7 @@ namespace STAR {
         }
 
         // Accessors for class member variables
+        public byte Port { get { return m_port; }}
         public byte Protocol { get { return m_protocolID; }}
         public byte[] AddressBytes { get { return m_address; }}
         //public byte ID { get { return m_packetID;  }}
@@ -38,7 +40,8 @@ namespace STAR {
         // Takes date string in the form dd-MM-yyyy HH:mm:ss.fff
         // List of bytes which make up the packet, including address bytes and protocol ID
         // and whether the packet ended with EOP and not EEP
-        public DataPacket(string dateString, string packetByteString, string endCode) : base(dateString) {
+        public DataPacket(byte port, string dateString, string packetByteString, string endCode) : base(dateString) {
+            m_port = port;
             string[] packetByteStringSplit = packetByteString.Split(' ');
 
             int byteCount = packetByteStringSplit.Count();

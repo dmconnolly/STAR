@@ -4,14 +4,10 @@
         Title="MainWindow" Height="500" Width="750">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="25" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Menu DockPanel.Dock="Top" Margin="0,0,0,0" Height="25" VerticalAlignment="Top">
-            <MenuItem Header="_File" Height="25" Width="40" FontSize="13">
-                <MenuItem Header="_Open" Click="OpenFileButton_Click"/>
-            </MenuItem>
-        </Menu>
+        <Button x:Name="OpenFile1Button" Content="Open File 1" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Click="OpenFile1Button_Click"/>
+        <Button x:Name="OpenFile2Button" Content="Open File 2" HorizontalAlignment="Left" Margin="10,0,0,400" VerticalAlignment="Bottom" Width="75" Click="OpenFile2Button_Click"/>
 
     </Grid>
 </Window>

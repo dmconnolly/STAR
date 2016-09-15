@@ -16,23 +16,33 @@ using System.Windows.Shapes;
 
 namespace STAR {
     public partial class MainWindow : Window {
-        private Data data;
+        private LinkCapture data;
 
         public MainWindow() {
             InitializeComponent();
-            data = new Data();
+            data = new LinkCapture();
         }
 
-        private void OpenFileButton_Click(object sender, RoutedEventArgs e) {
+        private void OpenFile1Button_Click(object sender, RoutedEventArgs e) {
+            OpenFile();
+        }
+
+        private void OpenFile2Button_Click(object sender, RoutedEventArgs e) {
+            OpenFile();
+        }
+
+        private void OpenFile() {
             OpenFileDialog openFileDialog = new OpenFileDialog();
 
             openFileDialog.Filter = "Capture files (*.rec)|*.rec|All files (*.*)|*.*";
             openFileDialog.FilterIndex = 1;
             openFileDialog.RestoreDirectory = false;
 
+
             if(openFileDialog.ShowDialog() == true) {
                 // TODO: Use thread so as not to lock up window?
                 data.processFile(openFileDialog.FileName);
+                data.Stats.print();
             }
         }
     }

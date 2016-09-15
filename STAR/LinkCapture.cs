@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 
 namespace STAR {
-    class Data {
+    class LinkCapture {
         private List<Packet> packets;
         private Statistics stats;
 
@@ -14,7 +14,7 @@ namespace STAR {
             }
         }
 
-        public Data() {
+        public LinkCapture() {
             packets = new List<Packet>();
             stats = new Statistics();
         }
@@ -31,9 +31,6 @@ namespace STAR {
             DateTime endTime = new DateTime();
             byte port;
 
-            // Clear anything in the packet list
-            packets.Clear();
-
             if(lineCount >= 2) {
                 // First two lines are timestamp for measurement start and port
                 startTime = Packet.parseDateString(lines[0]);
@@ -46,18 +43,18 @@ namespace STAR {
                     string time, startCode, endCode, bytes, errorText;
 
                     // Next line is a timestamp
-                    time = lines[lineIndex++];
+                    time = lines[lineIndex];
 
                     // Store this time in case file ends
                     endTime = Packet.parseDateString(time);
 
-                    if(lineIndex >= lines.Length) {
+                    if(++lineIndex >= lines.Length) {
                         break;
                     }
 
-                    startCode = lines[lineIndex++];
+                    startCode = lines[lineIndex];
 
-                    if(lineIndex >= lines.Length) {
+                    if(++lineIndex >= lines.Length) {
                         break;
                     }
 
@@ -68,14 +65,14 @@ namespace STAR {
                         packets.Add(errorMessage);
                     } else if(startCode.Equals("P", StringComparison.Ordinal)) {
                         // This is a packet
-                        bytes = lines[lineIndex++];
+                        bytes = lines[lineIndex];
 
-                        if(lineIndex >= lines.Length) {
+                        if(++lineIndex >= lines.Length) {
                             break;
                         }
 
                         endCode = lines[lineIndex];
-                        DataPacket packet = new DataPacket(time, bytes, endCode);
+                        DataPacket packet = new DataPacket(port, time, bytes, endCode);
                         packets.Add(packet);
                     } else {
                         // Unknown start code
@@ -83,11 +80,15 @@ namespace STAR {
                         break;
                     }
 
-                    lineIndex++;
+                    ++lineIndex;
                 }
-
-                stats.collect(port, startTime, endTime, packets);
             }
+
+            // Sort packet by timestamp (DateTime Ticks)
+            packets.OrderBy(packet => packet.Time);
+
+            // Collect statistics
+            stats.collect(startTime, endTime, packets);
         }
     }
 }
