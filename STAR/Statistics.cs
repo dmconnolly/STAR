@@ -19,6 +19,16 @@ namespace STAR {
         private double totalBytesPerSecond = 0;
 
         public void collect(DateTime startTime, DateTime endTime, List<Packet> packets) {
+            packetCount = 0;
+            validPacketCount = 0;
+            invalidPacketCount = 0;
+            errorMessageCount = 0;
+            totalByteCount = 0;
+            measurementTimeSeconds = 0;
+            totalPacketsPerSecond = 0;
+            totalErrorsPerSecond = 0;
+            totalBytesPerSecond = 0;
+
             if(packets.Count == 0) {
                 return;
             }
