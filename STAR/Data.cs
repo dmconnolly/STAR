@@ -19,8 +19,14 @@ namespace STAR {
             stats = new Statistics();
         }
 
-        // Reads and processes a file
         public void processFile(string path) {
+            string[] lines;
+            {
+                List<string> linesList = File.ReadLines(@path).ToList();
+                linesList.RemoveAll(String.IsNullOrEmpty);
+                lines = linesList.ToArray();
+            }
+            int lineCount = lines.Length;
             DateTime startTime = new DateTime();
             DateTime endTime = new DateTime();
             byte port;
@@ -28,54 +34,60 @@ namespace STAR {
             // Clear anything in the packet list
             packets.Clear();
 
-            string[] lines = File.ReadLines(@path).ToArray();
+            if(lineCount >= 2) {
+                // First two lines are timestamp for measurement start and port
+                startTime = Packet.parseDateString(lines[0]);
+                endTime = startTime;
+                port = Convert.ToByte(lines[1]);
 
-            // First two lines are timestamp for measurement start and port
-            startTime = Packet.parseDateString(lines[0].Trim());
-            port = Convert.ToByte(lines[1].Trim());
+                int lineIndex = 2;
 
-            int lineIndex = 3;
-            while(lineIndex < lines.Length - 1) {
-                string time, startCode, endCode, bytes, errorText;
-                // Skip whitespace
-                while(string.IsNullOrWhiteSpace(lines[lineIndex])) {
-                    ++lineIndex;
+                while(lineIndex < lineCount) {
+                    string time, startCode, endCode, bytes, errorText;
+
+                    // Next line is a timestamp
+                    time = lines[lineIndex++];
+
+                    // Store this time in case file ends
+                    endTime = Packet.parseDateString(time);
+
+                    if(lineIndex >= lines.Length) {
+                        break;
+                    }
+
+                    startCode = lines[lineIndex++];
+
+                    if(lineIndex >= lines.Length) {
+                        break;
+                    }
+
+                    if(startCode.Equals("E", StringComparison.Ordinal)) {
+                        // This is an error packet
+                        errorText = lines[lineIndex];
+                        ErrorPacket errorMessage = new ErrorPacket(time, errorText);
+                        packets.Add(errorMessage);
+                    } else if(startCode.Equals("P", StringComparison.Ordinal)) {
+                        // This is a packet
+                        bytes = lines[lineIndex++];
+
+                        if(lineIndex >= lines.Length) {
+                            break;
+                        }
+
+                        endCode = lines[lineIndex];
+                        DataPacket packet = new DataPacket(time, bytes, endCode);
+                        packets.Add(packet);
+                    } else {
+                        // Unknown start code
+                        // throw error?
+                        break;
+                    }
+
+                    lineIndex++;
                 }
 
-                // Next line is a timestamp
-                time = lines[lineIndex++].Trim();
-
-                // Store this time in case file ends
-                endTime = Packet.parseDateString(time);
-
-                // If blank line is after the timestamp
-                if(lineIndex >= lines.Length || string.IsNullOrWhiteSpace(lines[lineIndex])) {
-                    // This is end of the file
-                    break;
-                }
-
-                startCode = lines[lineIndex].Trim();
-
-                if(startCode.Equals("E", StringComparison.Ordinal)) {
-                    // This is an error packet
-                    errorText = lines[++lineIndex].Trim();
-                    ErrorPacket errorMessage = new ErrorPacket(time, errorText);
-                    packets.Add(errorMessage);
-                } else if(startCode.Equals("P", StringComparison.Ordinal)) {
-                    // This is a packet
-                    bytes = lines[++lineIndex].Trim();
-                    endCode = lines[++lineIndex].Trim();
-                    DataPacket packet = new DataPacket(time, bytes, endCode);
-                    packets.Add(packet);
-                } else {
-                    // Unknown start code
-                    // throw error?
-                }
-
-                lineIndex++;
+                stats.collect(port, startTime, endTime, packets);
             }
-
-            stats.collect(port, startTime, endTime, packets);
         }
     }
 }
