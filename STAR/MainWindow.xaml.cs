@@ -16,22 +16,15 @@ using System.Windows.Shapes;
 
 namespace STAR {
     public partial class MainWindow : Window {
-        private LinkCapture data;
+        private LinkCapture capture;
 
         public MainWindow() {
             InitializeComponent();
-            data = new LinkCapture();
+            capture = new LinkCapture();
+            ClearFilesButton.IsEnabled = false;
         }
 
         private void OpenFile1Button_Click(object sender, RoutedEventArgs e) {
-            OpenFile();
-        }
-
-        private void OpenFile2Button_Click(object sender, RoutedEventArgs e) {
-            OpenFile();
-        }
-
-        private void OpenFile() {
             OpenFileDialog openFileDialog = new OpenFileDialog();
 
             openFileDialog.Filter = "Capture files (*.rec)|*.rec|All files (*.*)|*.*";
@@ -40,10 +33,36 @@ namespace STAR {
 
 
             if(openFileDialog.ShowDialog() == true) {
+                OpenFile1Button.IsEnabled = false;
+                ClearFilesButton.IsEnabled = true;
                 // TODO: Use thread so as not to lock up window?
-                data.processFile(openFileDialog.FileName);
-                data.Stats.print();
+                capture.processFile(openFileDialog.FileName);
+                capture.Stats.print();
             }
+        }
+
+        private void OpenFile2Button_Click(object sender, RoutedEventArgs e) {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+
+            openFileDialog.Filter = "Capture files (*.rec)|*.rec|All files (*.*)|*.*";
+            openFileDialog.FilterIndex = 1;
+            openFileDialog.RestoreDirectory = false;
+
+
+            if(openFileDialog.ShowDialog() == true) {
+                OpenFile2Button.IsEnabled = false;
+                ClearFilesButton.IsEnabled = true;
+                // TODO: Use thread so as not to lock up window?
+                capture.processFile(openFileDialog.FileName);
+                capture.Stats.print();
+            }
+        }
+
+        private void ClearFilesButton_Click(object sender, RoutedEventArgs e) {
+            capture = new LinkCapture();
+            OpenFile1Button.IsEnabled = true;
+            OpenFile2Button.IsEnabled = true;
+            ClearFilesButton.IsEnabled = false;
         }
     }
 }
