@@ -6,9 +6,9 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Button x:Name="OpenFile1Button" Content="Open File 1" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Click="OpenFile1Button_Click"/>
-        <Button x:Name="OpenFile2Button" Content="Open File 2" HorizontalAlignment="Left" Margin="10,0,0,400" VerticalAlignment="Bottom" Width="75" Click="OpenFile2Button_Click"/>
-        <Button x:Name="ClearFilesButton" Content="Clear Files" HorizontalAlignment="Left" Margin="10,87,0,0" VerticalAlignment="Top" Width="75" Click="ClearFilesButton_Click"/>
+        <Button x:Name="OpenFile1Button" Content="Open File 1" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Click="OpenFileButton_Click"/>
+        <Button x:Name="OpenFile2Button" Content="Open File 2" HorizontalAlignment="Left" Margin="10,0,0,400" VerticalAlignment="Bottom" Width="75" Click="OpenFileButton_Click"/>
+        <Button x:Name="ClearFilesButton" Content="Clear Files" HorizontalAlignment="Left" Margin="10,87,0,0" VerticalAlignment="Top" Width="75" Click="ClearFilesButton_Click" IsEnabled="False"/>
 
     </Grid>
 </Window>

@@ -17,40 +17,23 @@ using System.Windows.Shapes;
 namespace STAR {
     public partial class MainWindow : Window {
         private LinkCapture capture;
+        private OpenFileDialog openFileDialog;
 
         public MainWindow() {
             InitializeComponent();
+
+            openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "All files (*.*)|*.*|Capture files (*.rec)|*.rec";
+            openFileDialog.FilterIndex = 2;
+            openFileDialog.RestoreDirectory = false;
+
             capture = new LinkCapture();
-            ClearFilesButton.IsEnabled = false;
         }
 
-        private void OpenFile1Button_Click(object sender, RoutedEventArgs e) {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-
-            openFileDialog.Filter = "Capture files (*.rec)|*.rec|All files (*.*)|*.*";
-            openFileDialog.FilterIndex = 1;
-            openFileDialog.RestoreDirectory = false;
-
-
+        private void OpenFileButton_Click(object sender, RoutedEventArgs e) {
             if(openFileDialog.ShowDialog() == true) {
+                ((Button)sender).IsEnabled = false;
                 OpenFile1Button.IsEnabled = false;
-                ClearFilesButton.IsEnabled = true;
-                // TODO: Use thread so as not to lock up window?
-                capture.processFile(openFileDialog.FileName);
-                capture.Stats.print();
-            }
-        }
-
-        private void OpenFile2Button_Click(object sender, RoutedEventArgs e) {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-
-            openFileDialog.Filter = "Capture files (*.rec)|*.rec|All files (*.*)|*.*";
-            openFileDialog.FilterIndex = 1;
-            openFileDialog.RestoreDirectory = false;
-
-
-            if(openFileDialog.ShowDialog() == true) {
-                OpenFile2Button.IsEnabled = false;
                 ClearFilesButton.IsEnabled = true;
                 // TODO: Use thread so as not to lock up window?
                 capture.processFile(openFileDialog.FileName);

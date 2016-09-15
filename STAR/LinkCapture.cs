@@ -27,14 +27,21 @@ namespace STAR {
                 lines = linesList.ToArray();
             }
             int lineCount = lines.Length;
-            DateTime startTime = new DateTime();
-            DateTime endTime = new DateTime();
+            DateTime startTime = DateTime.MinValue;
+            DateTime endTime = DateTime.MinValue;
             byte port;
 
             if(lineCount >= 2) {
                 // First two lines are timestamp for measurement start and port
-                startTime = Packet.parseDateString(lines[0]);
-                endTime = startTime;
+                {
+                    DateTime tmpTime = Packet.parseDateString(lines[0]);
+                    if(startTime == DateTime.MinValue || tmpTime.Ticks < startTime.Ticks) {
+                        startTime = tmpTime;
+                        if(endTime == DateTime.MinValue || startTime.Ticks > endTime.Ticks) {
+                            endTime = startTime;
+                        }
+                    }
+                }
                 port = Convert.ToByte(lines[1]);
 
                 int lineIndex = 2;
@@ -46,7 +53,12 @@ namespace STAR {
                     time = lines[lineIndex];
 
                     // Store this time in case file ends
-                    endTime = Packet.parseDateString(time);
+                    {
+                        DateTime tmpTime = Packet.parseDateString(time);
+                        if(tmpTime.Ticks > endTime.Ticks) {
+                            endTime = tmpTime;
+                        }
+                    }
 
                     if(++lineIndex >= lines.Length) {
                         break;
