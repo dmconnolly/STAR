@@ -74,6 +74,7 @@
             this.UploadButton.TabIndex = 2;
             this.UploadButton.Text = "Upload Traffic File";
             this.UploadButton.UseVisualStyleBackColor = false;
+            this.UploadButton.Click += new System.EventHandler(this.UploadButton_Click);
             // 
             // label1
             // 
@@ -182,7 +183,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Info;
-            this.ClientSize = new System.Drawing.Size(1054, 517);
+            this.ClientSize = new System.Drawing.Size(1055, 531);
             this.Controls.Add(this.textBox4);
             this.Controls.Add(this.textBox3);
             this.Controls.Add(this.textBox2);
