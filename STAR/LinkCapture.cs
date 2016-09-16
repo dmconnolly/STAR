@@ -8,6 +8,12 @@ namespace STAR {
         private List<Packet> packets;
         private Statistics stats;
 
+        public Packet[] Packets {
+            get {
+                return packets.ToArray();
+            }
+        }
+
         public Statistics Stats {
             get {
                 return stats;
@@ -32,9 +38,11 @@ namespace STAR {
             byte port;
 
             if(lineCount >= 2) {
+                int lineIndex = 0;
+
                 // First two lines are timestamp for measurement start and port
                 {
-                    DateTime tmpTime = Packet.parseDateString(lines[0]);
+                    DateTime tmpTime = Packet.parseDateString(lines[lineIndex++]);
                     if(startTime == DateTime.MinValue || tmpTime.Ticks < startTime.Ticks) {
                         startTime = tmpTime;
                         if(endTime == DateTime.MinValue || startTime.Ticks > endTime.Ticks) {
@@ -42,9 +50,7 @@ namespace STAR {
                         }
                     }
                 }
-                port = Convert.ToByte(lines[1]);
-
-                int lineIndex = 2;
+                port = Convert.ToByte(lines[lineIndex++]);
 
                 while(lineIndex < lineCount) {
                     string time, startCode, endCode, bytes, errorText;
@@ -73,7 +79,7 @@ namespace STAR {
                     if(startCode.Equals("E", StringComparison.Ordinal)) {
                         // This is an error packet
                         errorText = lines[lineIndex];
-                        ErrorPacket errorMessage = new ErrorPacket(time, errorText);
+                        ErrorPacket errorMessage = new ErrorPacket(port, time, errorText);
                         packets.Add(errorMessage);
                     } else if(startCode.Equals("P", StringComparison.Ordinal)) {
                         // This is a packet

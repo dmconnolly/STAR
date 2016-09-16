@@ -4,7 +4,15 @@ using System.Globalization;
 namespace STAR {
     class Packet {
         private const string timeFormat = "dd-MM-yyyy HH:mm:ss.fff";
+        private byte m_port;
         private DateTime timestamp;
+
+        // Gets the port
+        public byte Port {
+            get {
+                return m_port;
+            }
+        }
 
         // Gets the timestamp as millionths of a second
         // useful for ordering packets and errors on the UI
@@ -26,7 +34,10 @@ namespace STAR {
         }
 
         // Takes date string in the form dd-MM-yyyy HH:mm:ss.fff
-        public Packet(string dateString) {
+        public Packet(byte port, string dateString) {
+            // Store port
+            m_port = port;
+
             // Take date as string and store as DateTime
             timestamp = parseDateString(dateString);
         }
