@@ -62,6 +62,7 @@ namespace Industrial_Project_Interface_Ideas
             bool[][] errorType = new bool[3][];
             bool errorPresent = false;
             int pointer = 0;
+            string packetSelection = null;
 
 
             for (pointer = 0; pointer < errorLocation.Length; pointer++)
@@ -111,6 +112,7 @@ namespace Industrial_Project_Interface_Ideas
             errorSelection[0] = true;
             errorSelection[1] = true;
             errorSelection[2] = true;
+            packetSelection = "E";
 
             if (errorSelection[0] == true)
             {
@@ -142,9 +144,16 @@ namespace Industrial_Project_Interface_Ideas
                     }
                 }
             }
+            
+
             counter = 0;
+
             for (pointer = 0; pointer < packetInFilter.Length; pointer++)
             {
+                if (packet[pointer] == packetSelection)
+                {
+                    packetInFilter[pointer] = true;
+                }
                 if (packetInFilter[pointer] == true)
                 {
                     filteredPackets[counter] = packet[pointer];
