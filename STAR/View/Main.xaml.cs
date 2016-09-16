@@ -23,5 +23,10 @@ namespace STAR.View
         {
             InitializeComponent();
         }
+
+        private void PacketsDataGrid_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

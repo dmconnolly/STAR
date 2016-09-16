@@ -5,8 +5,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:STAR.View"
         mc:Ignorable="d"
-        Title="Main" Height="300" Width="300">
+        Title="Main" Height="800" Width="1280">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <DataGrid Grid.Column="0" Name="PacketsDataGrid" IsReadOnly="True" CanUserAddRows="False" HeadersVisibility="Column" CanUserDeleteRows="False" HorizontalAlignment="Left" Margin="10" VerticalAlignment="Top" Loaded="PacketsDataGrid_OnLoaded" FontSize="15">
+            <DataGrid.CellStyle>
+                <Style TargetType="DataGridCell">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Error}" Value="True">
+                            <Setter Property="Background" Value="Red"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.CellStyle>
+        </DataGrid>
+        <StackPanel Grid.Column="1">
+            
+        </StackPanel>
     </Grid>
 </Window>
