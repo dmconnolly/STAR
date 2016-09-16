@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace STAR.ViewModel
+namespace STAR.View
 {
     /// <summary>
     /// Interaction logic for Main.xaml
