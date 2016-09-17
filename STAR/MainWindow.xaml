@@ -9,7 +9,7 @@
         <Menu HorizontalAlignment="Left" Height="25" Margin="0" VerticalAlignment="Top">
             <MenuItem Header="_File">
                 <MenuItem Header="_Open Files" Click="OpenFilesButton_Click" />
-                <MenuItem Header="_Remove items (test)" Click="TestButton_Click" />
+                <MenuItem Header="_Apply Filter (test)" Click="ApplyFilterButton_Click" />
             </MenuItem>
         </Menu>
         <DataGrid

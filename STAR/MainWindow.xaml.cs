@@ -62,8 +62,17 @@ namespace STAR {
             }
         }
 
-        private void TestButton_Click(object sender, RoutedEventArgs e) {
-            // 
+        private void ApplyFilterButton_Click(object sender, RoutedEventArgs e) {
+            packetICV.Filter = item => {
+                PacketView packetView = item as PacketView;
+                if(packetView == null) {
+                    return false;
+                }
+                if(!packetView.Type.Equals("Error")) {
+                    return false;
+                }
+                return true;
+            };
         }
 
         private void ParseFileWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
