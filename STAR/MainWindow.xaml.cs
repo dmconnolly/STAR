@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -17,92 +18,51 @@ using System.Windows.Shapes;
 
 namespace STAR {
     public partial class MainWindow : Window {
+        private ObservableCollection<PacketView> packetView;
         private LinkCapture capture;
         private OpenFileDialog openFileDialog;
 
         public MainWindow() {
             InitializeComponent();
 
+            packetView = new ObservableCollection<PacketView>();
+            capture = new LinkCapture();
             openFileDialog = new OpenFileDialog();
+            openFileDialog.Multiselect = true;
             openFileDialog.Filter = "All files (*.*)|*.*|Capture files (*.rec)|*.rec";
             openFileDialog.FilterIndex = 2;
             openFileDialog.RestoreDirectory = false;
-
-            capture = new LinkCapture();
         }
 
-        private void OpenFileButton_Click(object sender, RoutedEventArgs e) {
+        private void OpenFilesButton_Click(object sender, RoutedEventArgs e) {
             if(openFileDialog.ShowDialog() == true) {
-                ((Button)sender).IsEnabled = false;
-                OpenFile1Button.IsEnabled = false;
-                ClearFilesButton.IsEnabled = true;
-                // TODO: Use thread so as not to lock up window?
-                capture.processFile(openFileDialog.FileName);
-                capture.Stats.print();
+                capture.Clear();
+                packetView.Clear();
 
-                PacketsDataGrid.Items.Clear();
-                for(int i=0; i<capture.Packets.Count(); i++) {
-                    Packet pkt = capture.Packets[i];
-                    if(pkt is DataPacket) {
-                        DataPacket dPkt = (DataPacket)pkt;
-                        PacketsDataGrid.Items.Add(
-                            new {
-                                TimeTicks = dPkt.Time,
-                                TimeString = dPkt.TimeString,
-                                Source = dPkt.Port,
-                                Destination = "?",
-                                Type = "Data",
-                                Message = "Byte data here"
-                            }
-                        );
-                    } else {
-                        ErrorPacket ePkt = (ErrorPacket)pkt;
-                        PacketsDataGrid.Items.Add(
-                            new {
-                                TimeTicks = ePkt.Time,
-                                TimeString = ePkt.TimeString,
-                                Source = ePkt.Port,
-                                Destination = "",
-                                Type = "Error",
-                                Message = ePkt.Message
-                            }
-                        );
+                BackgroundWorker worker = new BackgroundWorker();
+                worker.DoWork += delegate {
+                    foreach(string filename in openFileDialog.FileNames) {
+                        capture.processFile(filename);
                     }
-                }
-                sortDataGrid(PacketsDataGrid);
+                };
+                worker.RunWorkerCompleted += ParseFileWorkerCompleted;
+                worker.RunWorkerAsync();
             }
         }
 
-        private void ClearFilesButton_Click(object sender, RoutedEventArgs e) {
-            capture = new LinkCapture();
-            OpenFile1Button.IsEnabled = true;
-            OpenFile2Button.IsEnabled = true;
-            ClearFilesButton.IsEnabled = false;
-            PacketsDataGrid.Items.Clear();
-        }
-
-        // Method modified from http://stackoverflow.com/a/19952233
-        private static void sortDataGrid(
-                DataGrid dataGrid,
-                int columnIndex=0,
-                ListSortDirection sortDirection=ListSortDirection.Ascending) {
-
-            DataGridColumn column = dataGrid.Columns[columnIndex];
-
-            // Clear current sort descriptions
-            dataGrid.Items.SortDescriptions.Clear();
-
-            // Add the new sort description
-            dataGrid.Items.SortDescriptions.Add(new SortDescription(column.SortMemberPath, sortDirection));
-
-            // Apply sort
-            foreach(DataGridColumn col in dataGrid.Columns) {
-                col.SortDirection = null;
+        private void ParseFileWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
+            foreach(Packet packet in capture.Packets) {
+                packetView.Add(new PacketView(packet));
             }
-            column.SortDirection = sortDirection;
 
-            // Refresh items to display sort
-            dataGrid.Items.Refresh();
+            CollectionViewSource packetSourceList = new CollectionViewSource() {
+                Source = packetView
+            };
+            ICollectionView packetListView = packetSourceList.View;
+            packetListView.SortDescriptions.Add(
+                new SortDescription("TimeTicks", ListSortDirection.Ascending)
+            );
+            PacketsDataGrid.ItemsSource = packetListView;
         }
     }
 }

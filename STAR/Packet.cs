@@ -5,7 +5,7 @@ namespace STAR {
     class Packet {
         private const string timeFormat = "dd-MM-yyyy HH:mm:ss.fff";
         private byte m_port;
-        private DateTime timestamp;
+        private DateTime m_timestamp;
 
         // Gets the port
         public byte Port {
@@ -18,14 +18,14 @@ namespace STAR {
         // useful for ordering packets and errors on the UI
         public long Time {
             get {
-                return timestamp.Ticks;
+                return m_timestamp.Ticks;
             }
         }
 
         // Gets the timestamp as a formatted string
-        public string TimeString {
+        public string Timestamp {
             get {
-                return string.Format("{0:" + timeFormat + "}", timestamp);
+                return string.Format("{0:" + timeFormat + "}", m_timestamp);
             }
         }
 
@@ -39,7 +39,7 @@ namespace STAR {
             m_port = port;
 
             // Take date as string and store as DateTime
-            timestamp = parseDateString(dateString);
+            m_timestamp = parseDateString(dateString);
         }
 
         // Parse the date string and return a DateTime

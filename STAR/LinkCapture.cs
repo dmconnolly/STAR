@@ -1,28 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Windows.Data;
 
 namespace STAR {
     class LinkCapture {
-        private List<Packet> packets;
-        private Statistics stats;
+        private List<Packet> m_packets;
+        private Statistics m_stats;
 
         public Packet[] Packets {
             get {
-                return packets.ToArray();
+                return m_packets.ToArray();
             }
         }
 
         public Statistics Stats {
             get {
-                return stats;
+                return m_stats;
             }
         }
 
         public LinkCapture() {
-            packets = new List<Packet>();
-            stats = new Statistics();
+            m_packets = new List<Packet>();
+            m_stats = new Statistics();
+        }
+
+        public void Clear() {
+            m_packets.Clear();
+            m_stats.Clear();
         }
 
         public void processFile(string path) {
@@ -80,7 +87,7 @@ namespace STAR {
                         // This is an error packet
                         errorText = lines[lineIndex];
                         ErrorPacket errorMessage = new ErrorPacket(port, time, errorText);
-                        packets.Add(errorMessage);
+                        m_packets.Add(errorMessage);
                     } else if(startCode.Equals("P", StringComparison.Ordinal)) {
                         // This is a packet
                         bytes = lines[lineIndex];
@@ -91,7 +98,7 @@ namespace STAR {
 
                         endCode = lines[lineIndex];
                         DataPacket packet = new DataPacket(port, time, bytes, endCode);
-                        packets.Add(packet);
+                        m_packets.Add(packet);
                     } else {
                         // Unknown start code
                         // throw error?
@@ -103,10 +110,10 @@ namespace STAR {
             }
 
             // Sort packet by timestamp (DateTime Ticks)
-            packets.OrderBy(packet => packet.Time);
+            m_packets.OrderBy(packet => packet.Time);
 
             // Collect statistics
-            stats.collect(startTime, endTime, packets);
+            m_stats.collect(startTime, endTime, m_packets);
         }
     }
 }
