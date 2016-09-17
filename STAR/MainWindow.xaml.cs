@@ -1,6 +1,8 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,36 +18,73 @@ using System.Windows.Shapes;
 
 namespace STAR {
     public partial class MainWindow : Window {
+        private ObservableCollection<PacketView> packetView;
         private LinkCapture capture;
         private OpenFileDialog openFileDialog;
+        private CollectionViewSource packetCVS;
+        private SortDescription packetCVSSortDesc;
+        private ICollectionView packetICV;
 
         public MainWindow() {
             InitializeComponent();
 
+            packetView = new ObservableCollection<PacketView>();
+            capture = new LinkCapture();
             openFileDialog = new OpenFileDialog();
+            openFileDialog.Multiselect = true;
             openFileDialog.Filter = "All files (*.*)|*.*|Capture files (*.rec)|*.rec";
             openFileDialog.FilterIndex = 2;
             openFileDialog.RestoreDirectory = false;
 
-            capture = new LinkCapture();
+            packetCVS = new CollectionViewSource() {
+                Source = packetView
+            };
+            packetCVSSortDesc = new SortDescription(
+                "TimeTicks", ListSortDirection.Ascending
+            );
+            packetICV = packetCVS.View;
+            PacketsDataGrid.ItemsSource = packetICV;
         }
 
-        private void OpenFileButton_Click(object sender, RoutedEventArgs e) {
+        private void OpenFilesButton_Click(object sender, RoutedEventArgs e) {
             if(openFileDialog.ShowDialog() == true) {
-                ((Button)sender).IsEnabled = false;
-                OpenFile1Button.IsEnabled = false;
-                ClearFilesButton.IsEnabled = true;
-                // TODO: Use thread so as not to lock up window?
-                capture.processFile(openFileDialog.FileName);
-                capture.Stats.print();
+                capture.Clear();
+                packetView.Clear();
+
+                BackgroundWorker bgWorker = new BackgroundWorker();
+                bgWorker.DoWork += delegate {
+                    foreach(string filename in openFileDialog.FileNames) {
+                        capture.processFile(filename);
+                    }
+                };
+                bgWorker.RunWorkerCompleted += ParseFileWorkerCompleted;
+                bgWorker.RunWorkerAsync();
             }
         }
 
-        private void ClearFilesButton_Click(object sender, RoutedEventArgs e) {
-            capture = new LinkCapture();
-            OpenFile1Button.IsEnabled = true;
-            OpenFile2Button.IsEnabled = true;
-            ClearFilesButton.IsEnabled = false;
+        private void ApplyFilterButton_Click(object sender, RoutedEventArgs e) {
+            RefreshPacketDataGridFilter();
+        }
+
+        private void RefreshPacketDataGridFilter() {
+            packetICV.Filter = item => {
+                PacketView packetView = item as PacketView;
+                if(packetView == null) {
+                    return false;
+                }
+                if(!packetView.Type.Equals("Error")) {
+                    return false;
+                }
+                return true;
+            };
+        }
+
+        private void ParseFileWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
+            packetCVS.SortDescriptions.Remove(packetCVSSortDesc);
+            foreach(Packet packet in capture.Packets) {
+                packetView.Add(new PacketView(packet));
+            }
+            packetCVS.SortDescriptions.Add(packetCVSSortDesc);
         }
     }
 }
