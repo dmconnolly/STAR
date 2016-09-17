@@ -21,6 +21,9 @@ namespace STAR {
         private ObservableCollection<PacketView> packetView;
         private LinkCapture capture;
         private OpenFileDialog openFileDialog;
+        private CollectionViewSource packetCVS;
+        private SortDescription packetCVSSortDesc;
+        private ICollectionView packetICV;
 
         public MainWindow() {
             InitializeComponent();
@@ -32,6 +35,15 @@ namespace STAR {
             openFileDialog.Filter = "All files (*.*)|*.*|Capture files (*.rec)|*.rec";
             openFileDialog.FilterIndex = 2;
             openFileDialog.RestoreDirectory = false;
+
+            packetCVS = new CollectionViewSource() {
+                Source = packetView
+            };
+            packetCVSSortDesc = new SortDescription(
+                "TimeTicks", ListSortDirection.Ascending
+            );
+            packetICV = packetCVS.View;
+            PacketsDataGrid.ItemsSource = packetICV;
         }
 
         private void OpenFilesButton_Click(object sender, RoutedEventArgs e) {
@@ -39,30 +51,27 @@ namespace STAR {
                 capture.Clear();
                 packetView.Clear();
 
-                BackgroundWorker worker = new BackgroundWorker();
-                worker.DoWork += delegate {
+                BackgroundWorker bgWorker = new BackgroundWorker();
+                bgWorker.DoWork += delegate {
                     foreach(string filename in openFileDialog.FileNames) {
                         capture.processFile(filename);
                     }
                 };
-                worker.RunWorkerCompleted += ParseFileWorkerCompleted;
-                worker.RunWorkerAsync();
+                bgWorker.RunWorkerCompleted += ParseFileWorkerCompleted;
+                bgWorker.RunWorkerAsync();
             }
         }
 
+        private void TestButton_Click(object sender, RoutedEventArgs e) {
+            // 
+        }
+
         private void ParseFileWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
+            packetCVS.SortDescriptions.Remove(packetCVSSortDesc);
             foreach(Packet packet in capture.Packets) {
                 packetView.Add(new PacketView(packet));
             }
-
-            CollectionViewSource packetSourceList = new CollectionViewSource() {
-                Source = packetView
-            };
-            ICollectionView packetListView = packetSourceList.View;
-            packetListView.SortDescriptions.Add(
-                new SortDescription("TimeTicks", ListSortDirection.Ascending)
-            );
-            PacketsDataGrid.ItemsSource = packetListView;
+            packetCVS.SortDescriptions.Add(packetCVSSortDesc);
         }
     }
 }
