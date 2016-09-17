@@ -63,6 +63,10 @@ namespace STAR {
         }
 
         private void ApplyFilterButton_Click(object sender, RoutedEventArgs e) {
+            RefreshPacketDataGridFilter();
+        }
+
+        private void RefreshPacketDataGridFilter() {
             packetICV.Filter = item => {
                 PacketView packetView = item as PacketView;
                 if(packetView == null) {
