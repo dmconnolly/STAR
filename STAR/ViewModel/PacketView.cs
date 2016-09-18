@@ -31,7 +31,7 @@ namespace STAR {
                 m_type = "Data";
             } else {
                 m_type = "Error";
-                m_message = ((ErrorPacket)packet).Message;
+                m_message = (packet as ErrorPacket).Message;
             }
         }
     }
