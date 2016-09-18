@@ -63,6 +63,9 @@ namespace Industrial_Project_Interface_Ideas
             bool errorPresent = false;
             int pointer = 0;
             string packetSelection = null;
+            int errorCounter = 0;
+            int characterCounter = 0;
+            int packetCounter = 0;
 
 
             for (pointer = 0; pointer < errorLocation.Length; pointer++)
@@ -82,21 +85,25 @@ namespace Industrial_Project_Interface_Ideas
                 {
                     Console.WriteLine(line);
                     counter++;
+                    characterCounter++;
                     if (line == "E")
                     {
                         errorType[0][counter] = true;
                         errorLocation[counter] = line;
                         errorPresent = true;
+                        characterCounter++;
                     } else if (line == "EEP")
                     {
                         errorType[1][counter] = true;
                         errorLocation[counter] = line;
                         errorPresent = true;
+                        
                     } else if (line == "None")
                     {
                         errorType[2][counter] = true;
                         errorLocation[counter] = line;
                         errorPresent = true;
+                        
                     }
                 }
             } while (errorPresent == false);
@@ -121,6 +128,7 @@ namespace Industrial_Project_Interface_Ideas
                     if (errorType[0][pointer] == true)
                     {
                         packetInFilter[pointer] = true;
+                        errorCounter++;
                     }
                 }
             }
@@ -131,6 +139,7 @@ namespace Industrial_Project_Interface_Ideas
                     if (errorType[1][pointer] == true)
                     {
                         packetInFilter[pointer] = true;
+                        errorCounter++;
                     }
                 }
             }
@@ -141,6 +150,7 @@ namespace Industrial_Project_Interface_Ideas
                     if (errorType[2][pointer] == true)
                     {
                         packetInFilter[pointer] = true;
+                        errorCounter++;
                     }
                 }
             }
@@ -167,6 +177,9 @@ namespace Industrial_Project_Interface_Ideas
                     Console.Write(filteredPackets[pointer]);
                 }
             }
+            Console.WriteLine(errorCounter);
+            Console.WriteLine(characterCounter);
+            Console.WriteLine(packetCounter);
         }
     }
 }
