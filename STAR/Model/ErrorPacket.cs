@@ -1,18 +1,18 @@
 ﻿namespace STAR {
     class ErrorPacket : Packet {
-        private string errorString;
+        private string m_message;
 
         // Accessor for error string
-        public string Text {
+        public string Message {
             get {
-                return errorString;
+                return m_message;
             }
         }
 
         // Takes date string in the form dd-MM-yyyy HH:mm:ss.fff
         // and a string containing the error packet
-        public ErrorPacket(string dateString, string errorString) : base(dateString) {
-            this.errorString = errorString;
+        public ErrorPacket(byte port, string dateString, string errorMessage) : base(port, dateString) {
+            this.m_message = errorMessage;
         }
     }
 }

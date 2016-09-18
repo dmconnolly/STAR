@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +12,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace STAR.View
@@ -22,11 +25,6 @@ namespace STAR.View
         public Main()
         {
             InitializeComponent();
-        }
-
-        private void PacketsDataGrid_OnLoaded(object sender, RoutedEventArgs e)
-        {
-            throw new NotImplementedException();
         }
     }
 }

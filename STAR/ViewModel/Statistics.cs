@@ -19,11 +19,11 @@ namespace STAR {
         private double totalBytesPerSecond;
 
         public Statistics() {
-            clear();
+            Clear();
         }
 
         public void collect(DateTime startTime, DateTime endTime, List<Packet> packets) {
-            clear();
+            Clear();
 
             if(packets.Count == 0) {
                 return;
@@ -32,8 +32,8 @@ namespace STAR {
             foreach(Packet packet in packets) {
                 if(packet is DataPacket) {
                     packetCount++;
-                    totalByteCount += ((DataPacket)packet).CargoBytes.Count();
-                    if(((DataPacket)packet).Valid) {
+                    totalByteCount += (packet as DataPacket).CargoBytes.Count();
+                    if((packet as DataPacket).Valid) {
                         validPacketCount++;
                     } else {
                         invalidPacketCount++;
@@ -49,6 +49,18 @@ namespace STAR {
             totalBytesPerSecond = totalByteCount / measurementTimeSeconds;
         }
 
+        public void Clear() {
+            packetCount = 0;
+            validPacketCount = 0;
+            invalidPacketCount = 0;
+            errorMessageCount = 0;
+            totalByteCount = 0;
+            measurementTimeSeconds = 0;
+            totalPacketsPerSecond = 0;
+            totalErrorsPerSecond = 0;
+            totalBytesPerSecond = 0;
+        }
+
         public void print() {
             Console.WriteLine();
             Console.WriteLine("Measurement time: " + string.Format("{0:0.000}", measurementTimeSeconds) + " seconds");
@@ -61,18 +73,6 @@ namespace STAR {
             Console.WriteLine("Bytes transferred: " + totalByteCount);
             Console.WriteLine("Data rate: " + string.Format("{0:0.000}", totalBytesPerSecond) + " bytes/second");
             Console.WriteLine();
-        }
-
-        private void clear() {
-            packetCount = 0;
-            validPacketCount = 0;
-            invalidPacketCount = 0;
-            errorMessageCount = 0;
-            totalByteCount = 0;
-            measurementTimeSeconds = 0;
-            totalPacketsPerSecond = 0;
-            totalErrorsPerSecond = 0;
-            totalBytesPerSecond = 0;
         }
     }
 }
