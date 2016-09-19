@@ -9,7 +9,6 @@ namespace STAR.ViewModel
 {
     class Filter
     {
-        private string filterType;
         private List<Packet> filteredPackets;
         private bool[] portFilter;
         private bool[] errorFilter;
@@ -28,27 +27,6 @@ namespace STAR.ViewModel
                 return;
             }
 
-            filterType += "Ports: ";
-            for (pointer = 0; pointer < 8; pointer++)
-            {
-                if (portFilter[pointer] == true)
-                {
-                    filterType += pointer;
-                    filterType += ", ";
-                }
-            }
-            filterType = filterType.Remove(filterType.Length - 2, 2);
-            filterType += "Errors: ";
-            for (pointer = 0; pointer < 3; pointer++)
-            {
-                if (errorFilter[pointer] == true)
-                {
-                    filterType += pointer;
-                    filterType += ", ";
-                }
-            }
-            filterType = filterType.Remove(filterType.Length - 2, 2);
-
             foreach (Packet packet in packets)
             {
                 if (packet is DataPacket)
@@ -63,15 +41,37 @@ namespace STAR.ViewModel
                             }
                         }
                     }
-
+                    PacketView errorPacketView = new PacketView(packet);
+                    string errorType = errorPacketView.Message;
+                    if (errorFilter[0] == true) //I.E. If there is a parity error
+                    {
+                        if (errorType == "Parity")
+                        {
+                            filteredPackets.Add(packet);
+                        }
+                    }else if (errorFilter[1] == true)
+                    {
+                        if (errorType == "Disconnect")
+                        {
+                            filteredPackets.Add(packet);
+                        }
+                    }
                 }
             }
         }
+
         public void Clear()
         {
-            filterType = "";
             filteredPackets.Clear();
-        }
+            for (int pointer = 0; pointer < 8; pointer++)
+            {
+                errorFilter[pointer] = false;
+            }
+            for (int counter = 0; counter < 3; counter++)
+            {
+                portFilter[counter] = false;
+            }
+    }
         public void print()
         {
             Console.WriteLine();
