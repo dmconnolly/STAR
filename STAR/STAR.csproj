@@ -71,7 +71,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Help.xaml.cs">
+    <Compile Include="View\Help.xaml.cs">
       <DependentUpon>Help.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\Filter.cs" />
@@ -89,7 +89,7 @@
     </Compile>
     <Compile Include="ViewModel\LinkCapture.cs" />
     <Compile Include="Model\ErrorPacket.cs" />
-    <Page Include="Help.xaml">
+    <Page Include="View\Help.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

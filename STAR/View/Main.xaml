@@ -9,7 +9,7 @@
     <Window.Resources>
         <CollectionViewSource x:Key="PacketCollectionViewSource" CollectionViewType="ListCollectionView" />
     </Window.Resources>
-    <Grid Background="Gray">
+    <Grid>
         <Menu FontSize="15">
             <MenuItem Header="_File">
                 <MenuItem Header="_Open Files" Click="OpenFilesButton_Click"/>
@@ -23,7 +23,7 @@
                 <MenuItem Header="_Display Error Causes" />
                 <MenuItem Header="_Show groups" IsCheckable="True" IsChecked="True" />
             </MenuItem>
-            <MenuItem Header="_Help" Click="Help_Click">
+            <MenuItem Header="_Help">
                 <!-- Empty -->
             </MenuItem>
         </Menu>
@@ -40,16 +40,16 @@
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="2">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1.55*" />
-                        <ColumnDefinition Width="9*" />
+                        <ColumnDefinition Width="1.6*" />
+                        <ColumnDefinition Width="8.4*" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="1.5*" />
                         <RowDefinition Height="15*" />
                         <RowDefinition Height="1*" />
                     </Grid.RowDefinitions>
-                    <StackPanel Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,25,0,10">
-                        <ComboBox x:Name="ComboBox" Width="120" Margin="0,0,0,0">
+                    <StackPanel Grid.Column="1" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,20,0,10">
+                        <ComboBox x:Name="ComboBox" Width="120" Margin="0,0,10,0">
                             <ComboBoxItem Content="Parity Errors"/>
                             <ComboBoxItem Content="Disconnect Errors"/>
                         </ComboBox>
@@ -57,7 +57,7 @@
                         <Button x:Name="Button" Width="100">Filter</Button>
                     </StackPanel>
 
-                    <StackPanel Grid.Row="1" Margin="0,10,0,0" >
+                    <StackPanel Grid.Row="1" Margin="0,0,10,0" >
                         <CheckBox x:Name="ChkShowValidPackets" Click="ShowValidPacketCheckbox_Click" Content="Valid Packets" FontSize="15" Margin="0,0,0,10" VerticalAlignment="Top" VerticalContentAlignment="Center" IsEnabled="False" IsChecked="True" />
                         <CheckBox x:Name="ChkShowInvalidPackets" Click="ShowInvalidPacketCheckbox_Click" Content="Invalid Packets" FontSize="15" Margin="0,0,0,10" VerticalAlignment="Top" VerticalContentAlignment="Center" IsEnabled="False" IsChecked="True" />
                         <CheckBox x:Name="ChkShowErrors" Click="ShowErrorCheckbox_Click" Content="Errors" FontSize="15" Margin="0,0,0,25" VerticalAlignment="Top" VerticalContentAlignment="Center" IsEnabled="False" IsChecked="True" />
@@ -105,7 +105,7 @@
 
                     </DataGrid>
 
-                    <StackPanel Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal">
+                    <StackPanel Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal">
                         <Rectangle Width="25" Fill="LightGreen" Stroke="Gray" Margin="0,10,0,0"/>
                         <Label FontSize="15" VerticalAlignment="Bottom" Margin="0,0,10,0">Start of Packet</Label>
                         <Rectangle Width="25" Fill="LightBlue" Stroke="Gray" Margin="0,10,0,0"/>
@@ -115,52 +115,96 @@
                         <Rectangle Width="25" Fill="Red" Stroke="Gray" Margin="0,10,0,0"/>
                         <Label FontSize="15" VerticalAlignment="Bottom">Error</Label>
                     </StackPanel>
-                    <Label x:Name="DataCharTotal" Content="Total No. of Data Characters:" Grid.Column="1" HorizontalAlignment="Left" Margin="789,434,-183,0" Grid.Row="1" VerticalAlignment="Top" Height="33" Width="145"/>
-                    <TextBox x:Name="DataCharTotalText" Grid.Column="1" HorizontalAlignment="Left" Height="33" Margin="1007,434,-385,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="129" Background="#FFFB1111"/>
-                    <Label x:Name="ErrorsFoundTotal" Content="Total No. of Errors Found:" Grid.Column="1" HorizontalAlignment="Left" Height="32" Margin="789,472,-183,0" Grid.Row="1" VerticalAlignment="Top" Width="145"/>
-                    <TextBox x:Name="ErrorsFoundTotalText" Grid.Column="1" HorizontalAlignment="Left" Height="32" Margin="1007,472,-385,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="129" Background="#FF3BFDF4"/>
-                    <Label x:Name="PacketsTotal" Content="Total No. of Packets:" Grid.Column="1" HorizontalAlignment="Left" Height="34" Margin="789,509,-183,0" Grid.Row="1" VerticalAlignment="Top" Width="145"/>
-                    <TextBox x:Name="PacketsTotalText" Grid.Column="1" HorizontalAlignment="Left" Height="34" Margin="1007,509,-385,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="129" Background="#FF8BE693" RenderTransformOrigin="1.736,3.186"/>
-                    <Label x:Name="PacketsPerSecond" Content="Packets per second:" Grid.Column="1" HorizontalAlignment="Left" Height="41" Margin="789,548,-183,0" Grid.Row="1" VerticalAlignment="Top" Width="145"/>
-                    <TextBox x:Name="PacketsPerSecondText" Grid.Column="1" HorizontalAlignment="Left" Height="41" Margin="1007,548,-385,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="129" Background="#FF478F4E"/>
-                    <Label x:Name="DataCharPerSecond" Content="Data Characters per second:" Grid.Column="1" HorizontalAlignment="Left" Height="37" Margin="789,594,-208,0" Grid.Row="1" VerticalAlignment="Top" Width="170"/>
-                    <TextBox x:Name="DataCharPerSecondText" Grid.Column="1" HorizontalAlignment="Left" Height="37" Margin="1007,594,-385,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="129" Background="#FF6EDDE8"/>
-                    <Label x:Name="ErrorPerSecond" Content="Errors per second:" Grid.Column="1" HorizontalAlignment="Left" Height="39" Margin="789,631,-183,0" Grid.Row="1" VerticalAlignment="Top" Width="145" Grid.RowSpan="2"/>
-                    <TextBox x:Name="ErrorPerSecondText" Grid.Column="1" HorizontalAlignment="Left" Height="34" Margin="1007,636,-385,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="129" Background="#FFF55F5F" Grid.RowSpan="2"/>
                 </Grid>
-
-                <!--<DataGrid Grid.Row="1" Grid.RowSpan="2"></DataGrid>-->
-
-                <!--<Button Grid.Row="1" Grid.RowSpan="2">Button 1</Button>-->
 
                 <Grid Grid.Column="2" Grid.Row="0" Margin="0,0,0.333,0.333">
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="3*" />
-                            <RowDefinition Height="2*" />
+                            <RowDefinition Height="1*" />
+                            <RowDefinition Height="1*" />
                         </Grid.RowDefinitions>
-                        <StackPanel Grid.Row="0" Orientation="Vertical">
-                            <Label FontSize="20">
-                                Data Packet
-                            </Label>
-                            <Label FontSize="15">Port</Label>
-                            <TextBox FontSize="15"></TextBox>
-                            <Label FontSize="15">Destination</Label>
-                            <TextBox FontSize="15"></TextBox>
-                            <Label FontSize="15">Contents</Label>
-                            <TextBox FontSize="15" Height="80"></TextBox>
-                        </StackPanel>
-                        <StackPanel Grid.Row="1" Orientation="Vertical">
-                            <Label FontSize="20">Errors</Label>
-                            <ListView Height="140" />
-                        </StackPanel>
+                        <ScrollViewer HorizontalScrollBarVisibility="Visible">
+                            <Grid Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Label Grid.Column="0" Grid.ColumnSpan="2" FontSize="20">
+                                    Data Packet
+                                </Label>
+                                <Label Grid.Row="1" Grid.Column="0" Margin="0,0,0,10">Timestamp</Label>
+                                <TextBox x:Name="txtTimestamp" Grid.Row="1" Grid.Column="1" Margin="0,0,0,10"></TextBox>
+                                <Label Grid.Row="2" Grid.Column="0" Margin="0,0,0,10">Protocol ID</Label>
+                                <TextBox x:Name="txtProtocolID" Grid.Row="2" Grid.Column="1" Margin="0,0,0,10"></TextBox>
+                                <Label Grid.Row="3" Grid.Column="0" Margin="0,0,0,10">Address</Label>
+                                <TextBox x:Name="txtAddress" Grid.Row="3" Grid.Column="1" Margin="0,0,0,10"></TextBox>
+                                <Label Grid.Row="4" Grid.Column="0" Margin="0,0,0,10">Port</Label>
+                                <TextBox x:Name="txtPort" Grid.Row="4" Grid.Column="1" Margin="0,0,0,10"></TextBox>
+                                <Label Grid.Row="5" Grid.Column="0" Margin="0,0,0,10">Destination</Label>
+                                <TextBox x:Name="txtDestination" Grid.Row="5" Grid.Column="1" Margin="0,0,0,10"></TextBox>
+                                <Label Grid.Row="6" Grid.Column="0" Margin="0,0,0,10">Contents</Label>
+                                <TextBox x:Name="txtContents" Grid.Row="6" Grid.Column="1" Margin="0,0,0,10"></TextBox>
+                                <Button x:Name="btnPrevious" Grid.Row="7" Grid.Column="0" Width="100" HorizontalAlignment="Left">
+                                    Previous
+                                </Button>
+                                <Button x:Name="btnNext" Grid.Row="7" Grid.Column="1" Width="100" HorizontalAlignment="Right">
+                                    Next
+                                </Button>
+                            </Grid>
+                        </ScrollViewer>
+
+                        <Grid Grid.Row="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Label Grid.Row="0" FontSize="20">Packet Errors</Label>
+                            <ListView Grid.Row="1" FontSize="15" Height="150"></ListView>
+                        </Grid>
                     </Grid>
                 </Grid>
-                <!--<StackPanel Grid.Column="2" Grid.Row="1" Orientation="Horizontal">
-                </StackPanel>-->
-                <!--<Button Grid.Column="2" Grid.Row="1">Button 2</Button>-->
-                <!--<Button Grid.Row="3" Grid.ColumnSpan="2">Button 4</Button>-->
+
+
+                <Grid Grid.Column="2" Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1.5*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Label FontSize="20">Statistics</Label>
+                    <Label Grid.Row="1" FontSize="15" Margin="0,0,0,10">Total Data Characters</Label>
+                    <TextBox x:Name="DataCharTotalText" Grid.Column="1" Grid.Row="1" FontSize="15" Margin="0,0,0,10"></TextBox>
+                    <Label Grid.Row="2" FontSize="15" Margin="0,0,0,10">Total Packets</Label>
+                    <TextBox x:Name="PacketsTotalText" Grid.Column="1" Grid.Row="2" FontSize="15" Margin="0,0,0,10"></TextBox>
+                    <Label Grid.Row="3" FontSize="15" Margin="0,0,0,10">Total Errors</Label>
+                    <TextBox x:Name="ErrorsFoundTotalText" Grid.Column="1" Grid.Row="3" FontSize="15" Margin="0,0,0,10"></TextBox>
+                    <Label Grid.Row="4" FontSize="15" Margin="0,0,0,10">Data Rate</Label>
+                    <TextBox x:Name="DataCharPerSecondText" Grid.Column="1" Grid.Row="4" FontSize="15" Margin="0,0,0,10"></TextBox>
+                    <Label Grid.Row="5" FontSize="15" Margin="0,0,0,10">Packet Rate</Label>
+                    <TextBox x:Name="PacketsPerSecondText" Grid.Column="1" Grid.Row="5" FontSize="15" Margin="0,0,0,10"></TextBox>
+                    <Label Grid.Row="6" FontSize="15" Margin="0,0,0,10">Error Rate</Label>
+                    <TextBox x:Name="ErrorPerSecondText" Grid.Column="1" Grid.Row="6" FontSize="15" Margin="0,0,0,10"></TextBox>
+                </Grid>
             </Grid>
         </Grid>
     </Grid>
 </Window>
+ 
