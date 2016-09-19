@@ -36,6 +36,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Controls.DataVisualization.Toolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\WPFToolkit.DataVisualization.3.5.50211.1\lib\System.Windows.Controls.DataVisualization.Toolkit.dll</HintPath>
       <Private>True</Private>
@@ -48,6 +49,7 @@
       <HintPath>..\packages\WPFToolkit.3.5.50211.1\lib\System.Windows.Controls.Layout.Toolkit.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -69,10 +71,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Help.xaml.cs">
+      <DependentUpon>Help.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\Filter.cs" />
     <Compile Include="ViewModel\PacketView.cs" />
     <Compile Include="ViewModel\Statistics.cs" />
-    <Compile Include="View\GraphDisplay.xaml.cs">
-      <DependentUpon>GraphDisplay.xaml</DependentUpon>
+    <Compile Include="View\GraphView.xaml.cs">
+      <DependentUpon>GraphView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Main.xaml.cs">
       <DependentUpon>Main.xaml</DependentUpon>
@@ -83,9 +89,13 @@
     </Compile>
     <Compile Include="ViewModel\LinkCapture.cs" />
     <Compile Include="Model\ErrorPacket.cs" />
-    <Page Include="View\GraphDisplay.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="Help.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\GraphView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Main.xaml">
       <SubType>Designer</SubType>

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -136,6 +137,12 @@ namespace STAR.View {
                 portFilterCheckbox[port].IsEnabled = true;
                 portFilterCheckbox[port].IsChecked = true;
             }
+        }
+
+        private void Help_Click(object sender, RoutedEventArgs e)
+        {
+            Help helpWindow = new Help();
+            helpWindow.Show();
         }
     }
 }
