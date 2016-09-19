@@ -59,6 +59,9 @@ namespace STAR.View {
                 capture.Clear();
                 packetView.Clear();
 
+                ChkShowPackets.IsEnabled = true;
+                ChkShowErrors.IsEnabled = true;
+
                 foreach(CheckBox chkBox in portFilterCheckbox) {
                     chkBox.IsEnabled = false;
                     chkBox.IsChecked = false;
@@ -74,8 +77,12 @@ namespace STAR.View {
                 bgWorker.RunWorkerAsync();
             }
         }
+        
+        private void ShowPacketCheckbox_Click(object sender, RoutedEventArgs e) {
+            RefreshPacketDataGridFilter();
+        }
 
-        private void ApplyFilterButton_Click(object sender, RoutedEventArgs e) {
+        private void ShowErrorCheckbox_Click(object sender, RoutedEventArgs e) {
             RefreshPacketDataGridFilter();
         }
 
@@ -89,15 +96,22 @@ namespace STAR.View {
                 if(packetView == null) {
                     return false;
                 }
+
+                bool? _checked;
+
                 if(packetView.Type.Equals("Error")) {
-                    // if error check box selected
-                    //    return true
-                    // else
-                    //    return false
+                    _checked = ChkShowErrors.IsChecked;
+                    if(_checked != null && _checked == false) {
+                        return false;
+                    }
+                } else {
+                    _checked = ChkShowPackets.IsChecked;
+                    if(_checked != null && _checked == false) {
+                        return false;
+                    }
                 }
-                // if data check box NOT selected
-                //    return false
-                bool? _checked = portFilterCheckbox[packetView.Source].IsChecked;
+
+                _checked = portFilterCheckbox[packetView.Source].IsChecked;
                 return _checked != null && _checked == true;
             };
         }
