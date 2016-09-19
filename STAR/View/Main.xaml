@@ -20,6 +20,7 @@
             </MenuItem>
             <MenuItem Header="_Tools">
                 <MenuItem Header="_Manage users"/>
+                <MenuItem Header="_Display Error Causes" />
                 <MenuItem Header="_Show groups" IsCheckable="True" IsChecked="True" />
             </MenuItem>
             <MenuItem Header="_Help" Click="Help_Click">
@@ -115,17 +116,17 @@
                         <Label FontSize="15" VerticalAlignment="Bottom">Error</Label>
                     </StackPanel>
                     <Label x:Name="DataCharTotal" Content="Total No. of Data Characters:" Grid.Column="1" HorizontalAlignment="Left" Margin="370,49,0,0" Grid.Row="1" VerticalAlignment="Top" Height="33" Width="145"/>
-                    <TextBox x:Name="DataCharTotalText" Grid.Column="1" HorizontalAlignment="Left" Height="33" Margin="572,49,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="129"/>
+                    <TextBox x:Name="DataCharTotalText" Grid.Column="1" HorizontalAlignment="Left" Height="33" Margin="572,49,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="129" Background="#FFFB1111"/>
                     <Label x:Name="ErrorsFoundTotal" Content="Total No. of Errors Found:" Grid.Column="1" HorizontalAlignment="Left" Height="32" Margin="370,96,0,0" Grid.Row="1" VerticalAlignment="Top" Width="145"/>
-                    <TextBox x:Name="ErrorsFoundTotalText" Grid.Column="1" HorizontalAlignment="Left" Height="32" Margin="572,96,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="129"/>
+                    <TextBox x:Name="ErrorsFoundTotalText" Grid.Column="1" HorizontalAlignment="Left" Height="32" Margin="572,96,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="129" Background="#FF3BFDF4"/>
                     <Label x:Name="PacketsTotal" Content="Total No. of Packets:" Grid.Column="1" HorizontalAlignment="Left" Height="34" Margin="370,151,0,0" Grid.Row="1" VerticalAlignment="Top" Width="145"/>
-                    <TextBox x:Name="PacketsTotalText" Grid.Column="1" HorizontalAlignment="Left" Height="34" Margin="572,151,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="129"/>
+                    <TextBox x:Name="PacketsTotalText" Grid.Column="1" HorizontalAlignment="Left" Height="34" Margin="572,151,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="129" Background="#FF8BE693"/>
                     <Label x:Name="PacketsPerSecond" Content="Packets per second:" Grid.Column="1" HorizontalAlignment="Left" Height="41" Margin="370,192,0,0" Grid.Row="1" VerticalAlignment="Top" Width="145"/>
-                    <TextBox x:Name="PacketsPerSecondText" Grid.Column="1" HorizontalAlignment="Left" Height="41" Margin="572,192,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="129"/>
+                    <TextBox x:Name="PacketsPerSecondText" Grid.Column="1" HorizontalAlignment="Left" Height="41" Margin="572,192,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="129" Background="#FF478F4E"/>
                     <Label x:Name="DataCharPerSecond" Content="Data Characters per second:" Grid.Column="1" HorizontalAlignment="Left" Height="37" Margin="370,256,0,0" Grid.Row="1" VerticalAlignment="Top" Width="170"/>
-                    <TextBox x:Name="DataCharPerSecondText" Grid.Column="1" HorizontalAlignment="Left" Height="37" Margin="572,256,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="129"/>
+                    <TextBox x:Name="DataCharPerSecondText" Grid.Column="1" HorizontalAlignment="Left" Height="37" Margin="572,256,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="129" Background="#FF6EDDE8"/>
                     <Label x:Name="ErrorPerSecond" Content="Errors per second:" Grid.Column="1" HorizontalAlignment="Left" Height="34" Margin="370,323,0,0" Grid.Row="1" VerticalAlignment="Top" Width="145"/>
-                    <TextBox x:Name="ErrorPerSecondText" Grid.Column="1" HorizontalAlignment="Left" Height="34" Margin="572,323,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="129"/>
+                    <TextBox x:Name="ErrorPerSecondText" Grid.Column="1" HorizontalAlignment="Left" Height="34" Margin="572,323,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="129" Background="#FFF55F5F"/>
                 </Grid>
 
                 <!--<DataGrid Grid.Row="1" Grid.RowSpan="2"></DataGrid>-->
