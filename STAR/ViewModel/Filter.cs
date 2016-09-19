@@ -43,13 +43,13 @@ namespace STAR.ViewModel
                     }
                     PacketView errorPacketView = new PacketView(packet);
                     string errorType = errorPacketView.Message;
-                    if (errorFilter[0] == true) //I.E. If there is a parity error
+                    if (errorFilter[0] == true) //I.E. If there is a filter for parity errors
                     {
                         if (errorType == "Parity")
                         {
                             filteredPackets.Add(packet);
                         }
-                    }else if (errorFilter[1] == true)
+                    }else if (errorFilter[1] == true) //I.E. If there is a filter for disconnect errors
                     {
                         if (errorType == "Disconnect")
                         {
@@ -60,7 +60,7 @@ namespace STAR.ViewModel
             }
         }
 
-        public void Clear()
+        public void Clear() //Clears the list of filtered packets, as well as the filters.
         {
             filteredPackets.Clear();
             for (int pointer = 0; pointer < 8; pointer++)
@@ -72,13 +72,10 @@ namespace STAR.ViewModel
                 portFilter[counter] = false;
             }
     }
-        public void print()
+        public void print() //Prints out all the filtered packets
         {
             Console.WriteLine();
-            for (int pointer = 0; pointer < filteredPackets.Count; pointer++)
-            {
-                Console.WriteLine(filteredPackets);
-            }
+            Console.WriteLine(filteredPackets);
             Console.WriteLine();
         }
 
