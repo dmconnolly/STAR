@@ -99,10 +99,10 @@
                             <DataGridTextColumn Header="Type" Binding="{Binding Path=Type}" CanUserSort="False" />
                             <DataGridTextColumn Header="Message" Binding="{Binding Path=Message}" CanUserSort="False" />
                         </DataGrid.Columns>
-                        
-                        
+
+
                     </DataGrid>
-                    
+
                     <StackPanel Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal">
                         <Rectangle Width="25" Fill="LightGreen" Stroke="Gray" Margin="0,10,0,0"/>
                         <Label FontSize="15" VerticalAlignment="Bottom" Margin="0,0,10,0">Start of Packet</Label>
@@ -113,6 +113,18 @@
                         <Rectangle Width="25" Fill="Red" Stroke="Gray" Margin="0,10,0,0"/>
                         <Label FontSize="15" VerticalAlignment="Bottom">Error</Label>
                     </StackPanel>
+                    <Label x:Name="DataCharTotal" Content="Total No. of Data Characters:" Grid.Column="1" HorizontalAlignment="Left" Margin="293,49,0,0" Grid.Row="1" VerticalAlignment="Top" Height="33" Width="145"/>
+                    <TextBox x:Name="DataCharTotalText" Grid.Column="1" HorizontalAlignment="Left" Height="33" Margin="493,49,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="129"/>
+                    <Label x:Name="ErrorsFoundTotal" Content="Total No. of Errors Found:" Grid.Column="1" HorizontalAlignment="Left" Height="32" Margin="293,96,0,0" Grid.Row="1" VerticalAlignment="Top" Width="145"/>
+                    <TextBox x:Name="ErrorsFoundTotalText" Grid.Column="1" HorizontalAlignment="Left" Height="32" Margin="493,87,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="129"/>
+                    <Label x:Name="PacketsTotal" Content="Total No. of Packets:" Grid.Column="1" HorizontalAlignment="Left" Height="34" Margin="293,133,0,0" Grid.Row="1" VerticalAlignment="Top" Width="145"/>
+                    <TextBox x:Name="PacketsTotalText" Grid.Column="1" HorizontalAlignment="Left" Height="34" Margin="493,133,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="129"/>
+                    <Label x:Name="PacketsPerSecond" Content="Packets per second:" Grid.Column="1" HorizontalAlignment="Left" Height="41" Margin="293,185,0,0" Grid.Row="1" VerticalAlignment="Top" Width="145"/>
+                    <TextBox x:Name="PacketsPerSecondText" Grid.Column="1" HorizontalAlignment="Left" Height="41" Margin="493,185,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="129"/>
+                    <Label x:Name="DataCharPerSecond" Content="Data Characters per second:" Grid.Column="1" HorizontalAlignment="Left" Height="37" Margin="293,256,0,0" Grid.Row="1" VerticalAlignment="Top" Width="170"/>
+                    <TextBox x:Name="DataCharPerSecondText" Grid.Column="1" HorizontalAlignment="Left" Height="37" Margin="493,256,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="129"/>
+                    <Label x:Name="ErrorPerSecond" Content="Errors per second:" Grid.Column="1" HorizontalAlignment="Left" Height="34" Margin="293,323,0,0" Grid.Row="1" VerticalAlignment="Top" Width="145"/>
+                    <TextBox x:Name="ErrorPerSecondText" Grid.Column="1" HorizontalAlignment="Left" Height="34" Margin="493,323,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="129"/>
                 </Grid>
 
                 <!--<DataGrid Grid.Row="1" Grid.RowSpan="2"></DataGrid>-->
