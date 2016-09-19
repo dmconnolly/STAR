@@ -78,12 +78,12 @@
                             Margin="0,0,10,0"
                             HorizontalAlignment="Left"
                             Grid.Row="1"
-                            Grid.Column="1">
+                            Grid.Column="1" AlternationCount="2" AlternatingRowBackground="#FF31E8DF" RowBackground="#FF90DAE2">
                         <DataGrid.CellStyle>
                             <Style TargetType="DataGridCell">
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding Type}" Value="Data">
-                                        <Setter Property="Background" Value="LightBlue" />
+                                        <!--Setter Property="Background" Value="LightBlue"/-->
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding Type}" Value="Error">
                                         <Setter Property="Background" Value="Red" />
@@ -99,6 +99,8 @@
                             <DataGridTextColumn Header="Type" Binding="{Binding Path=Type}" CanUserSort="False" />
                             <DataGridTextColumn Header="Message" Binding="{Binding Path=Message}" CanUserSort="False" />
                         </DataGrid.Columns>
+                        
+                        
                     </DataGrid>
                     
                     <StackPanel Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal">
