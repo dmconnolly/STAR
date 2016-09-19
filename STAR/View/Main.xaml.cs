@@ -97,22 +97,17 @@ namespace STAR.View {
                     return false;
                 }
 
-                bool? _checked;
-
                 if(packetView.Type.Equals("Error")) {
-                    _checked = ChkShowErrors.IsChecked;
-                    if(_checked != null && _checked == false) {
+                    if(ChkShowErrors.IsChecked != true) {
                         return false;
                     }
                 } else {
-                    _checked = ChkShowPackets.IsChecked;
-                    if(_checked != null && _checked == false) {
+                    if(ChkShowPackets.IsChecked != true) {
                         return false;
                     }
                 }
 
-                _checked = portFilterCheckbox[packetView.Source].IsChecked;
-                return _checked != null && _checked == true;
+                return portFilterCheckbox[packetView.Source].IsChecked == true ? true : false;
             };
         }
 
