@@ -8,15 +8,15 @@ namespace STAR {
     class Statistics {
         private const double ticksPerSecond = 10000000;
 
-        private long packetCount;
-        private long validPacketCount;
-        private long invalidPacketCount;
-        private long errorMessageCount;
-        private long totalByteCount;
-        private double measurementTimeSeconds;
-        private double totalPacketsPerSecond;
-        private double totalErrorsPerSecond;
-        private double totalBytesPerSecond;
+        public long packetCount;
+        public long validPacketCount;
+        public long invalidPacketCount;
+        public long errorMessageCount;
+        public long totalByteCount;
+        public double measurementTimeSeconds;
+        public double totalPacketsPerSecond;
+        public double totalErrorsPerSecond;
+        public double totalBytesPerSecond;
 
         public Statistics() {
             Clear();
