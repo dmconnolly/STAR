@@ -9,6 +9,7 @@ namespace STAR {
     class LinkCapture {
         private List<Packet> m_packets;
         private Statistics m_stats;
+        private List<byte> m_portsLoaded;
 
         public Packet[] Packets {
             get {
@@ -22,14 +23,22 @@ namespace STAR {
             }
         }
 
+        public byte[] PortsLoaded {
+            get {
+                return m_portsLoaded.ToArray();
+            }
+        }
+
         public LinkCapture() {
             m_packets = new List<Packet>();
             m_stats = new Statistics();
+            m_portsLoaded = new List<byte>();
         }
 
         public void Clear() {
             m_packets.Clear();
             m_stats.Clear();
+            m_portsLoaded.Clear();
         }
 
         public void processFile(string path) {
@@ -58,6 +67,11 @@ namespace STAR {
                     }
                 }
                 port = Convert.ToByte(lines[lineIndex++]);
+
+                if(!m_portsLoaded.Contains(port)) {
+                    m_portsLoaded.Add(port);
+                    m_portsLoaded.Sort();
+                }
 
                 while(lineIndex < lineCount) {
                     string time, startCode, endCode, bytes, errorText;

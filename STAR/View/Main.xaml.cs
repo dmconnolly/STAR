@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -15,16 +16,120 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace STAR.View
-{
-    /// <summary>
-    /// Interaction logic for Main.xaml
-    /// </summary>
-    public partial class Main : Window
-    {
-        public Main()
-        {
+namespace STAR.View {
+    public partial class Main : Window {
+        private LinkCapture capture;
+        private OpenFileDialog openFileDialog;
+        private ObservableCollection<PacketView> packetView;
+        private SortDescription packetCVSSortDesc;
+        private CollectionViewSource packetCVS;
+        private ICollectionView packetICV;
+        private CheckBox[] portFilterCheckbox;
+
+        public Main() {
             InitializeComponent();
+
+            packetView = new ObservableCollection<PacketView>();
+            capture = new LinkCapture();
+            openFileDialog = new OpenFileDialog();
+            openFileDialog.Multiselect = true;
+            openFileDialog.Filter = "All files (*.*)|*.*|Capture files (*.rec)|*.rec";
+            openFileDialog.FilterIndex = 2;
+            openFileDialog.RestoreDirectory = false;
+
+            packetCVS = new CollectionViewSource() {
+                Source = packetView
+            };
+            packetCVSSortDesc = new SortDescription(
+                "TimeTicks", ListSortDirection.Ascending
+            );
+            packetICV = packetCVS.View;
+            PacketsDataGrid.ItemsSource = packetICV;
+
+            portFilterCheckbox = new CheckBox[8] {
+                ChkPort1, ChkPort2,
+                ChkPort3, ChkPort4,
+                ChkPort5, ChkPort6,
+                ChkPort7, ChkPort8
+            };
+        }
+
+        private void OpenFilesButton_Click(object sender, RoutedEventArgs e) {
+            if(openFileDialog.ShowDialog() == true) {
+                capture.Clear();
+                packetView.Clear();
+
+                ChkShowPackets.IsEnabled = true;
+                ChkShowErrors.IsEnabled = true;
+
+                foreach(CheckBox chkBox in portFilterCheckbox) {
+                    chkBox.IsEnabled = false;
+                    chkBox.IsChecked = false;
+                }
+
+                BackgroundWorker bgWorker = new BackgroundWorker();
+                bgWorker.DoWork += delegate {
+                    foreach(string filename in openFileDialog.FileNames) {
+                        capture.processFile(filename);
+                    }
+                };
+                bgWorker.RunWorkerCompleted += ParseFileWorkerCompleted;
+                bgWorker.RunWorkerAsync();
+            }
+        }
+        
+        private void ShowPacketCheckbox_Click(object sender, RoutedEventArgs e) {
+            RefreshPacketDataGridFilter();
+        }
+
+        private void ShowErrorCheckbox_Click(object sender, RoutedEventArgs e) {
+            RefreshPacketDataGridFilter();
+        }
+
+        private void PortFilterCheckbox_Click(object sender, RoutedEventArgs e) {
+            RefreshPacketDataGridFilter();
+        }
+
+        private void RefreshPacketDataGridFilter() {
+            packetICV.Filter = item => {
+                PacketView packetView = item as PacketView;
+                if(packetView == null) {
+                    return false;
+                }
+
+                bool? _checked;
+
+                if(packetView.Type.Equals("Error")) {
+                    _checked = ChkShowErrors.IsChecked;
+                    if(_checked != null && _checked == false) {
+                        return false;
+                    }
+                } else {
+                    _checked = ChkShowPackets.IsChecked;
+                    if(_checked != null && _checked == false) {
+                        return false;
+                    }
+                }
+
+                _checked = portFilterCheckbox[packetView.Source].IsChecked;
+                return _checked != null && _checked == true;
+            };
+        }
+
+        private void ParseFileWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
+            UpdatePortFilterCheckboxes();
+            packetCVS.SortDescriptions.Remove(packetCVSSortDesc);
+            foreach(Packet packet in capture.Packets) {
+                packetView.Add(new PacketView(packet));
+            }
+            packetCVS.SortDescriptions.Add(packetCVSSortDesc);
+        }
+
+        private void UpdatePortFilterCheckboxes() {
+            foreach(byte port in capture.PortsLoaded) {
+                portFilterCheckbox[port].IsEnabled = true;
+                portFilterCheckbox[port].IsChecked = true;
+            }
         }
     }
 }
