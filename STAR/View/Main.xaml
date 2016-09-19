@@ -25,37 +25,65 @@
         <Grid Margin="10">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="68*" />
-                    <ColumnDefinition Width="872*"/>
-                    <ColumnDefinition Width="313*" />
+                    <ColumnDefinition Width="3*" />
+                    <ColumnDefinition Width="7*"/>
+                    <ColumnDefinition Width="5*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <!--<RowDefinition Height="1.5*" />-->
                     <RowDefinition Height="15*" />
                     <RowDefinition Height="8*" />
-                    <!--<RowDefinition Height="1.5*" />-->
                 </Grid.RowDefinitions>
 
-                <!--<StackPanel Grid.ColumnSpan="2" Orientation="Horizontal">
-                    <Button HorizontalAlignment="Left" Width="150" Margin="0, 0, 10, 0">Open</Button>
-                    <Button HorizontalAlignment="Left" Width="150" Margin="0, 0, 10, 0">Clear</Button>
-                    <Button HorizontalAlignment="Right" Width="150" Margin="0, 0, 10, 0">Exit</Button>
-                </StackPanel>-->
-
-                <!--<Button Grid.ColumnSpan="2">Button 0</Button>-->
-
-                <Grid Grid.Row="0" Grid.RowSpan="2" Margin="0,0,10,-0.333" Grid.ColumnSpan="2">
+                <Grid Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="9*" />
+                    </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="1.5*" />
                         <RowDefinition Height="15*" />
                         <RowDefinition Height="1*" />
                     </Grid.RowDefinitions>
-                    <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
-                        <CheckBox x:Name="CheckBox" Content="Packet 1" VerticalAlignment="Top" FontSize="15" Margin="0,0,10,0"/>
-                        <CheckBox x:Name="CheckBox2" Content="Packet 2" VerticalAlignment="Top" FontSize="15"/>
+                    <StackPanel Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,25,0,10">
+                        <ComboBox x:Name="ComboBox" Width="120" Margin="0,0,0,0"/>
+                        <TextBox x:Name="TextBox" Width="200" Background="White" Margin="0,0,0,0"></TextBox>
+                        <Button x:Name="Button" Width="100">Filter</Button>
                     </StackPanel>
-                    <DataGrid Grid.Row="1" FontSize="15" />
-                    <StackPanel Grid.Row="2" Orientation="Horizontal">
+
+                    <StackPanel Grid.Row="1" Margin="0,10,0,0" >
+                        <CheckBox x:Name="chkPacket1" Content="Packet 1" VerticalAlignment="Top" FontSize="15" Margin="0,0,0,10"/>
+                        <CheckBox x:Name="chkPacket2" Content="Packet 2" VerticalAlignment="Top" FontSize="15" Margin="0,0,0,10"/>
+                        <CheckBox x:Name="chkPacket3" Content="Packet 3" VerticalAlignment="Top" FontSize="15" Margin="0,0,0,10"/>
+                        <CheckBox x:Name="chkPacket4" Content="Packet 4" VerticalAlignment="Top" FontSize="15" Margin="0,0,0,10"/>
+                        <CheckBox x:Name="chkPacket5" Content="Packet 5" VerticalAlignment="Top" FontSize="15" Margin="0,0,0,10"/>
+                        <CheckBox x:Name="chkPacket6" Content="Packet 6" VerticalAlignment="Top" FontSize="15" Margin="0,0,0,10"/>
+                        <CheckBox x:Name="chkPacket7" Content="Packet 7" VerticalAlignment="Top" FontSize="15" Margin="0,0,0,10"/>
+                        <CheckBox x:Name="chkPacket8" Content="Packet 8" VerticalAlignment="Top" FontSize="15" Margin="0,0,0,10"/>
+                    </StackPanel>
+
+                    <DataGrid Grid.Column="1" Grid.Row="1" FontSize="15" CanUserAddRows="False" CanUserDeleteRows="False" HeadersVisibility="Column" Margin="0,0,10,0">
+                        <DataGrid.CellStyle>
+                            <Style TargetType="DataGridCell">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding SOF}" Value="True">
+                                        <Setter Property="Background" Value="LightGreen" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Packet}" Value="True">
+                                        <Setter Property="Background" Value="LightBlue" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding EOF}" Value="True">
+                                        <Setter Property="Background" Value="LightCoral" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Error}" Value="True">
+                                        <Setter Property="Background" Value="Red" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGrid.CellStyle>
+                    </DataGrid>
+                    
+                    
+                    <StackPanel Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal">
                         <Rectangle Width="25" Fill="LightGreen" Stroke="Gray" Margin="0,10,0,0"/>
                         <Label FontSize="15" VerticalAlignment="Bottom" Margin="0,0,10,0">Start of Packet</Label>
                         <Rectangle Width="25" Fill="LightBlue" Stroke="Gray" Margin="0,10,0,0"/>
@@ -75,7 +103,7 @@
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="3*" />
-                            <RowDefinition Height="1*" />
+                            <RowDefinition Height="2*" />
                         </Grid.RowDefinitions>
                         <StackPanel Grid.Row="0" Orientation="Vertical">
                             <Label FontSize="20">
@@ -86,20 +114,18 @@
                             <Label FontSize="15">Destination</Label>
                             <TextBox FontSize="15"></TextBox>
                             <Label FontSize="15">Contents</Label>
-                            <TextBox FontSize="15" Height="120"></TextBox>
+                            <TextBox FontSize="15" Height="80"></TextBox>
                         </StackPanel>
                         <StackPanel Grid.Row="1" Orientation="Vertical">
                             <Label FontSize="20">Errors</Label>
-                            <TextBox FontSize="15" Height="50">
-
-                            </TextBox>
+                            <ListView Height="140" />
                         </StackPanel>
                     </Grid>
                 </Grid>
                 <!--<StackPanel Grid.Column="2" Grid.Row="1" Orientation="Horizontal">
                 </StackPanel>-->
                 <!--<Button Grid.Column="2" Grid.Row="1">Button 2</Button>-->
-                <Button Grid.Column="2" Grid.Row="0" Margin="0,459,0.333,-0.333" Grid.RowSpan="2">Button 3</Button>
+                <Button Grid.Column="2" Grid.Row="0" Margin="0,459,0.333,-0.333" Grid.RowSpan="2">Stats stuff here</Button>
                 <!--<Button Grid.Row="3" Grid.ColumnSpan="2">Button 4</Button>-->
             </Grid>
         </Grid>
