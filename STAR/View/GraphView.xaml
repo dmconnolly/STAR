@@ -8,6 +8,21 @@
 	Title="GraphView">
 
     <Grid>
-        
+        <Canvas>
+            <Grid RenderTransformOrigin="0.5,0.5" Height="1" Canvas.Left="104" Canvas.Top="92" Width="1">
+                <Grid.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform ScaleY="200" ScaleX="200"/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform X="50" Y="50"/>
+                    </TransformGroup>
+                </Grid.RenderTransform>
+                <ContentControl
+                    
+                />
+            </Grid>
+
+        </Canvas>
     </Grid>
 </Page>
