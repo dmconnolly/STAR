@@ -59,7 +59,8 @@ namespace STAR.View {
                 capture.Clear();
                 packetView.Clear();
 
-                ChkShowPackets.IsEnabled = true;
+                ChkShowValidPackets.IsEnabled = true;
+                ChkShowInvalidPackets.IsEnabled = true;
                 ChkShowErrors.IsEnabled = true;
 
                 foreach(CheckBox chkBox in portFilterCheckbox) {
@@ -77,8 +78,12 @@ namespace STAR.View {
                 bgWorker.RunWorkerAsync();
             }
         }
-        
-        private void ShowPacketCheckbox_Click(object sender, RoutedEventArgs e) {
+
+        private void ShowValidPacketCheckbox_Click(object sender, RoutedEventArgs e) {
+            RefreshPacketDataGridFilter();
+        }
+
+        private void ShowInvalidPacketCheckbox_Click(object sender, RoutedEventArgs e) {
             RefreshPacketDataGridFilter();
         }
 
@@ -102,8 +107,14 @@ namespace STAR.View {
                         return false;
                     }
                 } else {
-                    if(ChkShowPackets.IsChecked != true) {
-                        return false;
+                    if(packetView.Valid) {
+                        if(ChkShowValidPackets.IsChecked != true) {
+                            return false;
+                        }
+                    } else {
+                        if(ChkShowInvalidPackets.IsChecked != true) {
+                            return false;
+                        }
                     }
                 }
 

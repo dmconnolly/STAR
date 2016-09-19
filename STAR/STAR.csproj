@@ -71,6 +71,9 @@
     </ApplicationDefinition>
     <Compile Include="ViewModel\PacketView.cs" />
     <Compile Include="ViewModel\Statistics.cs" />
+    <Compile Include="View\GraphDisplay.xaml.cs">
+      <DependentUpon>GraphDisplay.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Main.xaml.cs">
       <DependentUpon>Main.xaml</DependentUpon>
     </Compile>
@@ -80,6 +83,10 @@
     </Compile>
     <Compile Include="ViewModel\LinkCapture.cs" />
     <Compile Include="Model\ErrorPacket.cs" />
+    <Page Include="View\GraphDisplay.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\Main.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
