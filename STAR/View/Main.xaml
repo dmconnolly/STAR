@@ -40,7 +40,7 @@
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="2">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1.55*" />
                         <ColumnDefinition Width="9*" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
@@ -58,7 +58,8 @@
                     </StackPanel>
 
                     <StackPanel Grid.Row="1" Margin="0,10,0,0" >
-                        <CheckBox x:Name="ChkShowPackets" Click="ShowPacketCheckbox_Click" Content="Packets" FontSize="15" Margin="0,0,0,10" VerticalAlignment="Top" VerticalContentAlignment="Center" IsEnabled="False" IsChecked="True" />
+                        <CheckBox x:Name="ChkShowValidPackets" Click="ShowValidPacketCheckbox_Click" Content="Valid Packets" FontSize="15" Margin="0,0,0,10" VerticalAlignment="Top" VerticalContentAlignment="Center" IsEnabled="False" IsChecked="True" />
+                        <CheckBox x:Name="ChkShowInvalidPackets" Click="ShowInvalidPacketCheckbox_Click" Content="Invalid Packets" FontSize="15" Margin="0,0,0,10" VerticalAlignment="Top" VerticalContentAlignment="Center" IsEnabled="False" IsChecked="True" />
                         <CheckBox x:Name="ChkShowErrors" Click="ShowErrorCheckbox_Click" Content="Errors" FontSize="15" Margin="0,0,0,25" VerticalAlignment="Top" VerticalContentAlignment="Center" IsEnabled="False" IsChecked="True" />
                         <CheckBox x:Name="ChkPort1" Click="PortFilterCheckbox_Click" Content="Port 1" FontSize="15" Margin="0,0,0,10" VerticalAlignment="Top" VerticalContentAlignment="Center" IsEnabled="False" IsChecked="True" />
                         <CheckBox x:Name="ChkPort2" Click="PortFilterCheckbox_Click" Content="Port 2" FontSize="15" Margin="0,0,0,10" VerticalAlignment="Top" VerticalContentAlignment="Center" IsEnabled="False" IsChecked="True" />
@@ -86,10 +87,7 @@
                         <DataGrid.CellStyle>
                             <Style TargetType="DataGridCell">
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Type}" Value="Data">
-                                        <!--Setter Property="Background" Value="LightBlue"/-->
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding Type}" Value="Error">
+                                    <DataTrigger Binding="{Binding PacketType}" Value="Error">
                                         <Setter Property="Background" Value="Red" />
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -98,9 +96,9 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="TimeTicks" Binding="{Binding Path=TimeTicks}" SortDirection="Ascending" CanUserSort="False" Visibility="Hidden" />
                             <DataGridTextColumn Header="Timestamp" Binding="{Binding Path=TimeString}" CanUserSort="False" />
-                            <DataGridTextColumn Header="Src" Binding="{Binding Path=Source}" CanUserSort="False" />
-                            <DataGridTextColumn Header="Dest" Binding="{Binding Path=Destination}" CanUserSort="False" />
-                            <DataGridTextColumn Header="Type" Binding="{Binding Path=Type}" CanUserSort="False" />
+                            <DataGridTextColumn Header="Entry" Binding="{Binding Path=EntryPort}" CanUserSort="False" />
+                            <DataGridTextColumn Header="Exit" Binding="{Binding Path=ExitPort}" CanUserSort="False" />
+                            <DataGridTextColumn Header="Type" Binding="{Binding Path=PacketType}" CanUserSort="False" />
                             <DataGridTextColumn Header="Message" Binding="{Binding Path=Message}" CanUserSort="False" />
                         </DataGrid.Columns>
 

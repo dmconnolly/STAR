@@ -51,7 +51,8 @@ namespace STAR {
             int lineCount = lines.Length;
             DateTime startTime = DateTime.MinValue;
             DateTime endTime = DateTime.MinValue;
-            byte port;
+            byte entryPort;
+            byte exitPort;
 
             if(lineCount >= 2) {
                 int lineIndex = 0;
@@ -66,12 +67,14 @@ namespace STAR {
                         }
                     }
                 }
-                port = Convert.ToByte(lines[lineIndex++]);
+                entryPort = Convert.ToByte(lines[lineIndex++]);
 
-                if(!m_portsLoaded.Contains(port)) {
-                    m_portsLoaded.Add(port);
+                if(!m_portsLoaded.Contains(entryPort)) {
+                    m_portsLoaded.Add(entryPort);
                     m_portsLoaded.Sort();
                 }
+
+                exitPort = (byte)(entryPort + (entryPort % 2 == 0 ? 1 : -1));
 
                 while(lineIndex < lineCount) {
                     string time, startCode, endCode, bytes, errorText;
@@ -100,7 +103,7 @@ namespace STAR {
                     if(startCode.Equals("E", StringComparison.Ordinal)) {
                         // This is an error packet
                         errorText = lines[lineIndex];
-                        ErrorPacket errorMessage = new ErrorPacket(port, time, errorText);
+                        ErrorPacket errorMessage = new ErrorPacket(entryPort, exitPort, time, errorText);
                         m_packets.Add(errorMessage);
                     } else if(startCode.Equals("P", StringComparison.Ordinal)) {
                         // This is a packet
@@ -111,7 +114,7 @@ namespace STAR {
                         }
 
                         endCode = lines[lineIndex];
-                        DataPacket packet = new DataPacket(port, time, bytes, endCode);
+                        DataPacket packet = new DataPacket(entryPort, exitPort, time, bytes, endCode);
                         m_packets.Add(packet);
                     } else {
                         // Unknown start code

@@ -35,7 +35,7 @@ namespace STAR.ViewModel
                     {
                         if (portFilter[pointer] == true)
                         {
-                            if (Convert.ToInt32(packet.Port) == pointer)
+                            if (Convert.ToInt32(packet.EntryPort) == pointer)
                             {
                                 filteredPackets.Add(packet);
                             }

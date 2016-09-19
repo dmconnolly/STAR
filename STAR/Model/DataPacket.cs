@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace STAR {
     class DataPacket : Packet {
-        private byte m_protocolID;
+        private ushort m_protocolID;
         private byte[] m_address;
         //private byte m_packetID;
         private byte[] m_cargo;
@@ -21,7 +21,7 @@ namespace STAR {
                 //List<Byte> list = new List<Byte>(m_address.Length + 2 + m_cargo.Length);
                 List<byte> list = new List<byte>(m_address.Length + 1 + m_cargo.Length);
                 list.AddRange(m_address);
-                list.Add(m_protocolID);
+                list.AddRange(BitConverter.GetBytes(m_protocolID));
                 //list.Add(m_packetID);
                 list.AddRange(m_cargo);
                 return list.ToArray();
@@ -29,7 +29,7 @@ namespace STAR {
         }
 
         // Accessors for class member variables
-        public byte Protocol { get { return m_protocolID; }}
+        public ushort Protocol { get { return m_protocolID; }}
         public byte[] AddressBytes { get { return m_address; }}
         //public byte ID { get { return m_packetID;  }}
         public byte[] CargoBytes { get {return m_cargo; }}
@@ -39,7 +39,8 @@ namespace STAR {
         // Takes date string in the form dd-MM-yyyy HH:mm:ss.fff
         // List of bytes which make up the packet, including address bytes and protocol ID
         // and whether the packet ended with EOP and not EEP
-        public DataPacket(byte port, string dateString, string packetByteString, string endCode) : base(port, dateString) {
+        public DataPacket(byte entryPort, byte exitPort, string dateString, string packetByteString, string endCode)
+                : base(entryPort, exitPort, dateString) {
             string[] packetByteStringSplit = packetByteString.Split(' ');
 
             int byteCount = packetByteStringSplit.Count();
@@ -52,19 +53,35 @@ namespace STAR {
             // Parse packet bytes for address (up to and including first byte >= 32)
             List<byte> addressBytes = new List<byte>();
             for(int i=0; i<byteCount; ++i) {
-                byte curByte = packetBytes[i];
 
                 // Add current byte to the temporary list
-                addressBytes.Add(curByte);
+                addressBytes.Add(packetBytes[i]);
 
                 // If the byte is 32 or larger, this is the last byte of the address
-                if(curByte >= 32) {
+                if(packetBytes[i] >= 32) {
                     // Store address bytes in address class member array
                     m_address = addressBytes.ToArray();
 
                     // Next byte is the protocol ID
                     if(++i < byteCount) {
-                        m_protocolID = packetBytes[i];
+                        if(packetBytes[i] != 0) {
+                            m_protocolID = packetBytes[i];
+                        } else {
+                            if((2+i) >= byteCount) {
+                                break;
+                            }
+
+                            byte[] pidBytes = {
+                                packetBytes[++i],
+                                packetBytes[++i]
+                            };
+
+                            if(BitConverter.IsLittleEndian) {
+                                Array.Reverse(pidBytes);
+                            }
+
+                            m_protocolID = BitConverter.ToUInt16(pidBytes, 0);
+                        }
                     }
 
                     // Next byte is packet ID
