@@ -55,14 +55,14 @@
                     </StackPanel>
 
                     <StackPanel Grid.Row="1" Margin="0,10,0,0" >
-                        <CheckBox x:Name="ChkPort1" Content="Port 1" FontSize="15" Margin="0,0,0,10" VerticalAlignment="Top" VerticalContentAlignment="Center" IsEnabled="False" />
-                        <CheckBox x:Name="ChkPort2" Content="Port 2" FontSize="15" Margin="0,0,0,10" VerticalAlignment="Top" VerticalContentAlignment="Center" IsEnabled="False" />
-                        <CheckBox x:Name="ChkPort3" Content="Port 3" FontSize="15" Margin="0,0,0,10" VerticalAlignment="Top" VerticalContentAlignment="Center" IsEnabled="False" />
-                        <CheckBox x:Name="ChkPort4" Content="Port 4" FontSize="15" Margin="0,0,0,10" VerticalAlignment="Top" VerticalContentAlignment="Center" IsEnabled="False" />
-                        <CheckBox x:Name="ChkPort5" Content="Port 5" FontSize="15" Margin="0,0,0,10" VerticalAlignment="Top" VerticalContentAlignment="Center" IsEnabled="False" />
-                        <CheckBox x:Name="ChkPort6" Content="Port 6" FontSize="15" Margin="0,0,0,10" VerticalAlignment="Top" VerticalContentAlignment="Center" IsEnabled="False" />
-                        <CheckBox x:Name="ChkPort7" Content="Port 7" FontSize="15" Margin="0,0,0,10" VerticalAlignment="Top" VerticalContentAlignment="Center" IsEnabled="False" />
-                        <CheckBox x:Name="ChkPort8" Content="Port 8" FontSize="15" Margin="0,0,0,10" VerticalAlignment="Top" VerticalContentAlignment="Center" IsEnabled="False" />
+                        <CheckBox x:Name="ChkPort1" Click="PortFilterCheckbox_Click" Content="Port 1" FontSize="15" Margin="0,0,0,10" VerticalAlignment="Top" VerticalContentAlignment="Center" IsEnabled="False" />
+                        <CheckBox x:Name="ChkPort2" Click="PortFilterCheckbox_Click" Content="Port 2" FontSize="15" Margin="0,0,0,10" VerticalAlignment="Top" VerticalContentAlignment="Center" IsEnabled="False" />
+                        <CheckBox x:Name="ChkPort3" Click="PortFilterCheckbox_Click" Content="Port 3" FontSize="15" Margin="0,0,0,10" VerticalAlignment="Top" VerticalContentAlignment="Center" IsEnabled="False" />
+                        <CheckBox x:Name="ChkPort4" Click="PortFilterCheckbox_Click" Content="Port 4" FontSize="15" Margin="0,0,0,10" VerticalAlignment="Top" VerticalContentAlignment="Center" IsEnabled="False" />
+                        <CheckBox x:Name="ChkPort5" Click="PortFilterCheckbox_Click" Content="Port 5" FontSize="15" Margin="0,0,0,10" VerticalAlignment="Top" VerticalContentAlignment="Center" IsEnabled="False" />
+                        <CheckBox x:Name="ChkPort6" Click="PortFilterCheckbox_Click" Content="Port 6" FontSize="15" Margin="0,0,0,10" VerticalAlignment="Top" VerticalContentAlignment="Center" IsEnabled="False" />
+                        <CheckBox x:Name="ChkPort7" Click="PortFilterCheckbox_Click" Content="Port 7" FontSize="15" Margin="0,0,0,10" VerticalAlignment="Top" VerticalContentAlignment="Center" IsEnabled="False" />
+                        <CheckBox x:Name="ChkPort8" Click="PortFilterCheckbox_Click" Content="Port 8" FontSize="15" Margin="0,0,0,10" VerticalAlignment="Top" VerticalContentAlignment="Center" IsEnabled="False" />
                     </StackPanel>
 
                     <DataGrid

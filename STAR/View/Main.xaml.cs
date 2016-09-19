@@ -79,16 +79,26 @@ namespace STAR.View {
             RefreshPacketDataGridFilter();
         }
 
+        private void PortFilterCheckbox_Click(object sender, RoutedEventArgs e) {
+            RefreshPacketDataGridFilter();
+        }
+
         private void RefreshPacketDataGridFilter() {
             packetICV.Filter = item => {
                 PacketView packetView = item as PacketView;
                 if(packetView == null) {
                     return false;
                 }
-                if(!packetView.Type.Equals("Error")) {
-                    return false;
+                if(packetView.Type.Equals("Error")) {
+                    // if error check box selected
+                    //    return true
+                    // else
+                    //    return false
                 }
-                return true;
+                // if data check box NOT selected
+                //    return false
+                bool? _checked = portFilterCheckbox[packetView.Source].IsChecked;
+                return _checked != null && _checked == true;
             };
         }
 
