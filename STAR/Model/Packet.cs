@@ -4,13 +4,22 @@ using System.Globalization;
 namespace STAR {
     class Packet {
         private const string timeFormat = "dd-MM-yyyy HH:mm:ss.fff";
-        private byte m_port;
+
+        private byte m_entryPort;
+        private byte m_exitPort;
         private DateTime m_timestamp;
 
-        // Gets the port
-        public byte Port {
+        // Gets the source port
+        public byte EntryPort {
             get {
-                return m_port;
+                return m_entryPort;
+            }
+        }
+
+        // Gets the destination port
+        public byte ExitPort {
+            get {
+                return m_exitPort;
             }
         }
 
@@ -34,9 +43,12 @@ namespace STAR {
         }
 
         // Takes date string in the form dd-MM-yyyy HH:mm:ss.fff
-        public Packet(byte port, string dateString) {
-            // Store port
-            m_port = port;
+        public Packet(byte entryPort, byte exitPort, string dateString) {
+            // Store source port
+            m_entryPort = entryPort;
+
+            // Store destination port
+            m_exitPort = exitPort;
 
             // Take date as string and store as DateTime
             m_timestamp = parseDateString(dateString);

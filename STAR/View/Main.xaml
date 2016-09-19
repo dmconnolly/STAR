@@ -83,10 +83,10 @@
                         <DataGrid.CellStyle>
                             <Style TargetType="DataGridCell">
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Type}" Value="Data">
+                                    <DataTrigger Binding="{Binding PacketType}" Value="Data">
                                         <Setter Property="Background" Value="LightBlue" />
                                     </DataTrigger>
-                                    <DataTrigger Binding="{Binding Type}" Value="Error">
+                                    <DataTrigger Binding="{Binding PacketType}" Value="Error">
                                         <Setter Property="Background" Value="Red" />
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -95,9 +95,9 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="TimeTicks" Binding="{Binding Path=TimeTicks}" SortDirection="Ascending" CanUserSort="False" Visibility="Hidden" />
                             <DataGridTextColumn Header="Timestamp" Binding="{Binding Path=TimeString}" CanUserSort="False" />
-                            <DataGridTextColumn Header="Src" Binding="{Binding Path=Source}" CanUserSort="False" />
-                            <DataGridTextColumn Header="Dest" Binding="{Binding Path=Destination}" CanUserSort="False" />
-                            <DataGridTextColumn Header="Type" Binding="{Binding Path=Type}" CanUserSort="False" />
+                            <DataGridTextColumn Header="Entry" Binding="{Binding Path=EntryPort}" CanUserSort="False" />
+                            <DataGridTextColumn Header="Exit" Binding="{Binding Path=ExitPort}" CanUserSort="False" />
+                            <DataGridTextColumn Header="Type" Binding="{Binding Path=PacketType}" CanUserSort="False" />
                             <DataGridTextColumn Header="Message" Binding="{Binding Path=Message}" CanUserSort="False" />
                         </DataGrid.Columns>
                     </DataGrid>

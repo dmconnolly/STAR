@@ -11,7 +11,8 @@
 
         // Takes date string in the form dd-MM-yyyy HH:mm:ss.fff
         // and a string containing the error packet
-        public ErrorPacket(byte port, string dateString, string errorMessage) : base(port, dateString) {
+        public ErrorPacket(byte entryPort, byte exitPort, string dateString, string errorMessage)
+                : base(entryPort, exitPort, dateString) {
             this.m_message = errorMessage;
         }
     }

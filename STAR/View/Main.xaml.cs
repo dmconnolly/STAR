@@ -102,7 +102,7 @@ namespace STAR.View {
                     return false;
                 }
 
-                if(packetView.Type.Equals("Error")) {
+                if(packetView.PacketType.Equals("Error")) {
                     if(ChkShowErrors.IsChecked != true) {
                         return false;
                     }
@@ -118,7 +118,7 @@ namespace STAR.View {
                     }
                 }
 
-                return portFilterCheckbox[packetView.Source].IsChecked == true ? true : false;
+                return portFilterCheckbox[packetView.EntryPort].IsChecked == true ? true : false;
             };
         }
 
