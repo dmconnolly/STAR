@@ -1,0 +1,10 @@
+﻿<Window x:Class="STAR.Help"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Help" Height="440.299" Width="616.418">
+    <Grid>
+        <ListBox HorizontalAlignment="Left" Height="188" Margin="32,45,0,0" VerticalAlignment="Top" Width="148"/>
+        <ListBoxItem>Yooo!</ListBoxItem>
+
+    </Grid>
+</Window>
