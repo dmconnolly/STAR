@@ -12,8 +12,8 @@
     <Grid Background="Gray">
         <Menu FontSize="15">
             <MenuItem Header="_File">
-                <MenuItem Header="_Open Files" Click="OpenFilesButton_Click" />
-                <MenuItem Header="_Exit" />
+                <MenuItem Header="_Open Files" Click="OpenFilesButton_Click"/>
+                <MenuItem Header="_Exit"/>
             </MenuItem>
             <MenuItem Header="_Options">
                 <!-- Empty -->
@@ -23,7 +23,7 @@
                 <MenuItem Header="_Display Error Causes" />
                 <MenuItem Header="_Show groups" IsCheckable="True" IsChecked="True" />
             </MenuItem>
-            <MenuItem Header="_Help">
+            <MenuItem Header="_Help" Click="Help_Click">
                 <!-- Empty -->
             </MenuItem>
         </Menu>

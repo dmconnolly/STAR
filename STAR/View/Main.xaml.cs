@@ -127,5 +127,11 @@ namespace STAR.View {
                 portFilterCheckbox[port].IsChecked = true;
             }
         }
+
+        private void Help_Click(object sender, RoutedEventArgs e)
+        {
+            Help helpWindow = new Help();
+            helpWindow.Show();
+        }
     }
 }
