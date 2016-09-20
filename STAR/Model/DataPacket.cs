@@ -10,7 +10,6 @@ namespace STAR {
         private byte[] m_cargo;
         private string m_endCode;
         private bool m_valid;
-        private int m_characterCount;
 
         // Accessor for all packet bytes
         public byte[] Bytes {
@@ -35,7 +34,7 @@ namespace STAR {
         public byte[] CargoBytes { get {return m_cargo; }}
         public bool Valid { get { return m_valid; }}
         public string EndCode { get { return m_endCode; }}
-        public int characterCount { get { return m_characterCount; }}
+
         // Takes date string in the form dd-MM-yyyy HH:mm:ss.fff
         // List of bytes which make up the packet, including address bytes and protocol ID
         // and whether the packet ended with EOP and not EEP
@@ -91,16 +90,11 @@ namespace STAR {
 
                     // Store the rest of the packet bytes in address class member array
                     if(++i < byteCount) {
-                        m_cargo = packetBytes.Skip<byte>(i).ToArray();
+                        m_cargo = packetBytes.Skip(i).ToArray();
                     }
 
                     break;
                 }
-            }
-
-            for (int pointer = 0; pointer < m_cargo.Length; pointer++)
-            {
-                m_characterCount++;
             }
 
             //End code - EEP, EOP, None

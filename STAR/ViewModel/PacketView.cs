@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace STAR {
+﻿namespace STAR {
     class PacketView {
         private const string timeFormat = "dd-MM-yyyy HH:mm:ss.fff";
 

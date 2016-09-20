@@ -74,7 +74,6 @@
     <Compile Include="View\Help.xaml.cs">
       <DependentUpon>Help.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\Filter.cs" />
     <Compile Include="ViewModel\PacketView.cs" />
     <Compile Include="ViewModel\Statistics.cs" />
     <Compile Include="View\GraphView.xaml.cs">
