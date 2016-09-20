@@ -107,7 +107,7 @@ namespace STAR.View {
                     }
                 }
 
-                return portFilterCheckbox[packetView.EntryPort].IsChecked == true ? true : false;
+                return portFilterCheckbox[packetView.EntryPort-1].IsChecked == true ? true : false;
             };
         }
 
@@ -122,8 +122,8 @@ namespace STAR.View {
 
         private void UpdatePortFilterCheckboxes() {
             foreach(byte port in capture.PortsLoaded) {
-                portFilterCheckbox[port].IsEnabled = true;
-                portFilterCheckbox[port].IsChecked = true;
+                portFilterCheckbox[port-1].IsEnabled = true;
+                portFilterCheckbox[port-1].IsChecked = true;
             }
         }
 

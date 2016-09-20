@@ -72,7 +72,7 @@ namespace STAR {
                     m_portsLoaded.Sort();
                 }
 
-                exitPort = (byte)(entryPort + (entryPort % 2 == 0 ? 1 : -1));
+                exitPort = (byte)(entryPort + (entryPort % 2 == 0 ? -1 : 1));
 
                 while(lineIndex < lineCount) {
                     string time, startCode, endCode, bytes, errorText;

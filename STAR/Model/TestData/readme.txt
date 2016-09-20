@@ -15,7 +15,7 @@ Test 3: This shows a babbling idiot which repeatedly sends the same packet until
 Test 4: This shows an invalid CRC in an RMAP packet.  Link 1 shows the RMAP
         commands and link 2 shows the replies.  To detect the cause of this
         error you would need to know the format of RMAP packets and check the
-		CRCs of each one.
+        CRCs of each one.
 
 Test 5: This shows a packet which is longer than expected.  Again this is an
         RMAP packet with link 1 showing the commands and link 2 the replies.  As
@@ -30,8 +30,10 @@ Test 6: This test shows a device which is periodically reading the status of two
         disconnect on the link.  The packet that was being transmitted on the
         link is terminated by an EEP by the receiving router when it is
         forwarded on.  The arrangement of this network is as follows:
-         - Initiating device (Device 1) connected to port 2 of a router (Router A).
-         - Port 1 of Router A is connected to port 3 of another router (Router B).
+         - Initiating device (Device 1) connected to port 2 of a router
+           (Router A).
+         - Port 1 of Router A is connected to port 3 of another router
+           (Router B).
          - Ports 1 and 2 of Router B are connected to the two devices which
            are having their status read (Devices 2 and 3).
         The Recorder is included at the following locations:
@@ -40,7 +42,18 @@ Test 6: This test shows a device which is periodically reading the status of two
          - Ports 5 and 6 are connected between Router B and Router A.
          - Ports 7 and 8 are connected between Router A and Device 1.
         Note that the order in which the devices/routers are specified indicates
-		which port of the Recorder they are connected to.
+        which port of the Recorder they are connected to.  The diagram below
+        shows the network topology and the location of the Recorder ports,
+        denoted as [xRy], where x and y are the ports on the Recorder:
+        
+                     [1R2]
+        [Device 2]----------
+                            |
+                            |1    3   [5R6]   1          2   [7R8]
+                        [Router B]-------------[Router A]-------------[Device 1]
+                            |2
+                     [3R4]  |
+        [Device 3]----------
 
 Note that in all tests, the link is disconnected after each error is
 encountered.  It can be assumed this will always happen after an error.
@@ -50,12 +63,18 @@ encountered.  It can be assumed this will always happen after an error.
 Change Log
 ----------
 
+19-09-16
+--------
+ - Corrected port numbers in Test 6 files (were one less than they should be).
+ - Added network topology used for Test 6 to this file.
+ 
+
 16-09-16
 --------
-- Changed structure of files, so that each test has its own directory, and each
-  file is named the same for all tests.
-- Fixed issue in test 4 with seconds having a value of 60.
-- Added Test 6.
+ - Changed structure of files, so that each test has its own directory, and each
+   file is named the same for all tests.
+ - Fixed issue in test 4 with seconds having a value of 60.
+ - Added Test 6.
 
 
 13-09-16
