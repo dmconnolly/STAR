@@ -75,7 +75,7 @@ namespace STAR {
                 exitPort = (byte)(entryPort + (entryPort % 2 == 0 ? -1 : 1));
 
                 while(lineIndex < lineCount) {
-                    string time, startCode, endCode, bytes, errorText;
+                    string time, startCode, endCode, byteString, errorText;
 
                     // Next line is a timestamp
                     time = lines[lineIndex];
@@ -105,14 +105,22 @@ namespace STAR {
                         m_packets.Add(errorMessage);
                     } else if(startCode.Equals("P", StringComparison.Ordinal)) {
                         // This is a packet
-                        bytes = lines[lineIndex];
+                        byteString = lines[lineIndex];
 
                         if(++lineIndex >= lines.Length) {
                             break;
                         }
 
                         endCode = lines[lineIndex];
-                        DataPacket packet = new DataPacket(entryPort, exitPort, time, bytes, endCode);
+
+                        string[] byteStringSplit = byteString.Split(' ');
+                        int byteCount = byteStringSplit.Count();
+                        List<byte> packetBytes = new List<byte>(byteCount);
+                        for(int i=0; i<byteCount; ++i) {
+                            packetBytes.Add(Convert.ToByte(byteStringSplit[i], 16));
+                        }
+
+                        DataPacket packet = new DataPacket(entryPort, exitPort, time, packetBytes, endCode);
                         m_packets.Add(packet);
                     } else {
                         // Unknown start code

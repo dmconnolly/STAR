@@ -39,7 +39,7 @@ namespace STAR {
             foreach(Packet packet in packets) {
                 if(packet is DataPacket) {
                     m_packetCount++;
-                    m_totalByteCount += (packet as DataPacket).CargoBytes.Length;
+                    m_totalByteCount += (packet as DataPacket).CargoByteCount;
                     if((packet as DataPacket).Valid) {
                         m_validPacketCount++;
                     } else {

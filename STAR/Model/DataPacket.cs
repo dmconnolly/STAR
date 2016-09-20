@@ -6,53 +6,29 @@ namespace STAR {
     class DataPacket : Packet {
         private ushort m_protocolID;
         private byte[] m_address;
-        //private byte m_packetID;
-        private byte[] m_cargo;
         private string m_endCode;
         private bool m_valid;
-
-        // Accessor for all packet bytes
-        public byte[] Bytes {
-            get {
-                // Possibly refactor to store full packet data in class at all times
-                // depends if avoiding data duplication or speed is more important
-
-                //List<Byte> list = new List<Byte>(m_address.Length + 2 + m_cargo.Length);
-                List<byte> list = new List<byte>(m_address.Length + 1 + m_cargo.Length);
-                list.AddRange(m_address);
-                list.AddRange(BitConverter.GetBytes(m_protocolID));
-                //list.Add(m_packetID);
-                list.AddRange(m_cargo);
-                return list.ToArray();
-            }
-        }
+        private List<byte> m_remainingBytes;
+        private long m_cargoByteCount;
 
         // Accessors for class member variables
         public ushort Protocol { get { return m_protocolID; }}
         public byte[] AddressBytes { get { return m_address; }}
         //public byte ID { get { return m_packetID;  }}
-        public byte[] CargoBytes { get {return m_cargo; }}
         public bool Valid { get { return m_valid; }}
         public string EndCode { get { return m_endCode; }}
+        public long CargoByteCount { get { return m_cargoByteCount; }}
 
         // Takes date string in the form dd-MM-yyyy HH:mm:ss.fff
         // List of bytes which make up the packet, including address bytes and protocol ID
         // and whether the packet ended with EOP and not EEP
-        public DataPacket(byte entryPort, byte exitPort, string dateString, string packetByteString, string endCode)
+        public DataPacket(byte entryPort, byte exitPort, string dateString, List<byte> packetBytes, string endCode)
                 : base(entryPort, exitPort, dateString) {
-            string[] packetByteStringSplit = packetByteString.Split(' ');
-
-            int byteCount = packetByteStringSplit.Count();
-
-            byte[] packetBytes = new byte[byteCount];
-            for(int i=0; i<byteCount; ++i) {
-                packetBytes[i] = Convert.ToByte(packetByteStringSplit[i], 16);
-            }
+            long byteCount = packetBytes.Count;
 
             // Parse packet bytes for address (up to and including first byte >= 32)
             List<byte> addressBytes = new List<byte>();
             for(int i=0; i<byteCount; ++i) {
-
                 // Add current byte to the temporary list
                 addressBytes.Add(packetBytes[i]);
 
@@ -63,6 +39,7 @@ namespace STAR {
 
                     // Next byte is the protocol ID
                     if(++i < byteCount) {
+                        m_cargoByteCount = byteCount - i;
                         if(packetBytes[i] != 0) {
                             m_protocolID = packetBytes[i];
                         } else {
@@ -83,14 +60,9 @@ namespace STAR {
                         }
                     }
 
-                    // Next byte is packet ID
-                    // if(++i < byteCount) {
-                    //     m_packetID = packetBytes[i];
-                    // }
-
                     // Store the rest of the packet bytes in address class member array
                     if(++i < byteCount) {
-                        m_cargo = packetBytes.Skip(i).ToArray();
+                       m_remainingBytes = packetBytes.Skip(i).ToList();
                     }
 
                     break;
@@ -102,26 +74,6 @@ namespace STAR {
 
             //Only valid if endCode is EOP
             m_valid = m_endCode == "EOP";
-        }
-
-        public void printFields() {
-            byte[] addressBytes = AddressBytes;
-            Console.Write("Address: ");
-            for(int i=0; i<addressBytes.Length; i++) {
-                Console.Write(addressBytes[i].ToString("x2") + " ");
-            }
-
-            Console.WriteLine("\nProtocol: " + Protocol.ToString("x2"));
-
-            //Console.WriteLine("ID: " + ID.ToString("x2"));
-
-            byte[] cargoBytes = CargoBytes;
-            Console.Write("Cargo: ");
-            for(int i=0; i<cargoBytes.Length; i++) {
-                Console.Write(cargoBytes[i].ToString("x2") + " ");
-            }
-
-            Console.WriteLine();
         }
     }
 }
