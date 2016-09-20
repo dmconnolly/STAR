@@ -6,41 +6,36 @@ using STAR.Model;
 using STAR.ViewModel;
 
 namespace STAR.ViewModel {
+    /*
+     * Class responsible for handling captured packet data
+     * files from multiple ports can be loaded, parsed and their contents
+     * stored in a meaningful format.
+     */
     class Capture {
-        private List<Packet> m_packets;
-        private Statistics m_stats;
-        private List<byte> m_portsLoaded;
+        private List<Packet> m_packets; // List of all captured packets
+        private Statistics m_stats; // Storage of statistics for the whole data set
+        private List<byte> m_portsLoaded; // List of the entry ports we have loaded data from
 
-        public Packet[] Packets {
-            get {
-                return m_packets.ToArray();
-            }
-        }
+        // Accessors for class member data
+        public Packet[] Packets { get { return m_packets.ToArray(); }}
+        public Statistics Stats { get { return m_stats; }}
+        public byte[] PortsLoaded { get { return m_portsLoaded.ToArray(); }}
 
-        public Statistics Stats {
-            get {
-                return m_stats;
-            }
-        }
-
-        public byte[] PortsLoaded {
-            get {
-                return m_portsLoaded.ToArray();
-            }
-        }
-
+        // Constructor
         public Capture() {
             m_packets = new List<Packet>();
             m_stats = new Statistics();
             m_portsLoaded = new List<byte>();
         }
 
+        // Clears any stored packet data
         public void Clear() {
             m_packets.Clear();
             m_stats.Clear();
             m_portsLoaded.Clear();
         }
 
+        // Processes a file and extracts the packet data
         public void processFile(string path) {
             string[] lines;
             {
