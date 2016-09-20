@@ -60,13 +60,21 @@ namespace STAR {
             //For statistic quality: 1 is good, 2 is normal, 3 is bad.
 
             //private int[] m_statisticQuality;
+            //private int m_parityErrorCount;
+            //private int m_disconnectErrorCount;
             //private float m_percentageValid;
             //private float m_percentageInvalid;
             //private float m_percentageError;
+            //private float m_parityPercentage;
+            //private float m_disconnectPercentage;
             //public int[] StatisticQuality {get {return m_statisticQuality;}}
+            //public int ParityError {get {return m_parityErrorCount;}}
+            //public int DisconnectError {get {return m_disconnectErrorCount;}}
             //public float PercentageValid {get {return m_percentageValid;}}
             //public float PercentageInvalid {get {return m_percentageInvalid;}}
             //public float PercentageError {get {return m_percentageError;}}
+            //public float ParityPercentage {get {return m_parityPercentage;}}
+            //public float DisconnectPercentage {get {return m_disconnectPercentage;}}
 
             //m_percentageValid = (m_validPacketCount / m_packetCount) * 100; 
             //m_percentageInvalid = (m_invalidPakcetCount / m_packetCount) * 100;
@@ -86,7 +94,55 @@ namespace STAR {
             //}
 
             //if statement for quality of packets
-            //if (m_percentageValid > 
+            //if (m_percentageValid > 80)
+            //{
+            //  m_statisticQuality[1] = 1; Console.WriteLine("The vast majority of the packets generated were valid.");
+            //} else if (m_percentageValid > 50)
+            //{
+            //  m_statisticQuality[1] = 2; Console.WriteLine("At least half of the packets generated were valid, but there were some invalid ones.");
+            //} else if (m_percentageInvalid > m_percentageError)
+            //{
+            //  m_statisticQuality[1] = 3; Console.WriteLine("There were a lot of non-valid packets generated, and the majority of these were invalid packets. This is likely a result of a high quantity of parity errors.");
+            //} else
+            //{
+            //  m_statisticQuality[1] = 3; Console.WriteLine("There were a lot of non-valid packets generated, and the majority of those were error message packets. This is due to disconnect errors being generated early in the file.");
+            //}
+
+            //if statement for quality of the packet rate
+            //if (m_totalPacketsPerSecond > 2)
+            //{
+            //  m_statisticQuality[2] = 1; Console.WriteLine("The rate of packet generation is very high, so there is likely no issues.");
+            //}else if (m_totalPacketsPerSecond > 1)
+            //{
+            //  m_statisticQuality[2] = 2; Console.WriteLine("The rate of packet generation is acceptable, but there may still be a few errors.");
+            //}else
+            //{
+            //  m_statisticQuality[2] = 3; Console.WriteLine("The rate of packet generation is low, which would suggest a lot of disconnection errors.");
+            //}
+
+            //if statement for the quality of the error rate
+            //if (m_totalErrorsPerSecond > 0.5)
+            //{
+            //  m_statisQuality[3] = 3; Console.WriteLine("The rate of error generation is quite high. This may indicate a key issue with the system being used.");
+            //}else if (m_totalErrorsPerSecond > 0.25)
+            //{
+            //  m_statisticQuality[3] = 2; Console.WriteLine("The rate of error generation is not too high, but not especially low either. This may indicate some minor issues with the system.")
+            //}else
+            //{
+            //  m_statisticQuality[3] = 1; Console.WriteLine("The rate of error generation is quite low. There does not appear to be any prominent issues with your system.");
+            //}
+
+            //if statement for the data character generation rate
+            //if (m_totalBytessPerSecond > 2)
+            //{
+            //  m_statisticQuality[4] = 1; Console.WriteLine("The rate of data character generation is very high, so there is likely no issues.");
+            //}else if (m_totalBytesPerSecond > 1)
+            //{
+            //  m_statisticQuality[4] = 2; Console.WriteLine("The rate of data character generation is acceptable, but there may still be a few errors.");
+            //}else
+            //{
+            //  m_statisticQuality[4] = 3; Console.WriteLine("The rate of data character generation is low, which would suggest a lot of disconnection errors.");
+            //}
 
         }
 
