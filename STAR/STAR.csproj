@@ -90,7 +90,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ViewModel\LinkCapture.cs" />
+    <Compile Include="ViewModel\Capture.cs" />
     <Compile Include="Model\ErrorPacket.cs" />
     <Page Include="View\Help.xaml">
       <SubType>Designer</SubType>

@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 
 namespace STAR {
-    class LinkCapture {
+    class Capture {
         private List<Packet> m_packets;
         private Statistics m_stats;
         private List<byte> m_portsLoaded;
@@ -27,7 +27,7 @@ namespace STAR {
             }
         }
 
-        public LinkCapture() {
+        public Capture() {
             m_packets = new List<Packet>();
             m_stats = new Statistics();
             m_portsLoaded = new List<byte>();

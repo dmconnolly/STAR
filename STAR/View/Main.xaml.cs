@@ -7,7 +7,7 @@ using System.Windows.Data;
 
 namespace STAR.View {
     public partial class Main : Window {
-        private LinkCapture capture;
+        private Capture capture;
         private OpenFileDialog openFileDialog;
         private ObservableCollection<PacketView> packetView;
         private SortDescription packetCVSSortDesc;
@@ -19,7 +19,7 @@ namespace STAR.View {
             InitializeComponent();
 
             packetView = new ObservableCollection<PacketView>();
-            capture = new LinkCapture();
+            capture = new Capture();
             openFileDialog = new OpenFileDialog();
             openFileDialog.Multiselect = true;
             openFileDialog.Filter = "All files (*.*)|*.*|Capture files (*.rec)|*.rec";
