@@ -123,12 +123,18 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Further Help.rtf" />
+    <None Include="Help\Introduction.rtf" />
+    <None Include="Help\Main Window Overview.rtf" />
+    <None Include="Help\Opening Files.rtf" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="Help\Quitting the Program.rtf" />
+    <None Include="Help\Searching and Filtering.rtf" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

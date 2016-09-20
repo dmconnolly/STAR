@@ -36,12 +36,17 @@
             // 
             this.lstHelpList.FormattingEnabled = true;
             this.lstHelpList.Items.AddRange(new object[] {
-            "Getting Started",
-            "Filtering packets"});
+            "Introduction",
+            "Opening Files",
+            "Main Window Overview",
+            "Searching and Filtering",
+            "Quitting the Program",
+            "Further Help"});
             this.lstHelpList.Location = new System.Drawing.Point(13, 13);
             this.lstHelpList.Name = "lstHelpList";
             this.lstHelpList.Size = new System.Drawing.Size(217, 290);
             this.lstHelpList.TabIndex = 0;
+            this.lstHelpList.SelectedIndexChanged += new System.EventHandler(this.lstHelpList_SelectedIndexChanged);
             // 
             // txtHelp
             // 
@@ -60,6 +65,7 @@
             this.Controls.Add(this.lstHelpList);
             this.Name = "Help";
             this.Text = "Help";
+            this.Load += new System.EventHandler(this.Help_Load);
             this.ResumeLayout(false);
 
         }
