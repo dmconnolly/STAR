@@ -54,6 +54,40 @@ namespace STAR {
             m_totalPacketsPerSecond = m_packetCount / m_measurementTimeSeconds;
             m_totalErrorsPerSecond = m_errorMessageCount / m_measurementTimeSeconds;
             m_totalBytesPerSecond = m_totalByteCount / m_measurementTimeSeconds;
+
+            //Untested code for comparing data obtained to a given baseline in order to find issues with the data 
+            //i.e. if there are more errors than usual, or if there is less data characters generated than usual.
+            //For statistic quality: 1 is good, 2 is normal, 3 is bad.
+
+            //private int[] m_statisticQuality;
+            //private float m_percentageValid;
+            //private float m_percentageInvalid;
+            //private float m_percentageError;
+            //public int[] StatisticQuality {get {return m_statisticQuality;}}
+            //public float PercentageValid {get {return m_percentageValid;}}
+            //public float PercentageInvalid {get {return m_percentageInvalid;}}
+            //public float PercentageError {get {return m_percentageError;}}
+
+            //m_percentageValid = (m_validPacketCount / m_packetCount) * 100; 
+            //m_percentageInvalid = (m_invalidPakcetCount / m_packetCount) * 100;
+            //m_percentageError = (m_errorMessageCount / m_packetCount) * 100;
+            //Console.WriteLine("Valid %: {0}, Invalid %: {1}, Error %: {2}");
+
+            //if statement for statistic quality of packets generated
+            //if (m_packetCount > 100)
+            //{ 
+            //  m_statisticQuality[0] = 1; Console.WriteLine("A lot of packets were generated");
+            //} else if (m_packetCount > 50)
+            //{
+            //  m_statisticQuality[0] = 2; Console.WriteLine("A reasonable amount of packets were generated");
+            //} else
+            //{
+            //  m_statisticQuality[0] = 3;  Console.WriteLine("Not a lot of packets were generated. This is likely due to an early disconnection in the files presented.");
+            //}
+
+            //if statement for quality of packets
+            //if (m_percentageValid > 
+
         }
 
         public void Clear() {
