@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using System.Windows.Controls.DataVisualization.Charting;
 
 namespace STAR.View
 {
