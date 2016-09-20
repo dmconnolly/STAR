@@ -14,6 +14,7 @@
 
         // Takes date string in the form dd-MM-yyyy HH:mm:ss.fff
         // and a string containing the error packet
+        //Note: The errorMessage variable here contains the error message used in the table.
         public ErrorPacket(byte entryPort, byte exitPort, string dateString, string errorMessage)
                 : base(entryPort, exitPort, dateString) {
             this.m_message = errorMessage;

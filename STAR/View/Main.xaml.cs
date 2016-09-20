@@ -129,6 +129,7 @@ namespace STAR.View {
             RefreshPacketDataGridFilter();
         }
 
+
         // Refresh packet filtering
         private void RefreshPacketDataGridFilter() {
             packetCollectionView.Refresh();
@@ -155,12 +156,17 @@ namespace STAR.View {
         // When files are loaded, this method is called
         // port filter checkboxes will only be enabled
         // if a file has been parsed for the port
-        private void UpdatePortFilterCheckboxes() {
-            foreach(byte port in capture.PortsLoaded) {
-                portFilterCheckbox[port-1].IsEnabled = true;
-                portFilterCheckbox[port-1].IsChecked = true;
+        private void UpdatePortFilterCheckboxes()
+        {
+            foreach (byte port in capture.PortsLoaded)
+            {
+                portFilterCheckbox[port - 1].IsEnabled = true;
+                portFilterCheckbox[port - 1].IsChecked = true;
             }
         }
+
+
+        
 
         private void Help_Click(object sender, RoutedEventArgs e) {
             Help helpWindow = new Help();
