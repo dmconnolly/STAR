@@ -1,4 +1,4 @@
-﻿namespace STAR {
+﻿namespace STAR.Model {
     class ErrorPacket : Packet {
         private string m_message;
 

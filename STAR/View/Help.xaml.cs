@@ -1,6 +1,13 @@
-﻿using System.Windows;
+﻿using Microsoft.Win32;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using STAR.ViewModel;
+using STAR.Model;
 
-namespace STAR
+namespace STAR.View
 {
     /// <summary>
     /// Interaction logic for Help.xaml

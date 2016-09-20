@@ -75,8 +75,11 @@
     <Compile Include="Model\ReadCommandPacket.cs" />
     <Compile Include="Model\WriteResponsePacket.cs" />
     <Compile Include="Model\WriteCommandPacket.cs" />
-    <Compile Include="View\Help.xaml.cs">
-      <DependentUpon>Help.xaml</DependentUpon>
+    <Compile Include="Help.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Help.Designer.cs">
+      <DependentUpon>Help.cs</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\PacketView.cs" />
     <Compile Include="ViewModel\Statistics.cs" />
@@ -92,10 +95,6 @@
     </Compile>
     <Compile Include="ViewModel\Capture.cs" />
     <Compile Include="Model\ErrorPacket.cs" />
-    <Page Include="View\Help.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\GraphView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -121,16 +120,25 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Help.resx">
+      <DependentUpon>Help.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Further Help.rtf" />
+    <None Include="Help\Introduction.rtf" />
+    <None Include="Help\Main Window Overview.rtf" />
+    <None Include="Help\Opening Files.rtf" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="Help\Quitting the Program.rtf" />
+    <None Include="Help\Searching and Filtering.rtf" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

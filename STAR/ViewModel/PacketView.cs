@@ -1,4 +1,6 @@
-﻿namespace STAR {
+﻿using STAR.Model;
+
+namespace STAR.ViewModel {
     class PacketView {
         private const string timeFormat = "dd-MM-yyyy HH:mm:ss.fff";
 

@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using STAR.ViewModel;
+using STAR.Model;
 
 namespace STAR.View {
     public partial class Main : Window {

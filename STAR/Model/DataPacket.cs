@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace STAR {
+namespace STAR.Model {
     class DataPacket : Packet {
         private ushort m_protocolID;
         private byte[] m_address;
@@ -18,6 +18,48 @@ namespace STAR {
         public bool Valid { get { return m_valid; }}
         public string EndCode { get { return m_endCode; }}
         public long CargoByteCount { get { return m_cargoByteCount; }}
+
+        public static Type GetType(List<byte> packetBytes) {
+            int i=0;
+            for(; i<packetBytes.Count(); ++i) {
+                if(packetBytes[i] >= 32) {
+                    break;
+                }
+            }
+
+            if(++i >= packetBytes.Count()) {
+                return typeof(DataPacket);
+            }
+
+            byte flagsByte;
+            if(packetBytes[i] == 0) {
+                if(++i >= packetBytes.Count()) {
+                    return typeof(DataPacket);
+                }
+                flagsByte = packetBytes[i];
+            } else {
+                if(3+i >= packetBytes.Count()) {
+                    return typeof(DataPacket);
+                }
+                flagsByte = packetBytes[3 + i];
+            }
+
+            /* Flag Bits
+             * 0 - Reserved
+             * 1 - 0=response, 1=command
+             * 2 - 0=read, 1=write
+             * 3 - 0=don't verify, 1=verify
+             * 4 - 0=no ack, 1=ack
+             * 5 - (Increment/No inc. address)  ?
+             * 6 - Source Path Address Length bit 1
+             * 6 - Source Path Address Length bit 2 */
+            bool command = (flagsByte & (1 << 1)) != 0;
+            bool write = (flagsByte & (1 << 2)) != 0;
+            if(command) {
+                return write ? typeof(WriteCommandPacket) : typeof(ReadCommandPacket);
+            }
+            return write ? typeof(WriteResponsePacket) : typeof(ReadResponsePacket);
+        }
 
         // Takes date string in the form dd-MM-yyyy HH:mm:ss.fff
         // List of bytes which make up the packet, including address bytes and protocol ID

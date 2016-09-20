@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using STAR.Model;
+using STAR.ViewModel;
 
-namespace STAR {
+namespace STAR.ViewModel {
     class Capture {
         private List<Packet> m_packets;
         private Statistics m_stats;
@@ -120,7 +122,18 @@ namespace STAR {
                             packetBytes.Add(Convert.ToByte(byteStringSplit[i], 16));
                         }
 
-                        DataPacket packet = new DataPacket(entryPort, exitPort, time, packetBytes, endCode);
+                        Type packetType = DataPacket.GetType(packetBytes);
+                        dynamic packet = Activator.CreateInstance(
+                            packetType,
+                            new Object[] {
+                                entryPort,
+                                exitPort,
+                                time,
+                                packetBytes,
+                                endCode
+                            }
+                        );
+
                         m_packets.Add(packet);
                     } else {
                         // Unknown start code
