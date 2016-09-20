@@ -1,4 +1,7 @@
 ﻿namespace STAR.Model {
+    /*
+     * Packet which has a timestamp and error message
+     */
     class ErrorPacket : Packet {
         private string m_message;
 

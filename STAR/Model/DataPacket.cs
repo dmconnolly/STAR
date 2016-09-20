@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace STAR.Model {
+    /*
+     * Packet containing write or read command or response
+     * This class contains variables and methods pertaining to only
+     * the elements which are shared among all four packet types
+     */
     class DataPacket : Packet {
         private ushort m_protocolID;
         private byte[] m_address;
@@ -14,11 +19,13 @@ namespace STAR.Model {
         // Accessors for class member variables
         public ushort Protocol { get { return m_protocolID; }}
         public byte[] AddressBytes { get { return m_address; }}
-        //public byte ID { get { return m_packetID;  }}
         public bool Valid { get { return m_valid; }}
         public string EndCode { get { return m_endCode; }}
         public long CargoByteCount { get { return m_cargoByteCount; }}
 
+        // Takes a list of bytes representing the packet
+        // returns the Type that the packet should be
+        // used when parsing a file and storing packet data
         public static Type GetType(List<byte> packetBytes) {
             int i=0;
             for(; i<packetBytes.Count(); ++i) {
@@ -55,10 +62,11 @@ namespace STAR.Model {
              * 6 - Source Path Address Length bit 2 */
             bool command = (flagsByte & (1 << 1)) != 0;
             bool write = (flagsByte & (1 << 2)) != 0;
-            if(command) {
-                return write ? typeof(WriteCommandPacket) : typeof(ReadCommandPacket);
-            }
-            return write ? typeof(WriteResponsePacket) : typeof(ReadResponsePacket);
+            return command ? 
+                write ? typeof(WriteCommandPacket) : 
+                typeof(ReadCommandPacket) : 
+                write ? typeof(WriteResponsePacket) : 
+                typeof(ReadResponsePacket);
         }
 
         // Takes date string in the form dd-MM-yyyy HH:mm:ss.fff

@@ -16,6 +16,7 @@ namespace STAR.ViewModel {
         private double m_totalErrorsPerSecond;
         private double m_totalBytesPerSecond;
 
+        // Accessors for class member variables
         public long PacketCount { get { return m_packetCount; }}
         public long ValidPacketCount { get { return ValidPacketCount; }}
         public long InvalidPacketCount { get { return m_invalidPacketCount;  }}
@@ -30,27 +31,37 @@ namespace STAR.ViewModel {
             Clear();
         }
 
+        // Collect statistics from the entire data set provided
         public void collect(DateTime startTime, DateTime endTime, List<Packet> packets) {
             Clear();
 
+            // No packets
             if(packets.Count == 0) {
                 return;
             }
 
+            // Loop through the list of packets
             foreach(Packet packet in packets) {
                 if(packet is DataPacket) {
+                    // Increment packet count
                     m_packetCount++;
+
+                    // Add the packet cargo bytes to the total byte count
                     m_totalByteCount += (packet as DataPacket).CargoByteCount;
+
+                    // Add to counters of valid or invalid packets
                     if((packet as DataPacket).Valid) {
                         m_validPacketCount++;
                     } else {
                         m_invalidPacketCount++;
                     }
                 } else {
+                    // Increment error count
                     m_errorMessageCount++;
                 }
             }
 
+            // Calculate some stats based on what we've worked out so far
             m_measurementTimeSeconds = (endTime.Ticks - startTime.Ticks) / ticksPerSecond;
             m_totalPacketsPerSecond = m_packetCount / m_measurementTimeSeconds;
             m_totalErrorsPerSecond = m_errorMessageCount / m_measurementTimeSeconds;
@@ -147,6 +158,7 @@ namespace STAR.ViewModel {
 
         }
 
+        // Clear the statistics
         public void Clear() {
             m_packetCount = 0;
             m_validPacketCount = 0;

@@ -1,6 +1,10 @@
 ﻿using STAR.Model;
 
 namespace STAR.ViewModel {
+    /*
+     * Used as an interface to the list of packets
+     * in order to display information on the UI
+     */
     class PacketView {
         private const string timeFormat = "dd-MM-yyyy HH:mm:ss.fff";
 
@@ -13,6 +17,7 @@ namespace STAR.ViewModel {
         private string m_endCode;
         private bool m_valid;
 
+        // Accessors for class member variables
         public long TimeTicks    { get { return m_timeTicks;  }}
         public string TimeString { get { return m_timeString; }}
         public byte EntryPort    { get { return m_entryPort;  }}
@@ -22,6 +27,10 @@ namespace STAR.ViewModel {
         public string EndCode    { get { return m_endCode;    }}
         public bool Valid        { get { return m_valid;      }}
 
+        // Constructor for PacketView
+        // Takes a Packet of any time as a parameter
+        // initialises the elements which will be displayed
+        // on the GUI
         public PacketView(Packet packet) {
             m_timeTicks = packet.Time;
             m_timeString = packet.Timestamp;
