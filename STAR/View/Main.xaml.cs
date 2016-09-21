@@ -266,7 +266,10 @@ namespace STAR.View {
         private void displayGeneralStats()
         {
             lblDataRate.Content = statisticsMain.TotalBytesPerSecond;
-            //lblErrorRate
+            lblErrorRate.Content = statisticsMain.TotalErrorsPerSecond;
+            lblPacketRate.Content = statisticsMain.TotalPacketsPerSecond;
+            lblTotalPackets.Content = statisticsMain.PacketCount;
+            lblTotalErrors.Content = statisticsMain.ErrorMessageCount;
         }
     }
 }
