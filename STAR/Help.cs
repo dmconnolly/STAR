@@ -36,27 +36,24 @@ namespace STAR
             
             Console.WriteLine(helpTopic);
 
-            //Load the file with that topic as its name
-            //txtHelp.LoadFile(helpTopic, RichTextBoxStreamType.RichText);
-
-
+            //Switch rtf file based on selection
             //I don't like doing it this way either, believe me. The alternative is a nuts though
             switch (helpTopic)
             {
                 case "Introduction":
-                    //txtHelp.LoadFile(Properties.Resources.Introduction, RichTextBoxStreamType.RichText);
+                    txtHelp.Rtf = Properties.Resources.Introduction;
                     break;
                 case "Main Window Overview":
-                    //txtHelp.LoadFile(Properties.Resources.Main_Window_Overview, RichTextBoxStreamType.RichText);
+                    txtHelp.Rtf = Properties.Resources.Main_Window_Overview;
                     break;
                 case "Opening Files":
-                    //txtHelp.LoadFile(Properties.Resources.Opening_Files, RichTextBoxStreamType.RichText);
+                    txtHelp.Rtf = Properties.Resources.Opening_Files;
                     break;
                 case "Quitting the Program":
-                    //txtHelp.LoadFile(Properties.Resources.Quitting_the_Program, RichTextBoxStreamType.RichText);
+                    txtHelp.Rtf = Properties.Resources.Quitting_the_Program;
                     break;
                 case "Searching and Filtering":
-                    //txtHelp.LoadFile(Properties.Resources.Searching_and_Filtering, RichTextBoxStreamType.RichText);
+                    txtHelp.Rtf = Properties.Resources.Searching_and_Filtering;
                     break;
                 default:
                     break;
