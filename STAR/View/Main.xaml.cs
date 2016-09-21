@@ -66,18 +66,13 @@ namespace STAR.View {
             // Filter predicate for packet collection view
             packetCollectionViewFilter = item => {
                 PacketView pktView = item as PacketView;
-                if(packetView == null) {
+                if (packetView == null)
+                {
                     return false;
                 }
-<<<<<<< HEAD
-                //If the checkbox for the errors has been checked
-                if(pktView.PacketTypeString.Equals("Error")) { 
-                    if (ChkShowErrors.IsChecked != true) {
-=======
                 // If the checkbox for the errors is checked
                 if(pktView.PacketTypeString.Equals("Error")) {
                     if(ChkShowErrors.IsChecked != true) {
->>>>>>> 0e179def95f7e07ce86a78f0bd88df431648a282
                         return false;
                     }
                     if(pktView.Message.Equals("Parity")) {
@@ -179,17 +174,14 @@ namespace STAR.View {
             packetCollectionView.SortDescriptions.Add(packetCollectionViewSort);
             packetCollectionView.Filter = packetCollectionViewFilter;
 
-<<<<<<< HEAD
             //Put capture's stats data into statisticsMain object
-            statisticsMain = capture.GetStatistics();
-=======
+            statisticsMain = capture.Stats;
             // Put capture's stats data into statisticsMain object
             // Sorry if this is messy, don't hate me Danny pls
             statisticsMain = capture.Stats;
 
             //Call method to show stats
             displayGeneralStats();
->>>>>>> 0e179def95f7e07ce86a78f0bd88df431648a282
         }
 
         // When files are loaded, this method is called
@@ -211,8 +203,6 @@ namespace STAR.View {
         private void Button_OnClick(object sender, RoutedEventArgs e) {
             RefreshPacketDataGridFilter();
         }
-<<<<<<< HEAD
-=======
 
         //Method for loading in overall statistics
         private void displayGeneralStats() {
@@ -222,6 +212,6 @@ namespace STAR.View {
             lblTotalPackets.Content = statisticsMain.PacketCount;
             lblTotalErrors.Content = statisticsMain.ErrorMessageCount;
         }
->>>>>>> 0e179def95f7e07ce86a78f0bd88df431648a282
+
     }
 }
