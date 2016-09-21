@@ -40,7 +40,8 @@ namespace STAR.Model {
 
                 m_transactionId = (ushort)(
                     m_remainingBytes[2+byteIndex] +
-                    (m_remainingBytes[1+byteIndex] << 8));
+                    (m_remainingBytes[1+byteIndex] << 8)
+                );
 
                 byteIndex += 2;
             }
