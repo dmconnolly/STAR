@@ -173,8 +173,8 @@ namespace STAR.View {
             packetCollectionView.SortDescriptions.Add(packetCollectionViewSort);
             packetCollectionView.Filter = packetCollectionViewFilter;
 
-            //Put capture's stats data into statisticsMain object
-            //Sorry if this is messy, don't hate me Danny pls
+            // Put capture's stats data into statisticsMain object
+            // Sorry if this is messy, don't hate me Danny pls
             statisticsMain = capture.Stats;
 
             //Call method to show stats
@@ -204,6 +204,10 @@ namespace STAR.View {
         //Method for loading in overall statistics
         private void displayGeneralStats() {
             lblDataRate.Content = statisticsMain.TotalBytesPerSecond;
+            lblErrorRate.Content = statisticsMain.TotalErrorsPerSecond;
+            lblPacketRate.Content = statisticsMain.TotalPacketsPerSecond;
+            lblTotalPackets.Content = statisticsMain.PacketCount;
+            lblTotalErrors.Content = statisticsMain.ErrorMessageCount;
         }
     }
 }
