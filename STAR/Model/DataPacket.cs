@@ -63,8 +63,14 @@ namespace STAR.Model {
              * 6 - Source Path Address Length bit 1
              * 6 - Source Path Address Length bit 2 */
             var bits = new BitArray(new byte[] { flagsByte });
+
+            // Shift left 6 bits and mask for command/response bit flag
             bool command = (flagsByte & (1 << 6)) != 0;
+
+            // Shift left 5 bits and mask for read/write bit flag
             bool write = (flagsByte & (1 << 5)) != 0;
+
+            // Return packet type based on the two flags
             return command ?
                 write ? typeof(WriteCommandPacket) :
                 typeof(ReadCommandPacket) :

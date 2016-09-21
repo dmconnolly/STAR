@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using STAR.Model;
-using STAR.ViewModel;
 
 namespace STAR.ViewModel {
     /*
