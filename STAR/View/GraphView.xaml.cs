@@ -23,6 +23,14 @@ namespace STAR.View
             //graph.DataSource = value 
             //graph.Series[""].Xvalues = "key";
             //graph.Series[""].Yvalues = "value";
+
+            //if (graphInput == "ErrorRate") {
+            //
+            //} else if (graphInput == "DataRate") {
+            //
+            //} else if (graphInput == "PacketRate") {
+            //
+            //}
         }
     }
 }
