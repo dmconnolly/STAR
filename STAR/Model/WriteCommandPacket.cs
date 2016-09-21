@@ -58,16 +58,11 @@ namespace STAR.Model {
                     return;
                 }
 
-                byte[] tIdBytes = {
-                    m_remainingBytes[++byteIndex],
-                    m_remainingBytes[++byteIndex]
-                };
+                m_transactionId = (ushort)(
+                    m_remainingBytes[2+byteIndex] +
+                    (m_remainingBytes[1+byteIndex] << 8));
 
-                if(BitConverter.IsLittleEndian) {
-                    Array.Reverse(tIdBytes);
-                }
-
-                m_transactionId = BitConverter.ToUInt16(tIdBytes, 0);
+                byteIndex += 2;
             }
 
             // Extended write address
@@ -82,18 +77,13 @@ namespace STAR.Model {
                     return;
                 }
 
-                byte[] writeAddressBytes = {
-                    m_remainingBytes[++byteIndex],
-                    m_remainingBytes[++byteIndex],
-                    m_remainingBytes[++byteIndex],
-                    m_remainingBytes[++byteIndex]
-                };
+                m_writeAddress = (uint)(
+                    m_remainingBytes[4+byteIndex] +
+                    (m_remainingBytes[3+byteIndex] << 8) +
+                    (m_remainingBytes[2+byteIndex] << 16) +
+                    (m_remainingBytes[1+byteIndex] << 24));
 
-                if(BitConverter.IsLittleEndian) {
-                    Array.Reverse(writeAddressBytes);
-                }
-
-                m_writeAddress = BitConverter.ToUInt32(writeAddressBytes, 0);
+                byteIndex += 4;
             }
 
             // Data length
@@ -102,18 +92,12 @@ namespace STAR.Model {
                     return;
                 }
 
-                byte[] dataLengthBytes = {
-                        m_remainingBytes[++byteIndex],
-                        m_remainingBytes[++byteIndex],
-                        m_remainingBytes[++byteIndex],
-                        0
-                    };
+                m_dataLength = (uint)(
+                    m_remainingBytes[3+byteIndex] +
+                    (m_remainingBytes[2+byteIndex] << 8) +
+                    (m_remainingBytes[1+byteIndex] << 16));
 
-                if(BitConverter.IsLittleEndian) {
-                    Array.Reverse(dataLengthBytes);
-                }
-
-                m_dataLength = BitConverter.ToUInt32(dataLengthBytes, 0);
+                byteIndex += 3;
             }
 
             // Header CRC

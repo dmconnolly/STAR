@@ -98,16 +98,11 @@ namespace STAR.Model {
                                 break;
                             }
 
-                            byte[] pidBytes = {
-                                packetBytes[++i],
-                                packetBytes[++i]
-                            };
+                            m_protocolId = (ushort)(
+                                m_remainingBytes[2+i] +
+                                (m_remainingBytes[1+i] << 8));
 
-                            if(BitConverter.IsLittleEndian) {
-                                Array.Reverse(pidBytes);
-                            }
-
-                            m_protocolId = BitConverter.ToUInt16(pidBytes, 0);
+                            i += 2;
                         }
                     }
 
