@@ -1,5 +1,7 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Controls.DataVisualization.Charting;
+using STAR.ViewModel;
+
 
 namespace STAR.View
 {
@@ -12,7 +14,11 @@ namespace STAR.View
         {
             InitializeComponent();
 
-            //value = new <x value, y value>();
+            Statistics stats = new Statistics();
+
+            //Pseudo based on tutorial added iterator and dynamic sizing instead of constant.
+
+            //value = new listofvalues <x value, y value>();
             /*
              * for (i = 0; i < list.size(); i++)
              * value.Add(i, elem.at);
