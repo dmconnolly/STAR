@@ -230,7 +230,7 @@
                     <Label Content="p/s" Grid.Column="1" Margin="40,1,0,0" Grid.Row="3"/>
                     <Label x:Name="lblErrorRate" Content="15" Grid.Column="3" Margin="0,0,45,1" Grid.Row="3"/>
                     <Label Content="e/s" Grid.Column="3" Margin="43,0,0,1" Grid.Row="3"/>
-                    <Label Content="d/s" Grid.Column="3" Margin="43,0,0,1" Grid.Row="2"/>
+                    <Label Content="bytes/s" Grid.Column="3" Margin="32,0,0,1" Grid.Row="2"/>
                 </Grid>
             </Grid>
         </Grid>
