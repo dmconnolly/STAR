@@ -12,7 +12,11 @@ namespace STAR.View
         {
             InitializeComponent();
 
-            //value = new <x value, y value>();
+            
+
+            //Pseudo based on tutorial added iterator and dynamic sizing instead of constant.
+
+            //value = new listofvalues <x value, y value>();
             /*
              * for (i = 0; i < list.size(); i++)
              * value.Add(i, elem.at);
