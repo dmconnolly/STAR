@@ -59,11 +59,15 @@ namespace STAR.View {
                 if(packetView == null) {
                     return false;
                 }
-
+                //If the checkbox for the errors has been checked
                 if(pktView.PacketType.Equals("Error")) {
                     if(ChkShowErrors.IsChecked != true) {
                         return false;
-                    }
+                    } //else if (ComboBox.Text == "Parity"){
+                    //  return true;
+                    // }else if (ComboBox.Text == "Disconnect") {
+                    // return true;
+                    // }
                 } else {
                     if(pktView.Valid) {
                         if(ChkShowValidPackets.IsChecked != true) {
