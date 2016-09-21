@@ -10,13 +10,13 @@ namespace STAR.Model {
         private byte[] m_dataBytes;
         private byte   m_dataCRC;
 
-        public byte Status { get { return m_status; }}
-        public byte DestinationLogicalAddress { get { return m_destinationLogicalAddress; }}
+        public byte   Status { get { return m_status; }}
+        public byte   DestinationLogicalAddress { get { return m_destinationLogicalAddress; }}
         public ushort TransactionId { get { return m_transactionId; }}
-        public uint DataLength { get { return m_dataLength; }}
-        public byte HeaderCRC { get { return m_headerCRC; }}
+        public uint   DataLength { get { return m_dataLength; }}
+        public byte   HeaderCRC { get { return m_headerCRC; }}
         public byte[] DataBytes { get { return m_dataBytes; }}
-        public byte DataCRC { get { return m_dataCRC; }}
+        public byte   DataCRC { get { return m_dataCRC; }}
 
         public ReadResponsePacket(byte entryPort, byte exitPort, string dateString, List<byte> packetBytes, string endCode)
                 : base(entryPort, exitPort, dateString, packetBytes, endCode) {
@@ -73,7 +73,7 @@ namespace STAR.Model {
                 byteIndex += 3;
             }
 
-            // Header CRC
+            // Header RmapCRC
             if(++byteIndex >= byteCount) {
                 return;
             }
@@ -88,8 +88,12 @@ namespace STAR.Model {
                 m_dataBytes = tmpBytes.ToArray();
             }
 
-            // Data CRC
+            // Data RmapCRC
             m_dataCRC = m_remainingBytes[byteIndex];
+
+            if(!m_CRCError && !RmapCRC.validCRC(DataBytes, m_dataCRC)) {
+                m_CRCError = true;
+            }
         }
     }
 }
