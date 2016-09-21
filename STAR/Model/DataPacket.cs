@@ -9,15 +9,16 @@ namespace STAR.Model {
      * the elements which are shared among all four packet types
      */
     class DataPacket : Packet {
-        private ushort m_protocolID;
+        private ushort m_protocolId;
         private byte[] m_address;
         private string m_endCode;
         private bool m_valid;
-        private List<byte> m_remainingBytes;
         private long m_cargoByteCount;
 
+        protected List<byte> m_remainingBytes;
+
         // Accessors for class member variables
-        public ushort Protocol { get { return m_protocolID; }}
+        public ushort Protocol { get { return m_protocolId; }}
         public byte[] AddressBytes { get { return m_address; }}
         public bool Valid { get { return m_valid; }}
         public string EndCode { get { return m_endCode; }}
@@ -91,7 +92,7 @@ namespace STAR.Model {
                     if(++i < byteCount) {
                         m_cargoByteCount = byteCount - i;
                         if(packetBytes[i] != 0) {
-                            m_protocolID = packetBytes[i];
+                            m_protocolId = packetBytes[i];
                         } else {
                             if((2+i) >= byteCount) {
                                 break;
@@ -106,7 +107,7 @@ namespace STAR.Model {
                                 Array.Reverse(pidBytes);
                             }
 
-                            m_protocolID = BitConverter.ToUInt16(pidBytes, 0);
+                            m_protocolId = BitConverter.ToUInt16(pidBytes, 0);
                         }
                     }
 
