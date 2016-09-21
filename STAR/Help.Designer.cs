@@ -52,7 +52,7 @@
             // 
             this.txtHelp.Location = new System.Drawing.Point(274, 13);
             this.txtHelp.Name = "txtHelp";
-            this.txtHelp.Size = new System.Drawing.Size(316, 188);
+            this.txtHelp.Size = new System.Drawing.Size(392, 236);
             this.txtHelp.TabIndex = 1;
             this.txtHelp.Text = "";
             // 
@@ -60,7 +60,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(618, 360);
+            this.ClientSize = new System.Drawing.Size(706, 460);
             this.Controls.Add(this.txtHelp);
             this.Controls.Add(this.lstHelpList);
             this.Name = "Help";

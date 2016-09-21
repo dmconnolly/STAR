@@ -55,6 +55,9 @@ namespace STAR
                 case "Searching and Filtering":
                     txtHelp.Rtf = Properties.Resources.Searching_and_Filtering;
                     break;
+                case "Further Help":
+                    txtHelp.Rtf = Properties.Resources.Further_Help;
+                    break;
                 default:
                     break;
             }
