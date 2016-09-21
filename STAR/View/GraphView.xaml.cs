@@ -18,6 +18,8 @@ namespace STAR.View
 
             //value = new listofvalues <x value, y value>();
             /*
+             * if (graphInput == "ErrorRate") {
+             * 
              * for (i = 0; i < list.size(); i++)
              * value.Add(i, elem.at);
              */
@@ -28,13 +30,7 @@ namespace STAR.View
             //graph.Series[""].Xvalues = "key";
             //graph.Series[""].Yvalues = "value";
 
-            //if (graphInput == "ErrorRate") {
-            //
-            //} else if (graphInput == "DataRate") {
-            //
-            //} else if (graphInput == "PacketRate") {
-            //
-            //}
+            
         }
     }
 }

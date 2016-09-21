@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using System;
+using Microsoft.Win32;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
@@ -63,7 +64,25 @@ namespace STAR.View {
                 if(pktView.PacketType.Equals("Error")) {
                     if(ChkShowErrors.IsChecked != true) {
                         return false;
-                    } 
+                    }
+                    if (pktView.Message.Equals("Parity"))
+                    {
+                        Console.WriteLine(pktView.Message);
+                        Console.WriteLine(ComboBox.SelectedItem.ToString());
+                        if (ComboBox.SelectedItem.ToString() == "System.Windows.Controls.ComboBoxItem: Disconnect Errors")
+                        {
+                            return false;
+                        }
+                    }
+                    if (pktView.Message.Equals("Disconnect"))
+                    {
+                        Console.WriteLine(pktView.Message);
+                        Console.WriteLine(ComboBox.SelectedItem.ToString());
+                        if (ComboBox.SelectedItem.ToString() == "System.Windows.Controls.ComboBoxItem: Parity Errors")
+                        {
+                            return false;
+                        }
+                    }
                 } else {
                     if(pktView.Valid) {
                         if(ChkShowValidPackets.IsChecked != true) {
@@ -89,7 +108,7 @@ namespace STAR.View {
             // INotifyPropertyChanged callback.
             PacketsDataGrid.ItemsSource = packetCollectionView;
 
-            lvPacketsView.ItemsSource = packetCollectionView;
+            //lvPacketsView.ItemsSource = packetCollectionView;
 
             // Set up array of port filter checkboxes
             portFilterCheckbox = new CheckBox[8] {
