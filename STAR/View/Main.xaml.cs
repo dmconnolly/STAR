@@ -70,8 +70,7 @@ namespace STAR.View {
                     return false;
                 }
                 //If the checkbox for the errors has been checked
-                if(pktView.PacketTypeString.Equals("Error")) {
-                    Console.WriteLine(pktView.PacketTypeString);
+                if(pktView.PacketTypeString.Equals("Error")) { 
                     if (ChkShowErrors.IsChecked != true) {
                         return false;
                     }
@@ -223,11 +222,7 @@ namespace STAR.View {
             packetCollectionView.Filter = packetCollectionViewFilter;
 
             //Put capture's stats data into statisticsMain object
-            //Sorry if this is messy, don't hate me Danny pls
             statisticsMain = capture.GetStatistics();
-
-            //Call method to show stats
-            displayGeneralStats();
         }
 
         // When files are loaded, this method is called
@@ -260,16 +255,6 @@ namespace STAR.View {
             // }
 
             RefreshPacketDataGridFilter();
-        }
-
-        //Method for loading in overall statistics
-        private void displayGeneralStats()
-        {
-            lblDataRate.Content = statisticsMain.TotalBytesPerSecond;
-            lblErrorRate.Content = statisticsMain.TotalErrorsPerSecond;
-            lblPacketRate.Content = statisticsMain.TotalPacketsPerSecond;
-            lblTotalPackets.Content = statisticsMain.PacketCount;
-            lblTotalErrors.Content = statisticsMain.ErrorMessageCount;
         }
     }
 }
