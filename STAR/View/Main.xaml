@@ -54,7 +54,7 @@
                             <ComboBoxItem Content="Disconnect Errors"/>
                         </ComboBox>
                         <TextBox x:Name="TextBox" Width="200" Background="White" Margin="0,0,0,0"></TextBox>
-                        <Button x:Name="Button" Width="100">Filter</Button>
+                        <Button x:Name="Button" Click="Button_OnClick" Width="100">Filter</Button>
                     </StackPanel>
 
                     <StackPanel Grid.Row="1" Margin="0,0,10,0" >

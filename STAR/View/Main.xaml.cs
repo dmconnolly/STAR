@@ -63,11 +63,7 @@ namespace STAR.View {
                 if(pktView.PacketType.Equals("Error")) {
                     if(ChkShowErrors.IsChecked != true) {
                         return false;
-                    } //else if (ComboBox.Text == "Parity"){
-                    //  return true;
-                    // }else if (ComboBox.Text == "Disconnect") {
-                    // return true;
-                    // }
+                    } 
                 } else {
                     if(pktView.Valid) {
                         if(ChkShowValidPackets.IsChecked != true) {
@@ -133,6 +129,8 @@ namespace STAR.View {
             RefreshPacketDataGridFilter();
         }
 
+        
+
 
         // Refresh packet filtering
         private void RefreshPacketDataGridFilter() {
@@ -175,6 +173,18 @@ namespace STAR.View {
         private void Help_Click(object sender, RoutedEventArgs e) {
             Help helpWindow = new Help();
             helpWindow.Show();
+        }
+
+        //When Filter button is pressed (used for filtering different errors
+        private void Button_OnClick(object sender, RoutedEventArgs e)
+        {
+            //else if (ComboBox.Text != "Parity"){
+            //  return false;
+            // }else if (ComboBox.Text != "Disconnect") {
+            // return false;
+            // }
+
+            RefreshPacketDataGridFilter();
         }
     }
 }
