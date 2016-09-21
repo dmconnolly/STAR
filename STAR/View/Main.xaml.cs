@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using System;
+using Microsoft.Win32;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
@@ -11,6 +12,10 @@ namespace STAR.View {
     public partial class Main : Window {
         // Storage for all data read in from files and processed
         private Capture capture;
+
+        //Bring statistics from capture into main
+        private Statistics statisticsMain;
+
         // File selection dialog
         private OpenFileDialog openFileDialog;
         // ObservableCollection allows external code to be notified
@@ -25,6 +30,10 @@ namespace STAR.View {
         private SortDescription packetCollectionViewSort;
         // Filter predicate for packet collection view
         private System.Predicate<object> packetCollectionViewFilter;
+        //Filter predicate for packet errors
+        private System.Predicate<object> lvPacketViewFilter;
+        //Interface to the packet errors, which currently displays all errors and their types
+        private ICollectionView lvpacketCollectionView;
         // Array of checkboxes for port filters
         // used when updating packet view filter
         private CheckBox[] portFilterCheckbox;
@@ -47,6 +56,7 @@ namespace STAR.View {
 
             // Packet collection view
             packetCollectionView = CollectionViewSource.GetDefaultView(packetView);
+            lvpacketCollectionView = CollectionViewSource.GetDefaultView(packetView);
 
             // Packet collection view sort description
             packetCollectionViewSort = new SortDescription(
@@ -59,10 +69,25 @@ namespace STAR.View {
                 if(packetView == null) {
                     return false;
                 }
-
-                if(pktView.PacketType.Equals("Error")) {
-                    if(ChkShowErrors.IsChecked != true) {
+                //If the checkbox for the errors has been checked
+                if(pktView.PacketTypeString.Equals("Error")) {
+                    Console.WriteLine(pktView.PacketTypeString);
+                    if (ChkShowErrors.IsChecked != true) {
                         return false;
+                    }
+                    if (pktView.Message.Equals("Parity"))
+                    {
+                        if ((ComboBox.SelectedItem.ToString() != "System.Windows.Controls.ComboBoxItem: Parity Errors") && (ComboBox.SelectedItem.ToString() != "System.Windows.Controls.ComboBoxItem: All Errors"))
+                        {
+                            return false;
+                        }
+                    }
+                    if (pktView.Message.Equals("Disconnect"))
+                    {
+                        if ((ComboBox.SelectedItem.ToString() != "System.Windows.Controls.ComboBoxItem: Disconnect Errors") && (ComboBox.SelectedItem.ToString() != "System.Windows.Controls.ComboBoxItem: All Errors"))
+                        {
+                            return false;
+                        }
                     }
                 } else {
                     if(pktView.Valid) {
@@ -90,8 +115,48 @@ namespace STAR.View {
             PacketsDataGrid.ItemsSource = packetCollectionView;
 
 
-            lvPacketsView.ItemsSource = packetCollectionView;
+            //lvPacketsView.ItemsSource = packetCollectionView;
 
+            /*lvPacketViewFilter = item => {
+                PacketView lvpktView = item as PacketView;
+                if (packetView == null)
+                {
+                    return false;
+                }
+                //If the checkbox for the errors has been checked
+                if (lvpktView.PacketType.Equals("Error"))
+                {
+                    Console.WriteLine("Error Found");
+                    if (ChkShowErrors.IsChecked != true)
+                    {
+                        return false;
+                    }
+                    if (lvpktView.Message.Equals("Parity"))
+                    {
+                        if ((ComboBox.SelectedItem.ToString() != "System.Windows.Controls.ComboBoxItem: Parity Errors") && (ComboBox.SelectedItem.ToString() != "System.Windows.Controls.ComboBoxItem: All Errors"))
+                        {
+                            return false;
+                        }
+                    }
+                    if (lvpktView.Message.Equals("Disconnect"))
+                    {
+                        if ((ComboBox.SelectedItem.ToString() != "System.Windows.Controls.ComboBoxItem: Disconnect Errors") && (ComboBox.SelectedItem.ToString() != "System.Windows.Controls.ComboBoxItem: All Errors"))
+                        {
+                            return false;
+                        }
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Not an error");
+                    return false;
+                }
+
+                return portFilterCheckbox[lvpktView.EntryPort - 1].IsChecked == true ? true : false;
+            };
+            lvpacketCollectionView.Filter = lvPacketViewFilter
+            */
+            lvPacketsView.ItemsSource = lvpacketCollectionView;
             // Set up array of port filter checkboxes
             portFilterCheckbox = new CheckBox[8] {
                 ChkPort1, ChkPort2,
@@ -132,6 +197,9 @@ namespace STAR.View {
             RefreshPacketDataGridFilter();
         }
 
+        
+
+
         // Refresh packet filtering
         private void RefreshPacketDataGridFilter() {
             packetCollectionView.Refresh();
@@ -153,21 +221,52 @@ namespace STAR.View {
             // Re-add the sort description and filter
             packetCollectionView.SortDescriptions.Add(packetCollectionViewSort);
             packetCollectionView.Filter = packetCollectionViewFilter;
+
+            //Put capture's stats data into statisticsMain object
+            //Sorry if this is messy, don't hate me Danny pls
+            statisticsMain = capture.GetStatistics();
+
+            //Call method to show stats
+            displayGeneralStats();
         }
 
         // When files are loaded, this method is called
         // port filter checkboxes will only be enabled
         // if a file has been parsed for the port
-        private void UpdatePortFilterCheckboxes() {
-            foreach(byte port in capture.PortsLoaded) {
-                portFilterCheckbox[port-1].IsEnabled = true;
-                portFilterCheckbox[port-1].IsChecked = true;
+        private void UpdatePortFilterCheckboxes()
+        {
+            foreach (byte port in capture.PortsLoaded)
+            {
+                portFilterCheckbox[port - 1].IsEnabled = true;
+                portFilterCheckbox[port - 1].IsChecked = true;
             }
         }
+
+
+        
 
         private void Help_Click(object sender, RoutedEventArgs e) {
             Help helpWindow = new Help();
             helpWindow.Show();
+        }
+
+        //When Filter button is pressed (used for filtering different errors
+        private void Button_OnClick(object sender, RoutedEventArgs e)
+        {
+            //else if (ComboBox.Text != "Parity"){
+            //  return false;
+            // }else if (ComboBox.Text != "Disconnect") {
+            // return false;
+            // }
+
+            RefreshPacketDataGridFilter();
+        }
+
+        //Method for loading in overall statistics
+        private void displayGeneralStats()
+        {
+            lblDataRate.Content = statisticsMain.TotalBytesPerSecond;
+            //lblErrorRate
         }
     }
 }
