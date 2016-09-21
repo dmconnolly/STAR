@@ -223,7 +223,11 @@ namespace STAR.View {
             packetCollectionView.Filter = packetCollectionViewFilter;
 
             //Put capture's stats data into statisticsMain object
+            //Sorry if this is messy, don't hate me Danny pls
             statisticsMain = capture.GetStatistics();
+
+            //Call method to show stats
+            displayGeneralStats();
         }
 
         // When files are loaded, this method is called
@@ -256,6 +260,13 @@ namespace STAR.View {
             // }
 
             RefreshPacketDataGridFilter();
+        }
+
+        //Method for loading in overall statistics
+        private void displayGeneralStats()
+        {
+            lblDataRate.Content = statisticsMain.TotalBytesPerSecond;
+            //lblErrorRate
         }
     }
 }
