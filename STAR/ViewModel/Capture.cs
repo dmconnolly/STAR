@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using STAR.Model;
-using STAR.ViewModel;
 
 namespace STAR.ViewModel {
     /*
@@ -120,7 +119,7 @@ namespace STAR.ViewModel {
                         Type packetType = DataPacket.GetType(packetBytes);
                         dynamic packet = Activator.CreateInstance(
                             packetType,
-                            new Object[] {
+                            new object[] {
                                 entryPort,
                                 exitPort,
                                 time,
@@ -145,6 +144,12 @@ namespace STAR.ViewModel {
 
             // Collect statistics
             m_stats.collect(startTime, endTime, m_packets);
+        }
+
+        //Returns the instance of statistics
+        public Statistics GetStatistics()
+        {
+            return m_stats;
         }
     }
 }

@@ -90,23 +90,23 @@
                                 <Setter Property="TextBlock.TextAlignment" Value="Center" />
                                 <Setter Property="BorderThickness" Value="0" />
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding PacketType}" Value="Error">
-                                        <Setter Property="Background" Value="#FFE04141" />
-                                    </DataTrigger>
                                     <MultiDataTrigger>
                                         <MultiDataTrigger.Conditions>
-                                            <Condition Binding="{Binding PacketType}" Value="Data" />
+                                            <Condition Binding="{Binding DataPacket}" Value="true" />
                                             <Condition Binding="{Binding Valid}" Value="true" />
                                         </MultiDataTrigger.Conditions>
                                         <Setter Property="Background" Value="#FFA2B6FB" />
                                     </MultiDataTrigger>
                                     <MultiDataTrigger>
                                         <MultiDataTrigger.Conditions>
-                                            <Condition Binding="{Binding PacketType}" Value="Data" />
+                                            <Condition Binding="{Binding DataPacket}" Value="true" />
                                             <Condition Binding="{Binding Valid}" Value="false" />
                                         </MultiDataTrigger.Conditions>
                                         <Setter Property="Background" Value="#FFFB8C4D" />
                                     </MultiDataTrigger>
+                                    <DataTrigger Binding="{Binding DataPacket}" Value="false">
+                                        <Setter Property="Background" Value="#FFFF4242" />
+                                    </DataTrigger>
                                 </Style.Triggers>
                             </Style>
                         </DataGrid.CellStyle>
@@ -115,7 +115,7 @@
                             <DataGridTextColumn Header="Timestamp" Binding="{Binding Path=TimeString}" CanUserSort="False" />
                             <DataGridTextColumn Header="Entry" Binding="{Binding Path=EntryPort}" CanUserSort="False" />
                             <DataGridTextColumn Header="Exit" Binding="{Binding Path=ExitPort}" CanUserSort="False" />
-                            <DataGridTextColumn Header="Type" Binding="{Binding Path=PacketType}" CanUserSort="False" />
+                            <DataGridTextColumn Header="Type" Binding="{Binding Path=PacketTypeString}" CanUserSort="False" />
                             <DataGridTextColumn Header="Message" Binding="{Binding Path=Message}" CanUserSort="False" />
                         </DataGrid.Columns>
                     </DataGrid>
@@ -231,7 +231,7 @@
                     <Label Content="p/s" Grid.Column="1" Margin="40,1,0,0" Grid.Row="3"/>
                     <Label x:Name="lblErrorRate" Content="15" Grid.Column="3" Margin="0,0,45,1" Grid.Row="3"/>
                     <Label Content="e/s" Grid.Column="3" Margin="43,0,0,1" Grid.Row="3"/>
-                    <Label Content="d/s" Grid.Column="3" Margin="43,0,0,1" Grid.Row="2"/>
+                    <Label Content="bytes/s" Grid.Column="3" Margin="32,0,0,1" Grid.Row="2"/>
                 </Grid>
             </Grid>
         </Grid>

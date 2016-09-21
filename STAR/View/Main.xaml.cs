@@ -12,6 +12,10 @@ namespace STAR.View {
     public partial class Main : Window {
         // Storage for all data read in from files and processed
         private Capture capture;
+
+        //Bring statistics from capture into main
+        private Statistics statisticsMain;
+
         // File selection dialog
         private OpenFileDialog openFileDialog;
         // ObservableCollection allows external code to be notified
@@ -66,8 +70,9 @@ namespace STAR.View {
                     return false;
                 }
                 //If the checkbox for the errors has been checked
-                if(pktView.PacketType.Equals("Error")) {
-                    if(ChkShowErrors.IsChecked != true) {
+                if(pktView.PacketTypeString.Equals("Error")) {
+                    Console.WriteLine(pktView.PacketTypeString);
+                    if (ChkShowErrors.IsChecked != true) {
                         return false;
                     }
                     if (pktView.Message.Equals("Parity"))
@@ -216,6 +221,9 @@ namespace STAR.View {
             // Re-add the sort description and filter
             packetCollectionView.SortDescriptions.Add(packetCollectionViewSort);
             packetCollectionView.Filter = packetCollectionViewFilter;
+
+            //Put capture's stats data into statisticsMain object
+            statisticsMain = capture.GetStatistics();
         }
 
         // When files are loaded, this method is called

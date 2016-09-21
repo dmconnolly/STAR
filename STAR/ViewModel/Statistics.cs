@@ -2,11 +2,8 @@
 using System.Collections.Generic;
 using STAR.Model;
 
-
 namespace STAR.ViewModel {
     class Statistics {
- 
-
         private const double ticksPerSecond = 10000000;
 
         private long m_packetCount;
@@ -158,7 +155,6 @@ namespace STAR.ViewModel {
             //{
             //  m_statisticQuality[4] = 3; Console.WriteLine("The rate of data character generation is low, which would suggest a lot of disconnection errors.");
             //}
-
         }
 
         // Clear the statistics
