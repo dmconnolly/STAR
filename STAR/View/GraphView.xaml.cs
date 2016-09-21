@@ -11,6 +11,18 @@ namespace STAR.View
         public GraphView()
         {
             InitializeComponent();
+
+            //value = new <x value, y value>();
+            /*
+             * for (i = 0; i < list.size(); i++)
+             * value.Add(i, elem.at);
+             */
+
+
+            Chart graph = this.FindName("XyChart") as Chart;
+            //graph.DataSource = value 
+            //graph.Series[""].Xvalues = "key";
+            //graph.Series[""].Yvalues = "value";
         }
     }
 }
