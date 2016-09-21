@@ -140,7 +140,7 @@ namespace STAR.ViewModel {
             }
 
             // Sort packet by timestamp (DateTime Ticks)
-            m_packets.OrderBy(packet => packet.Time);
+            m_packets.OrderBy(packet => packet.TimeStamp);
 
             // Collect statistics
             m_stats.collect(startTime, endTime, m_packets);

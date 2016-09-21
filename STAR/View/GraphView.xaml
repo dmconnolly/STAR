@@ -18,9 +18,7 @@
                         <TranslateTransform X="50" Y="50"/>
                     </TransformGroup>
                 </Grid.RenderTransform>
-                <ContentControl
-                    
-                >
+                <ContentControl>
                     <Grid x:Name="InnerGrid" HorizontalAlignment="Left" VerticalAlignment="Top" Height="1" Width="1" RenderTransformOrigin="0.5,0.5">
                         <Grid.RenderTransform>
                                 <ScaleTransform ScaleY="200" ScaleX="200"/>

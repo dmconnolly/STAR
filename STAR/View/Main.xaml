@@ -80,11 +80,15 @@
                             FontSize="15"
                             CanUserAddRows="False"
                             CanUserDeleteRows="False" 
+                            CanUserResizeColumns="False"
+                            CanUserReorderColumns="False"
+                            CanUserSortColumns="False"
                             HeadersVisibility="Column"
                             Margin="0,0,10,0"
                             HorizontalAlignment="Left"
                             Grid.Row="1"
-                            Grid.Column="1" BorderThickness="1">
+                            Grid.Column="1"
+                            BorderThickness="1">
                         <DataGrid.CellStyle>
                             <Style TargetType="DataGridCell">
                                 <Setter Property="TextBlock.TextAlignment" Value="Center" />
@@ -111,12 +115,42 @@
                             </Style>
                         </DataGrid.CellStyle>
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="TimeTicks" Binding="{Binding Path=TimeTicks}" SortDirection="Ascending" CanUserSort="False" Visibility="Hidden" />
-                            <DataGridTextColumn Header="Timestamp" Binding="{Binding Path=TimeString}" CanUserSort="False" />
-                            <DataGridTextColumn Header="Entry" Binding="{Binding Path=EntryPort}" CanUserSort="False" />
-                            <DataGridTextColumn Header="Exit" Binding="{Binding Path=ExitPort}" CanUserSort="False" />
-                            <DataGridTextColumn Header="Type" Binding="{Binding Path=PacketTypeString}" CanUserSort="False" />
-                            <DataGridTextColumn Header="Message" Binding="{Binding Path=Message}" CanUserSort="False" />
+                            <DataGridTextColumn Header="TimeTicks" Binding="{Binding Path=TimeTicks}" Visibility="Hidden" />
+                            <DataGridTextColumn Header="Timestamp" Binding="{Binding Path=TimeString}" Width="100">
+                                <DataGridTextColumn.HeaderStyle>
+                                    <Style TargetType="DataGridColumnHeader">
+                                        <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridTextColumn.HeaderStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Entry" Binding="{Binding Path=EntryPort}" Width="44">
+                                <DataGridTextColumn.HeaderStyle>
+                                    <Style TargetType="DataGridColumnHeader">
+                                        <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridTextColumn.HeaderStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Exit" Binding="{Binding Path=ExitPort}" Width="44">
+                                <DataGridTextColumn.HeaderStyle>
+                                    <Style TargetType="DataGridColumnHeader">
+                                        <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridTextColumn.HeaderStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Type" Binding="{Binding Path=PacketTypeString}" Width="115">
+                                <DataGridTextColumn.HeaderStyle>
+                                    <Style TargetType="DataGridColumnHeader">
+                                        <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridTextColumn.HeaderStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Info" Binding="{Binding Path=Message}" Width="100">
+                                <DataGridTextColumn.HeaderStyle>
+                                    <Style TargetType="DataGridColumnHeader">
+                                        <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridTextColumn.HeaderStyle>
+                            </DataGridTextColumn>
                         </DataGrid.Columns>
                     </DataGrid>
 

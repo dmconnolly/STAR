@@ -3,7 +3,7 @@ using System.Globalization;
 
 namespace STAR.Model {
     class Packet {
-        private const string timeFormat = "dd-MM-yyyy HH:mm:ss.fff";
+        private const string timeFormatInput = "dd-MM-yyyy HH:mm:ss.fff";
 
         private byte m_entryPort;
         private byte m_exitPort;
@@ -25,21 +25,14 @@ namespace STAR.Model {
 
         // Gets the timestamp as millionths of a second
         // useful for ordering packets and errors on the UI
-        public long Time {
+        public DateTime TimeStamp {
             get {
-                return m_timestamp.Ticks;
-            }
-        }
-
-        // Gets the timestamp as a formatted string
-        public string Timestamp {
-            get {
-                return string.Format("{0:" + timeFormat + "}", m_timestamp);
+                return m_timestamp;
             }
         }
 
         public static string timeString(DateTime dateTime) {
-            return string.Format("{0:" + timeFormat + "}", dateTime);
+            return string.Format("{0:" + timeFormatInput + "}", dateTime);
         }
 
         // Takes date string in the form dd-MM-yyyy HH:mm:ss.fff
@@ -59,7 +52,7 @@ namespace STAR.Model {
             DateTime timestamp = new DateTime();
 
             try {
-                timestamp = DateTime.ParseExact(dateString, timeFormat, CultureInfo.InvariantCulture);
+                timestamp = DateTime.ParseExact(dateString, timeFormatInput, CultureInfo.InvariantCulture);
             } catch(FormatException) {
                 Console.WriteLine("{0} is not in the correct format.", dateString);
             } 

@@ -7,7 +7,7 @@ namespace STAR.ViewModel {
      * in order to display information on the UI
      */
     class PacketView {
-        private const string timeFormat = "dd-MM-yyyy HH:mm:ss.fff";
+        private const string timeFormatUI = "HH:mm:ss.fff";
 
         public long   TimeTicks        { get; private set; }
         public string TimeString       { get; private set; }
@@ -40,8 +40,8 @@ namespace STAR.ViewModel {
         // initialises the elements which will be displayed
         // on the GUI
         public PacketView(Packet packet) {
-            TimeTicks = packet.Time;
-            TimeString = packet.Timestamp;
+            TimeTicks = packet.TimeStamp.Ticks;
+            TimeString = string.Format("{0:" + timeFormatUI + "}", packet.TimeStamp);
             EntryPort = packet.EntryPort;
             ExitPort = packet.ExitPort;
 
@@ -60,6 +60,7 @@ namespace STAR.ViewModel {
             DataPacket = true;
             EndCode = (packet as DataPacket).EndCode;
             Valid = (packet as DataPacket).Valid;
+            Message = Valid ? "" : "No EOP";
 
             if(PacketType == typeof(WriteCommandPacket)) {
                 WriteCommandPacket pkt = packet as WriteCommandPacket;
