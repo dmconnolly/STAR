@@ -1,4 +1,5 @@
 ﻿using STAR.Model;
+using System;
 
 namespace STAR.ViewModel {
     /*
@@ -8,42 +9,100 @@ namespace STAR.ViewModel {
     class PacketView {
         private const string timeFormat = "dd-MM-yyyy HH:mm:ss.fff";
 
-        private long m_timeTicks;
-        private string m_timeString;
-        private byte m_entryPort;
-        private byte m_exitPort;
-        private string m_type;
-        private string m_message;
-        private string m_endCode;
-        private bool m_valid;
+        public long   TimeTicks        { get; private set; }
+        public string TimeString       { get; private set; }
+        public byte   EntryPort        { get; private set; }
+        public byte   ExitPort         { get; private set; }
+        public Type   PacketType       { get; private set; }
+        public bool   DataPacket       { get; private set; }
+        public string PacketTypeString { get; private set; }
+        public string Message          { get; private set; }
+        public string EndCode          { get; private set; }
+        public bool   Valid            { get; private set; }
 
-        // Accessors for class member variables
-        public long TimeTicks    { get { return m_timeTicks;  }}
-        public string TimeString { get { return m_timeString; }}
-        public byte EntryPort    { get { return m_entryPort;  }}
-        public byte ExitPort     { get { return m_exitPort;   }}
-        public string PacketType { get { return m_type;       }}
-        public string Message    { get { return m_message;    }}
-        public string EndCode    { get { return m_endCode;    }}
-        public bool Valid        { get { return m_valid;      }}
+        public byte   DestinationKey       { get; private set; }
+        public byte[] SourcePathAddress    { get; private set; }
+        public byte   SourceLogicalAddress { get; private set; }
+        public ushort TransactionId        { get; private set; }
+        public byte   ExtendedWriteAddress { get; private set; }
+        public uint   WriteAddress         { get; private set; }
+        public uint   ReadAddress          { get; private set; }
+        public uint   DataLength           { get; private set; }
+        public byte   HeaderCRC            { get; private set; }
+        public byte[] DataBytes            { get; private set; }
+        public byte   DataCRC              { get; private set; }
+        public byte   Status               { get; private set; }
+        public byte   ReplyCRC             { get; private set; }
+        public byte   DestinationLogicalAddress { get; private set; }
 
         // Constructor for PacketView
         // Takes a Packet of any time as a parameter
         // initialises the elements which will be displayed
         // on the GUI
         public PacketView(Packet packet) {
-            m_timeTicks = packet.Time;
-            m_timeString = packet.Timestamp;
-            m_entryPort = packet.EntryPort;
-            m_exitPort = packet.ExitPort;
+            TimeTicks = packet.Time;
+            TimeString = packet.Timestamp;
+            EntryPort = packet.EntryPort;
+            ExitPort = packet.ExitPort;
 
-            if(packet is DataPacket) {
-                m_type = "Data";
-                m_endCode = (packet as DataPacket).EndCode;
-                m_valid = (packet as DataPacket).Valid;
+            PacketType = packet.GetType();
+
+
+            if(PacketType == typeof(ErrorPacket)) {
+                // Error packet
+                PacketTypeString = "Error";
+                DataPacket = false;
+                Message = (packet as ErrorPacket).Message;
+                return;
+            }
+
+            // Common to all data packets
+            DataPacket = true;
+            EndCode = (packet as DataPacket).EndCode;
+            Valid = (packet as DataPacket).Valid;
+
+            if(PacketType == typeof(WriteCommandPacket)) {
+                WriteCommandPacket pkt = packet as WriteCommandPacket;
+                PacketTypeString = "Write command";
+                DestinationKey = pkt.DestinationKey;
+                SourcePathAddress = pkt.SourcePathAddress;
+                SourceLogicalAddress = pkt.SourceLogicalAddress;
+                TransactionId = pkt.TransactionId;
+                ExtendedWriteAddress = pkt.ExtendedWriteAddress;
+                WriteAddress = pkt.WriteAddress;
+                DataLength = pkt.DataLength;
+                HeaderCRC = pkt.HeaderCRC;
+                DataBytes = pkt.DataBytes;
+                DataCRC = pkt.DataCRC;
+            } else if(PacketType == typeof(WriteResponsePacket)) {
+                WriteResponsePacket pkt = packet as WriteResponsePacket;
+                PacketTypeString = "Write response";
+                Status = pkt.Status;
+                DestinationLogicalAddress = pkt.DestinationLogicalAddress;
+                TransactionId = pkt.TransactionId;
+                ReplyCRC = pkt.ReplyCRC;
+            } else if(PacketType == typeof(ReadCommandPacket)) {
+                ReadCommandPacket pkt = packet as ReadCommandPacket;
+                PacketTypeString = "Read command";
+                DestinationKey = pkt.DestinationKey;
+                SourcePathAddress = pkt.SourcePathAddress;
+                SourceLogicalAddress = pkt.SourceLogicalAddress;
+                TransactionId = pkt.TransactionId;
+                ExtendedWriteAddress = pkt.ExtendedWriteAddress;
+                ReadAddress = pkt.ReadAddress;
+                DataLength = pkt.DataLength;
+                HeaderCRC = pkt.HeaderCRC;
             } else {
-                m_type = "Error";
-                m_message = (packet as ErrorPacket).Message;
+                // Read response
+                ReadResponsePacket pkt = packet as ReadResponsePacket;
+                PacketTypeString = "Read response";
+                Status = pkt.Status;
+                DestinationLogicalAddress = pkt.DestinationLogicalAddress;
+                TransactionId = pkt.TransactionId;
+                DataLength = pkt.DataLength;
+                HeaderCRC = pkt.HeaderCRC;
+                DataBytes = pkt.DataBytes;
+                DataCRC = pkt.DataCRC;
             }
         }
     }

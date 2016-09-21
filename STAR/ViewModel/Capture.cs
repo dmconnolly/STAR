@@ -120,7 +120,7 @@ namespace STAR.ViewModel {
                         Type packetType = DataPacket.GetType(packetBytes);
                         dynamic packet = Activator.CreateInstance(
                             packetType,
-                            new Object[] {
+                            new object[] {
                                 entryPort,
                                 exitPort,
                                 time,
