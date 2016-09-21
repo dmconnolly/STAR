@@ -158,23 +158,23 @@
                                 Data Packet
                             </Label>
                             <Label Grid.Row="1" Grid.Column="0" Margin="0,0,0,10">Timestamp</Label>
-                            <TextBox x:Name="txtTimestamp" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Margin="0,0,0,10"></TextBox>
                             <Label Grid.Row="2" Grid.Column="0" Margin="0,0,0,10">Protocol ID</Label>
-                            <TextBox x:Name="txtProtocolID" Grid.Row="2" Grid.Column="1" Margin="0,0,0,10"></TextBox>
                             <Label Grid.Row="2" Grid.Column="2" Margin="0,0,0,10">Address</Label>
-                            <TextBox x:Name="txtAddress" Grid.Row="2" Grid.Column="3" Margin="0,0,0,10"></TextBox>
                             <Label Grid.Row="4" Grid.Column="0" Margin="0,0,0,10">Port</Label>
-                            <TextBox x:Name="txtPort" Grid.Row="4" Grid.Column="1" Margin="0,0,0,10"></TextBox>
                             <Label Grid.Row="4" Grid.Column="2" Margin="0,0,0,10">Destination</Label>
-                            <TextBox x:Name="txtDestination" Grid.Row="4" Grid.Column="3" Margin="0,0,0,10"></TextBox>
                             <Label Grid.Row="6" Grid.Column="0" Margin="0,0,0,10">Contents</Label>
-                            <TextBox x:Name="txtContents" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="3" Margin="0,0,0,10"></TextBox>
+                            <TextBox x:Name="txtContents" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="3" Margin="0,0,0,10" IsReadOnly="True"/>
                             <Button x:Name="btnPrevious" Grid.Row="7" Grid.Column="0" Width="100" HorizontalAlignment="Left">
                                 Previous
                             </Button>
                             <Button x:Name="btnNext" Grid.Row="7" Grid.Column="3" Width="100" HorizontalAlignment="Right">
                                 Next
                             </Button>
+                            <Label x:Name="lblTimestamp" Content="13-09-2016 14:33:02.453" Grid.Column="1" Margin="0,1,10,0" Grid.Row="1" Grid.ColumnSpan="3"/>
+                            <Label x:Name="lblProtocolID" Content="ReadCommand" Grid.Row="2" Grid.Column="1"/>
+                            <Label x:Name="lblPort" Content="2" Grid.Column="1" Grid.Row="4"/>
+                            <Label x:Name="lblDestination" Content="1" Grid.Column="3" Margin="2,0,0,0" Grid.Row="4"/>
+                            <Label x:Name="lblAddress" Content="address" Grid.Column="3" Grid.Row="2"/>
                         </Grid>
 
                         <Grid Grid.Row="1">
