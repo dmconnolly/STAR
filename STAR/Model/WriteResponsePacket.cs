@@ -50,7 +50,7 @@ namespace STAR.Model {
                 return;
             }
 
-            // Reply CRC
+            // Reply RmapCRC
             m_replyCRC = m_remainingBytes[byteIndex];
         }
     }

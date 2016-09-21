@@ -54,7 +54,7 @@
                             <ComboBoxItem Content="Parity Errors"/>
                             <ComboBoxItem Content="Disconnect Errors"/>
                         </ComboBox>
-                        <TextBox x:Name="TextBox" Width="200" Background="White" Margin="0,0,0,0"></TextBox>
+                        <TextBox x:Name="TextBox" Width="200" Background="White" Margin="0"></TextBox>
                         <Button x:Name="Button" Click="Button_OnClick" Width="100">Filter</Button>
                     </StackPanel>
 

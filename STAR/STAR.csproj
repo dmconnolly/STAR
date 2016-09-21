@@ -71,6 +71,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\RmapCRC.cs" />
     <Compile Include="Model\ReadResponsePacket.cs" />
     <Compile Include="Model\ReadCommandPacket.cs" />
     <Compile Include="Model\WriteResponsePacket.cs" />
@@ -127,7 +128,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="Help\Further Help.rtf" />
+    <None Include="Further Help.rtf" />
     <None Include="Help\Introduction.rtf" />
     <None Include="Help\Main Window Overview.rtf" />
     <None Include="Help\Opening Files.rtf" />

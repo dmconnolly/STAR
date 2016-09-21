@@ -11,19 +11,23 @@ namespace STAR.Model {
      */
     class DataPacket : Packet {
         private ushort m_protocolId;
-        private byte[] m_address;
+        private byte[] m_pathAddress;
+        private byte m_logicalAddress;
         private string m_endCode;
         private bool m_valid;
         private long m_cargoByteCount;
 
-        protected List<byte> m_remainingBytes;
-
         // Accessors for class member variables
         public ushort Protocol { get { return m_protocolId; }}
-        public byte[] AddressBytes { get { return m_address; }}
+        public byte[] PathAddress { get { return m_pathAddress; } }
+        public byte LogicalAddress { get { return m_logicalAddress; } }
         public bool Valid { get { return m_valid; }}
         public string EndCode { get { return m_endCode; }}
         public long CargoByteCount { get { return m_cargoByteCount; }}
+        protected bool CRCError { get { return m_CRCError; } }
+
+        protected bool m_CRCError = false;
+        protected List<byte> m_remainingBytes;
 
         // Takes a list of bytes representing the packet
         // returns the Type that the packet should be
@@ -87,40 +91,48 @@ namespace STAR.Model {
 
             // Parse packet bytes for address (up to and including first byte >= 32)
             List<byte> addressBytes = new List<byte>();
-            for(int i=0; i<byteCount; ++i) {
-                // Add current byte to the temporary list
-                addressBytes.Add(packetBytes[i]);
-
-                // If the byte is 32 or larger, this is the last byte of the address
-                if(packetBytes[i] >= 32) {
-                    // Store address bytes in address class member array
-                    m_address = addressBytes.ToArray();
-
-                    // Next byte is the protocol ID
-                    if(++i < byteCount) {
-                        m_cargoByteCount = byteCount - i;
-                        if(packetBytes[i] != 0) {
-                            m_protocolId = packetBytes[i];
-                        } else {
-                            if((2+i) >= byteCount) {
-                                break;
-                            }
-
-                            m_protocolId = (ushort)(
-                                m_remainingBytes[2+i] +
-                                (m_remainingBytes[1+i] << 8));
-
-                            i += 2;
-                        }
-                    }
-
-                    // Store the rest of the packet bytes in address class member array
-                    if(++i < byteCount) {
-                       m_remainingBytes = packetBytes.Skip(i).ToList();
-                    }
-
+            int byteIndex = 0;
+            for(; byteIndex<byteCount; ++byteIndex) {
+                // If the byte is 32 or larger, this is the logical address
+                if(packetBytes[byteIndex] >= 32) {
                     break;
                 }
+
+                // Add current byte to the temporary list
+                addressBytes.Add(packetBytes[byteIndex]);
+            }
+
+            m_pathAddress = addressBytes.ToArray();
+
+            // Store the rest of the packet bytes in address class member array
+            if(++byteIndex >= byteCount) {
+                return;
+            }
+
+            // Next byte is logical address
+            m_logicalAddress = packetBytes[byteIndex];
+
+            // Next byte is the protocol ID
+            if(++byteIndex < byteCount) {
+                m_cargoByteCount = byteCount - byteIndex;
+                if(packetBytes[byteIndex] != 0) {
+                    m_protocolId = packetBytes[byteIndex];
+                } else {
+                    if((2+byteIndex) >= byteCount) {
+                        return;
+                    }
+
+                    m_protocolId = (ushort)(
+                        m_remainingBytes[2+byteIndex] +
+                        (m_remainingBytes[1+byteIndex] << 8));
+
+                    byteIndex += 2;
+                }
+            }
+
+            // Store the rest of the packet bytes in address class member array
+            if(++byteIndex < byteCount) {
+                m_remainingBytes = packetBytes.Skip(byteIndex).ToList();
             }
 
             //End code - EEP, EOP, None

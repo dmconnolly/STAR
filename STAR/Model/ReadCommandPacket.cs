@@ -107,7 +107,7 @@ namespace STAR.Model {
                 byteIndex += 3;
             }
 
-            // Header CRC
+            // Header RmapCRC
             if(++byteIndex >= byteCount) {
                 return;
             }

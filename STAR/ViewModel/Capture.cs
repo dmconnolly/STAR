@@ -88,6 +88,7 @@ namespace STAR.ViewModel {
                         break;
                     }
 
+                    // Start code (E or P)
                     startCode = lines[lineIndex];
 
                     if(++lineIndex >= lines.Length) {
@@ -144,12 +145,6 @@ namespace STAR.ViewModel {
 
             // Collect statistics
             m_stats.collect(startTime, endTime, m_packets);
-        }
-
-        //Returns the instance of statistics
-        public Statistics GetStatistics()
-        {
-            return m_stats;
         }
     }
 }
