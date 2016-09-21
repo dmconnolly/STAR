@@ -1,19 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace STAR.Model {
     class WriteCommandPacket : DataPacket {
-        private byte m_destinationKey;
+        private byte   m_destinationKey;
         private byte[] m_sourcePathAddress;
-        private byte m_sourceLogicalAddress;
+        private byte   m_sourceLogicalAddress;
         private ushort m_transactionId;
-        private byte m_extendedWriteAddress;
-        private uint m_writeAddress;
-        private uint m_dataLength;
-        private byte m_headerCRC;
+        private byte   m_extendedWriteAddress;
+        private uint   m_writeAddress;
+        private uint   m_dataLength;
+        private byte   m_headerCRC;
         private byte[] m_dataBytes;
-        private byte m_dataCRC;
+        private byte   m_dataCRC;
 
         public WriteCommandPacket(byte entryPort, byte exitPort, string dateString, List<byte> packetBytes, string endCode)
                 : base(entryPort, exitPort, dateString, packetBytes, endCode) {
@@ -21,7 +20,7 @@ namespace STAR.Model {
             m_sourcePathAddress = new byte[0];
             m_dataBytes = new byte[0];
 
-            int byteCount = m_remainingBytes.Count();
+            int byteCount = m_remainingBytes.Count;
             int byteIndex = 0;
 
             if(byteIndex >= byteCount) {
@@ -114,6 +113,7 @@ namespace STAR.Model {
                 }
             }
 
+            // Data CRC
             m_dataCRC = m_remainingBytes[byteIndex];
         }
     }
