@@ -2,14 +2,14 @@
 
 namespace STAR.Model {
     class ReadCommandPacket : DataPacket {
-        private byte m_destinationKey;
+        private byte   m_destinationKey;
         private byte[] m_sourcePathAddress;
-        private byte m_sourceLogicalAddress;
+        private byte   m_sourceLogicalAddress;
         private ushort m_transactionId;
-        private byte m_extendedWriteAddress;
-        private uint m_readAddress;
-        private uint m_dataLength;
-        private byte m_headerCRC;
+        private byte   m_extendedWriteAddress;
+        private uint   m_readAddress;
+        private uint   m_dataLength;
+        private byte   m_headerCRC;
 
         public byte DestinationKey { get { return m_destinationKey; }}
         public byte[] SourcePathAddress { get { return m_sourcePathAddress; }}
@@ -105,7 +105,7 @@ namespace STAR.Model {
             }
 
             // Header CRC
-            if((++byteIndex) >= byteCount) {
+            if(++byteIndex >= byteCount) {
                 return;
             }
             m_headerCRC = m_remainingBytes[byteIndex];

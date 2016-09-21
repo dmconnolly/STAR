@@ -121,6 +121,7 @@ namespace STAR.Model {
                 for(; byteIndex<(byteCount-1); ++byteIndex) {
                     tmpBytes.Add(m_remainingBytes[byteIndex]);
                 }
+                m_dataBytes = tmpBytes.ToArray();
             }
 
             // Data CRC

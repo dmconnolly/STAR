@@ -2,10 +2,10 @@
 
 namespace STAR.Model {
     class WriteResponsePacket : DataPacket {
-        private byte m_status;
-        private byte m_destinationLogicalAddress;
+        private byte   m_status;
+        private byte   m_destinationLogicalAddress;
         private ushort m_transactionId;
-        private byte m_replyCRC;
+        private byte   m_replyCRC;
 
         public byte Status { get { return m_status; }}
         public byte DestinationLogicalAddress { get { return m_destinationLogicalAddress; }}
