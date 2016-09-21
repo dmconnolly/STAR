@@ -108,7 +108,12 @@ namespace STAR.View {
             // INotifyPropertyChanged callback.
             PacketsDataGrid.ItemsSource = packetCollectionView;
 
+<<<<<<< HEAD
             //lvPacketsView.ItemsSource = packetCollectionView;
+=======
+
+            lvPacketsView.ItemsSource = packetCollectionView;
+>>>>>>> 92a0df630d29432ccbb02be1c43c8b0b3b7b3d8f
 
             // Set up array of port filter checkboxes
             portFilterCheckbox = new CheckBox[8] {

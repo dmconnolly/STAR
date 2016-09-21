@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using STAR.Model;
 
+
 namespace STAR.ViewModel {
     class Statistics {
+ 
+
         private const double ticksPerSecond = 10000000;
 
         private long m_packetCount;
