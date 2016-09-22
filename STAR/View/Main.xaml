@@ -4,13 +4,18 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:STAR.View"
+        xmlns:GraphTools="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
         mc:Ignorable="d"
-        Title="Main" Height="800" Width="1280">
+        Title="Main" Height="830" Width="1280">
     <Window.Resources>
         <CollectionViewSource x:Key="PacketCollectionViewSource" CollectionViewType="ListCollectionView" />
     </Window.Resources>
     <Grid>
-        <Menu FontSize="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Menu Grid.Row="0" FontSize="15">
             <MenuItem Header="_File">
                 <MenuItem Header="_Open Files" Click="OpenFilesButton_Click"/>
                 <MenuItem Header="_Exit"/>
@@ -27,252 +32,266 @@
                 <!-- Empty -->
             </MenuItem>
         </Menu>
-        <Grid Margin="10">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="3*" />
-                    <ColumnDefinition Width="7*"/>
-                    <ColumnDefinition Width="5*" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="15*" />
-                    <RowDefinition Height="8*" />
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="2">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1.6*" />
-                        <ColumnDefinition Width="8.4*" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="1.5*" />
-                        <RowDefinition Height="15*" />
-                        <RowDefinition Height="1*" />
-                    </Grid.RowDefinitions>
-                    <StackPanel Grid.Column="1" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,20,0,10">
-                        <ComboBox x:Name="ComboBox" Width="120" Margin="0,0,10,0">
-                            <ComboBoxItem Content="All Errors" IsSelected="True"/>
-                            <ComboBoxItem Content="Parity Errors"/>
-                            <ComboBoxItem Content="Disconnect Errors"/>
-                        </ComboBox>
-                        <!--<TextBox x:Name="TextBox" Width="200" Background="White" Margin="0"></TextBox>
-                        <Button x:Name="Button" Click="Button_OnClick" Width="100">Filter</Button>-->
-                    </StackPanel>
-
-                    <StackPanel Grid.Row="1" Margin="0,0,10,0" >
-                        <CheckBox x:Name="ChkShowValidPackets" Click="PacketFilterCheckbox_Click" Content="Valid Packets" FontSize="15" Margin="0,0,0,10" VerticalAlignment="Top" VerticalContentAlignment="Center" IsEnabled="False" IsChecked="True" />
-                        <CheckBox x:Name="ChkShowInvalidPackets" Click="PacketFilterCheckbox_Click" Content="Invalid Packets" FontSize="15" Margin="0,0,0,10" VerticalAlignment="Top" VerticalContentAlignment="Center" IsEnabled="False" IsChecked="True" />
-                        <CheckBox x:Name="ChkShowErrors" Click="PacketFilterCheckbox_Click" Content="Errors" FontSize="15" Margin="0,0,0,25" VerticalAlignment="Top" VerticalContentAlignment="Center" IsEnabled="False" IsChecked="True" />
-                        <CheckBox x:Name="ChkPort1" Click="PacketFilterCheckbox_Click" Content="Port 1" FontSize="15" Margin="0,0,0,10" VerticalAlignment="Top" VerticalContentAlignment="Center" IsEnabled="False" IsChecked="True" />
-                        <CheckBox x:Name="ChkPort2" Click="PacketFilterCheckbox_Click" Content="Port 2" FontSize="15" Margin="0,0,0,10" VerticalAlignment="Top" VerticalContentAlignment="Center" IsEnabled="False" IsChecked="True" />
-                        <CheckBox x:Name="ChkPort3" Click="PacketFilterCheckbox_Click" Content="Port 3" FontSize="15" Margin="0,0,0,10" VerticalAlignment="Top" VerticalContentAlignment="Center" IsEnabled="False" IsChecked="True" />
-                        <CheckBox x:Name="ChkPort4" Click="PacketFilterCheckbox_Click" Content="Port 4" FontSize="15" Margin="0,0,0,10" VerticalAlignment="Top" VerticalContentAlignment="Center" IsEnabled="False" IsChecked="True" />
-                        <CheckBox x:Name="ChkPort5" Click="PacketFilterCheckbox_Click" Content="Port 5" FontSize="15" Margin="0,0,0,10" VerticalAlignment="Top" VerticalContentAlignment="Center" IsEnabled="False" IsChecked="True" />
-                        <CheckBox x:Name="ChkPort6" Click="PacketFilterCheckbox_Click" Content="Port 6" FontSize="15" Margin="0,0,0,10" VerticalAlignment="Top" VerticalContentAlignment="Center" IsEnabled="False" IsChecked="True" />
-                        <CheckBox x:Name="ChkPort7" Click="PacketFilterCheckbox_Click" Content="Port 7" FontSize="15" Margin="0,0,0,10" VerticalAlignment="Top" VerticalContentAlignment="Center" IsEnabled="False" IsChecked="True" />
-                        <CheckBox x:Name="ChkPort8" Click="PacketFilterCheckbox_Click" Content="Port 8" FontSize="15" Margin="0,0,0,10" VerticalAlignment="Top" VerticalContentAlignment="Center" IsEnabled="False" IsChecked="True" />
-                    </StackPanel>
-
-                    <DataGrid
-                            DataContext="{DynamicResource PacketCollectionViewSource}"
-                            ItemsSource="{Binding}"
-                            AutoGenerateColumns="False"
-                            Name="PacketsDataGrid"
-                            FontSize="15"
-                            CanUserAddRows="False"
-                            CanUserDeleteRows="False" 
-                            CanUserResizeColumns="False"
-                            CanUserReorderColumns="False"
-                            CanUserSortColumns="False"
-                            HeadersVisibility="Column"
-                            HorizontalAlignment="Left"
-                            Grid.Row="1"
-                            Grid.Column="1"
-                            BorderThickness="1"
-                            SelectionChanged="PacketsDataGrid_SelectionChanged"
-                            SelectionMode="Single">
-                        <DataGrid.CellStyle>
-                            <Style TargetType="DataGridCell">
-                                <Setter Property="TextBlock.TextAlignment" Value="Center" />
-                                <Setter Property="BorderThickness" Value="0" />
-                                <Style.Triggers>
-                                    <MultiDataTrigger>
-                                        <MultiDataTrigger.Conditions>
-                                            <Condition Binding="{Binding DataPacket}" Value="true" />
-                                            <Condition Binding="{Binding Valid}" Value="true" />
-                                        </MultiDataTrigger.Conditions>
-                                        <Setter Property="Background" Value="#FFA2B6FB" />
-                                    </MultiDataTrigger>
-                                    <MultiDataTrigger>
-                                        <MultiDataTrigger.Conditions>
-                                            <Condition Binding="{Binding DataPacket}" Value="true" />
-                                            <Condition Binding="{Binding Valid}" Value="false" />
-                                        </MultiDataTrigger.Conditions>
-                                        <Setter Property="Background" Value="#FFFB8C4D" />
-                                    </MultiDataTrigger>
-                                    <DataTrigger Binding="{Binding DataPacket}" Value="false">
-                                        <Setter Property="Background" Value="#FFFF4242" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </DataGrid.CellStyle>
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="TimeTicks" Binding="{Binding Path=TimeTicks}" Visibility="Hidden" />
-                            <DataGridTextColumn Header="Timestamp" Binding="{Binding Path=TimeString}" Width="100">
-                                <DataGridTextColumn.HeaderStyle>
-                                    <Style TargetType="DataGridColumnHeader">
-                                        <Setter Property="HorizontalContentAlignment" Value="Center" />
-                                    </Style>
-                                </DataGridTextColumn.HeaderStyle>
-                            </DataGridTextColumn>
-                            <DataGridTextColumn Header="Entry" Binding="{Binding Path=EntryPort}" Width="44">
-                                <DataGridTextColumn.HeaderStyle>
-                                    <Style TargetType="DataGridColumnHeader">
-                                        <Setter Property="HorizontalContentAlignment" Value="Center" />
-                                    </Style>
-                                </DataGridTextColumn.HeaderStyle>
-                            </DataGridTextColumn>
-                            <DataGridTextColumn Header="Exit" Binding="{Binding Path=ExitPort}" Width="44">
-                                <DataGridTextColumn.HeaderStyle>
-                                    <Style TargetType="DataGridColumnHeader">
-                                        <Setter Property="HorizontalContentAlignment" Value="Center" />
-                                    </Style>
-                                </DataGridTextColumn.HeaderStyle>
-                            </DataGridTextColumn>
-                            <DataGridTextColumn Header="Type" Binding="{Binding Path=PacketTypeString}" Width="115">
-                                <DataGridTextColumn.HeaderStyle>
-                                    <Style TargetType="DataGridColumnHeader">
-                                        <Setter Property="HorizontalContentAlignment" Value="Center" />
-                                    </Style>
-                                </DataGridTextColumn.HeaderStyle>
-                            </DataGridTextColumn>
-                            <DataGridTextColumn Header="Info" Binding="{Binding Path=Message}" Width="100">
-                                <DataGridTextColumn.HeaderStyle>
-                                    <Style TargetType="DataGridColumnHeader">
-                                        <Setter Property="HorizontalContentAlignment" Value="Center" />
-                                    </Style>
-                                </DataGridTextColumn.HeaderStyle>
-                            </DataGridTextColumn>
-                        </DataGrid.Columns>
-                    </DataGrid>
-
-                    <StackPanel Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal">
-                        <Rectangle Width="25" Fill="LightGreen" Stroke="Gray" Margin="0,10,0,0"/>
-                        <Label FontSize="15" VerticalAlignment="Bottom" Margin="0,0,10,0">Start of Packet</Label>
-                        <Rectangle Width="25" Fill="LightBlue" Stroke="Gray" Margin="0,10,0,0"/>
-                        <Label FontSize="15" VerticalAlignment="Bottom" Margin="0,0,10,0">Packet</Label>
-                        <Rectangle Width="25" Fill="LightCoral" Stroke="Gray" Margin="0,10,0,0"/>
-                        <Label FontSize="15" VerticalAlignment="Bottom" Margin="0,0,10,0">End of File</Label>
-                        <Rectangle Width="25" Fill="Red" Stroke="Gray" Margin="0,10,0,0"/>
-                        <Label FontSize="15" VerticalAlignment="Bottom">Error</Label>
-                    </StackPanel>
-                </Grid>
-
-                <Grid Grid.Column="2" Grid.Row="0" Margin="0,0,0.333,0.333">
+        <TabControl Grid.Row="1" Margin="0,10,0,0">
+            <TabItem Header="Packet View">
+                <Grid Margin="10">
                     <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*" />
+                            <ColumnDefinition Width="7*"/>
+                            <ColumnDefinition Width="5*" />
+                        </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="1*" />
-                            <RowDefinition Height="1*" />
+                            <RowDefinition Height="15*" />
+                            <RowDefinition Height="8*" />
                         </Grid.RowDefinitions>
-                        <Grid Grid.Row="0">
+                        <Grid Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="2">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="1.6*" />
+                                <ColumnDefinition Width="8.4*" />
                             </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <Label Grid.Column="0" Grid.ColumnSpan="2" FontSize="20">
-                                Data Packet
-                            </Label>
-                            <Label Grid.Row="1" Grid.Column="0" Margin="0,0,0,10">Timestamp</Label>
-                            <Label Grid.Row="2" Grid.Column="0" Margin="0,0,0,10">Protocol ID</Label>
-                            <Label Grid.Row="2" Grid.Column="2" Margin="0,0,0,10">Address</Label>
-                            <Label Grid.Row="4" Grid.Column="0" Margin="0,0,0,10">Port</Label>
-                            <Label Grid.Row="4" Grid.Column="2" Margin="0,0,0,10">Destination</Label>
-                            <Label Grid.Row="6" Grid.Column="0" Margin="0,0,0,10">Contents</Label>
-                            <TextBox x:Name="txtContents" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="3" Margin="0,0,0,10" IsReadOnly="True"/>
-                            <Button x:Name="btnPrevious" Grid.Row="7" Grid.Column="0" Width="100" HorizontalAlignment="Left">
-                                Previous
-                            </Button>
-                            <Button x:Name="btnNext" Grid.Row="7" Grid.Column="3" Width="100" HorizontalAlignment="Right">
-                                Next
-                            </Button>
-                            <Label x:Name="lblTimestamp" Content="13-09-2016 14:33:02.453" Grid.Column="1" Margin="0,1,10,0" Grid.Row="1" Grid.ColumnSpan="3"/>
-                            <Label x:Name="lblProtocolID" Content="ReadCommand" Grid.Row="2" Grid.Column="1"/>
-                            <Label x:Name="lblPort" Content="2" Grid.Column="1" Grid.Row="4"/>
-                            <Label x:Name="lblDestination" Content="1" Grid.Column="3" Margin="2,0,0,0" Grid.Row="4"/>
-                            <Label x:Name="lblAddress" Content="address" Grid.Column="3" Grid.Row="2"/>
+
+                            <StackPanel Grid.Row="0" Margin="0,0,10,0" >
+                                <CheckBox x:Name="ChkShowValidPackets" Click="PacketFilterCheckbox_Click" Content="Valid Packets" FontSize="15" Margin="0,0,0,10" VerticalAlignment="Top" VerticalContentAlignment="Center" IsEnabled="False" IsChecked="True" />
+                                <CheckBox x:Name="ChkShowInvalidPackets" Click="PacketFilterCheckbox_Click" Content="Invalid Packets" FontSize="15" Margin="0,0,0,10" VerticalAlignment="Top" VerticalContentAlignment="Center" IsEnabled="False" IsChecked="True" />
+                                <CheckBox x:Name="ChkShowErrors" Click="PacketFilterCheckbox_Click" Content="Errors" FontSize="15" Margin="0,0,0,25" VerticalAlignment="Top" VerticalContentAlignment="Center" IsEnabled="False" IsChecked="True" />
+                                <CheckBox x:Name="ChkPort1" Click="PacketFilterCheckbox_Click" Content="Port 1" FontSize="15" Margin="0,0,0,10" VerticalAlignment="Top" VerticalContentAlignment="Center" IsEnabled="False" IsChecked="True" />
+                                <CheckBox x:Name="ChkPort2" Click="PacketFilterCheckbox_Click" Content="Port 2" FontSize="15" Margin="0,0,0,10" VerticalAlignment="Top" VerticalContentAlignment="Center" IsEnabled="False" IsChecked="True" />
+                                <CheckBox x:Name="ChkPort3" Click="PacketFilterCheckbox_Click" Content="Port 3" FontSize="15" Margin="0,0,0,10" VerticalAlignment="Top" VerticalContentAlignment="Center" IsEnabled="False" IsChecked="True" />
+                                <CheckBox x:Name="ChkPort4" Click="PacketFilterCheckbox_Click" Content="Port 4" FontSize="15" Margin="0,0,0,10" VerticalAlignment="Top" VerticalContentAlignment="Center" IsEnabled="False" IsChecked="True" />
+                                <CheckBox x:Name="ChkPort5" Click="PacketFilterCheckbox_Click" Content="Port 5" FontSize="15" Margin="0,0,0,10" VerticalAlignment="Top" VerticalContentAlignment="Center" IsEnabled="False" IsChecked="True" />
+                                <CheckBox x:Name="ChkPort6" Click="PacketFilterCheckbox_Click" Content="Port 6" FontSize="15" Margin="0,0,0,10" VerticalAlignment="Top" VerticalContentAlignment="Center" IsEnabled="False" IsChecked="True" />
+                                <CheckBox x:Name="ChkPort7" Click="PacketFilterCheckbox_Click" Content="Port 7" FontSize="15" Margin="0,0,0,10" VerticalAlignment="Top" VerticalContentAlignment="Center" IsEnabled="False" IsChecked="True" />
+                                <CheckBox x:Name="ChkPort8" Click="PacketFilterCheckbox_Click" Content="Port 8" FontSize="15" Margin="0,0,0,10" VerticalAlignment="Top" VerticalContentAlignment="Center" IsEnabled="False" IsChecked="True" />
+                            </StackPanel>
+
+                            <DataGrid
+                                    DataContext="{DynamicResource PacketCollectionViewSource}"
+                                    ItemsSource="{Binding}"
+                                    AutoGenerateColumns="False"
+                                    Name="PacketsDataGrid"
+                                    FontSize="15"
+                                    CanUserAddRows="False"
+                                    CanUserDeleteRows="False" 
+                                    CanUserResizeColumns="False"
+                                    CanUserReorderColumns="False"
+                                    CanUserSortColumns="False"
+                                    HeadersVisibility="Column"
+                                    HorizontalAlignment="Left"
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    SelectionChanged="PacketsDataGrid_SelectionChanged"
+                                    SelectionMode="Single"
+                                    BorderThickness="1">
+                                <DataGrid.CellStyle>
+                                    <Style TargetType="DataGridCell">
+                                        <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                        <Setter Property="BorderThickness" Value="0" />
+                                        <Style.Triggers>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding DataPacket}" Value="true" />
+                                                    <Condition Binding="{Binding Valid}" Value="true" />
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="Background" Value="#FFA2B6FB" />
+                                            </MultiDataTrigger>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding DataPacket}" Value="true" />
+                                                    <Condition Binding="{Binding Valid}" Value="false" />
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="Background" Value="#FFFB8C4D" />
+                                            </MultiDataTrigger>
+                                            <DataTrigger Binding="{Binding DataPacket}" Value="false">
+                                                <Setter Property="Background" Value="#FFFF4242" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGrid.CellStyle>
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="TimeTicks" Binding="{Binding Path=TimeTicks}" Visibility="Hidden" />
+                                    <DataGridTextColumn Header="Timestamp" Binding="{Binding Path=TimeString}" Width="100">
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="DataGridColumnHeader">
+                                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="Entry" Binding="{Binding Path=EntryPort}" Width="44">
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="DataGridColumnHeader">
+                                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="Exit" Binding="{Binding Path=ExitPort}" Width="44">
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="DataGridColumnHeader">
+                                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="Type" Binding="{Binding Path=PacketTypeString}" Width="115">
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="DataGridColumnHeader">
+                                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="Info" Binding="{Binding Path=Message}" Width="100">
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="DataGridColumnHeader">
+                                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                    </DataGridTextColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
                         </Grid>
 
-                        <Grid Grid.Row="1">
+                        <Grid Grid.Column="2" Grid.Row="0" Margin="0,0,0.333,0.333">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1*" />
+                                    <RowDefinition Height="1*" />
+                                </Grid.RowDefinitions>
+                                <Grid Grid.Row="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Label Grid.Column="0" Grid.ColumnSpan="2" FontSize="20">
+                                        Data Packet
+                                    </Label>
+                                    <Label Grid.Row="1" Grid.Column="0" Margin="0,0,0,10">Timestamp</Label>
+                                    <Label Grid.Row="2" Grid.Column="0" Margin="0,0,0,10">Protocol ID</Label>
+                                    <Label Grid.Row="2" Grid.Column="2" Margin="0,0,0,10">Address</Label>
+                                    <Label Grid.Row="4" Grid.Column="0" Margin="0,0,0,10">Port</Label>
+                                    <Label Grid.Row="4" Grid.Column="2" Margin="0,0,0,10">Destination</Label>
+                                    <Label Grid.Row="6" Grid.Column="0" Margin="0,0,0,10">Contents</Label>
+                                    <TextBox x:Name="txtContents" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="3" Margin="0,0,0,10" IsReadOnly="True"/>
+                                    <Button x:Name="btnPrevious" Grid.Row="7" Grid.Column="0" Width="100" HorizontalAlignment="Left">
+                                        Previous
+                                    </Button>
+                                    <Button x:Name="btnNext" Grid.Row="7" Grid.Column="3" Width="100" HorizontalAlignment="Right">
+                                        Next
+                                    </Button>
+                                    <Label x:Name="lblTimestamp" Content="13-09-2016 14:33:02.453" Grid.Column="1" Margin="0,1,10,0" Grid.Row="1" Grid.ColumnSpan="3"/>
+                                    <Label x:Name="lblProtocolID" Content="ReadCommand" Grid.Row="2" Grid.Column="1"/>
+                                    <Label x:Name="lblPort" Content="2" Grid.Column="1" Grid.Row="4"/>
+                                    <Label x:Name="lblDestination" Content="1" Grid.Column="3" Margin="2,0,0,0" Grid.Row="4"/>
+                                    <Label x:Name="lblAddress" Content="address" Grid.Column="3" Grid.Row="2"/>
+                                </Grid>
+
+                                <Grid Grid.Row="1">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Label Grid.Row="0" FontSize="20">Packet Errors</Label>
+                                    <ListView Name="ErrorPacketsListView"  Grid.Row="1" Height="150" FontSize="15" DataContext="{DynamicResource PacketCollectionViewSource}" ItemsSource="{Binding}" SelectionMode="Single" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Visible" >
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <WrapPanel>
+                                                    <TextBlock Text="{Binding Path=TimeString}"/>
+                                                    <TextBlock Text=" " />
+                                                    <TextBlock Text="{Binding Path=Message}" />
+                                                </WrapPanel>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+
+                        <Grid Grid.Column="2" Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1.5*"/>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1.5*"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
-                            <Label Grid.Row="0" FontSize="20">Packet Errors</Label>
-                            <ListView Name="ErrorPacketsListView"  Grid.Row="1" Height="150" FontSize="15" DataContext="{DynamicResource PacketCollectionViewSource}" ItemsSource="{Binding}" SelectionMode="Single" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Visible" >
-                                <ListView.ItemTemplate>
-                                    <DataTemplate>
-                                        <WrapPanel>
-                                            <TextBlock Text="{Binding Path=TimeString}"/>
-                                            <TextBlock Text=" " />
-                                            <TextBlock Text="{Binding Path=Message}" />
-                                        </WrapPanel>
-                                    </DataTemplate>
-                                </ListView.ItemTemplate>
-                            </ListView>
+                            <Label FontSize="20">Statistics</Label>
+                            <Label Grid.Column="0" Grid.Row="1" Margin="0,0,0,10">Total Data Characters</Label>
+                            <Label Grid.Column="2" Grid.Row="1" Margin="0,0,0,10">Total Packets</Label>
+                            <Label Grid.Column="0" Grid.Row="2" Margin="0,0,0,10">Total Errors</Label>
+                            <Label Grid.Column="2" Grid.Row="2" Margin="0,0,0,10">Data Rate</Label>
+                            <Label Grid.Column="0" Grid.Row="3" Margin="0,0,0,10">Packet Rate</Label>
+                            <Label Grid.Column="2" Grid.Row="3" Margin="0,0,0,10">Error Rate</Label>
+                            <Label x:Name="lblTotalDataCharacters" Content="---" Grid.Column="1" Margin="2,1,0,0" Grid.Row="1"/>
+                            <Label x:Name="lblTotalPackets" Content="---" Grid.Column="3" Margin="2,0,0,0" Grid.Row="1"/>
+                            <Label x:Name="lblTotalErrors" Content="---" Grid.Column="1" Margin="1,1,0,0" Grid.Row="2"/>
+                            <Label x:Name="lblDataRate" Content="---" Grid.Column="3" Grid.Row="2" Margin="0,0,40,0"/>
+                            <Label x:Name="lblPacketRate" Content="---" Grid.Column="1" Margin="0,1,37,0" Grid.Row="3"/>
+                            <Label Content="p/s" Grid.Column="1" Margin="40,1,0,0" Grid.Row="3"/>
+                            <Label x:Name="lblErrorRate" Content="---" Grid.Column="3" Margin="0,0,45,1" Grid.Row="3"/>
+                            <Label Content="e/s" Grid.Column="3" Margin="43,0,0,1" Grid.Row="3"/>
+                            <Label Content="bytes/s" Grid.Column="3" Margin="32,0,0,1" Grid.Row="2"/>
+                            <Label Content="Start Time" HorizontalAlignment="Left" Grid.Row="5" VerticalAlignment="Top"/>
+                            <Label Content="End Time" Grid.Column="2" HorizontalAlignment="Left" Grid.Row="5" VerticalAlignment="Top"/>
+                            <Label x:Name="lblStartTime" Content="---" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="5" VerticalAlignment="Top" RenderTransformOrigin="-0.105,0" Height="28" Width="84"/>
+                            <Label x:Name="lblEndTime" Content="---" Grid.Column="3" HorizontalAlignment="Left" Grid.Row="5" VerticalAlignment="Top" Width="83"/>
                         </Grid>
                     </Grid>
                 </Grid>
+            </TabItem>
+            <TabItem Header="Graph View">
+                <!-- GRAPH GOES HERE -->
+                <Grid>
+                    <Canvas>
+                        <Grid x:Name="OuterGrid" RenderTransformOrigin="0.5,0.5" Height="1" Canvas.Left="104" Canvas.Top="92" Width="1">
+                            <Grid.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform ScaleY="200" ScaleX="200"/>
+                                    <TranslateTransform X="50" Y="50"/>
+                                </TransformGroup>
+                            </Grid.RenderTransform>
+                            <ContentControl>
+                                <Grid x:Name="InnerGrid" HorizontalAlignment="Left" VerticalAlignment="Top" Height="1" Width="1" RenderTransformOrigin="0.5,0.5">
+                                    <Grid.RenderTransform>
+                                        <ScaleTransform ScaleY="200" ScaleX="200"/>
+                                    </Grid.RenderTransform>
 
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width= "10"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
 
-                <Grid Grid.Column="2" Grid.Row="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1.5*"/>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="1.5*"/>
-                        <ColumnDefinition Width="1*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <Label FontSize="20">Statistics</Label>
-                    <Label Grid.Column="0" Grid.Row="1" Margin="0,0,0,10">Total Data Characters</Label>
-                    <Label Grid.Column="2" Grid.Row="1" Margin="0,0,0,10">Total Packets</Label>
-                    <Label Grid.Column="0" Grid.Row="2" Margin="0,0,0,10">Total Errors</Label>
-                    <Label Grid.Column="2" Grid.Row="2" Margin="0,0,0,10">Data Rate</Label>
-                    <Label Grid.Column="0" Grid.Row="3" Margin="0,0,0,10">Packet Rate</Label>
-                    <Label Grid.Column="2" Grid.Row="3" Margin="0,0,0,10">Error Rate</Label>
-                    <Label x:Name="lblTotalDataCharacters" Content="---" Grid.Column="1" Margin="2,1,0,0" Grid.Row="1"/>
-                    <Label x:Name="lblTotalPackets" Content="---" Grid.Column="3" Margin="2,0,0,0" Grid.Row="1"/>
-                    <Label x:Name="lblTotalErrors" Content="---" Grid.Column="1" Margin="1,1,0,0" Grid.Row="2"/>
-                    <Label x:Name="lblDataRate" Content="---" Grid.Column="3" Grid.Row="2" Margin="0,0,40,0"/>
-                    <Label x:Name="lblPacketRate" Content="---" Grid.Column="1" Margin="0,1,37,0" Grid.Row="3"/>
-                    <Label Content="p/s" Grid.Column="1" Margin="40,1,0,0" Grid.Row="3"/>
-                    <Label x:Name="lblErrorRate" Content="---" Grid.Column="3" Margin="0,0,45,1" Grid.Row="3"/>
-                    <Label Content="e/s" Grid.Column="3" Margin="43,0,0,1" Grid.Row="3"/>
-                    <Label Content="bytes/s" Grid.Column="3" Margin="32,0,0,1" Grid.Row="2"/>
-                    <Label Content="Start Time" HorizontalAlignment="Left" Grid.Row="5" VerticalAlignment="Top"/>
-                    <Label Content="End Time" Grid.Column="2" HorizontalAlignment="Left" Grid.Row="5" VerticalAlignment="Top"/>
-                    <Label x:Name="lblStartTime" Content="---" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="5" VerticalAlignment="Top" RenderTransformOrigin="-0.105,0" Height="28" Width="84"/>
-                    <Label x:Name="lblEndTime" Content="---" Grid.Column="3" HorizontalAlignment="Left" Grid.Row="5" VerticalAlignment="Top" Width="83"/>
+                                    <GraphTools:Chart HorizontalAlignment="Stretch" 
+                                          VerticalAlignment="Stretch" 
+                                          Margin="20,20,20,20"
+                                          Name="XyChart"
+                                          />
+                                    <GraphTools:AreaSeries Name="AREA"></GraphTools:AreaSeries>
+                                    <GraphTools:BarSeries Name="BAR"></GraphTools:BarSeries>
+                                    <GraphTools:PieSeries Name="PIE"></GraphTools:PieSeries>
+                                    <GraphTools:LineSeries Name="LINE"></GraphTools:LineSeries>
+                                </Grid>
+                            </ContentControl>
+                        </Grid>
+                    </Canvas>
                 </Grid>
-            </Grid>
-        </Grid>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>
