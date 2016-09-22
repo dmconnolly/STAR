@@ -66,22 +66,23 @@
                             </StackPanel>
 
                             <DataGrid
-                                DataContext="{DynamicResource PacketCollectionViewSource}"
-                                ItemsSource="{Binding}"
-                                AutoGenerateColumns="False"
-                                Name="PacketsDataGrid"
-                                FontSize="15"
-                                CanUserAddRows="False"
-                                CanUserDeleteRows="False" 
-                                CanUserResizeColumns="False"
-                                CanUserReorderColumns="False"
-                                CanUserSortColumns="False"
-                                HeadersVisibility="Column"
-                                Margin="0,0,10,0"
-                                HorizontalAlignment="Left"
-                                Grid.Row="0"
-                                Grid.Column="1"
-                                BorderThickness="1">
+                                    DataContext="{DynamicResource PacketCollectionViewSource}"
+                                    ItemsSource="{Binding}"
+                                    AutoGenerateColumns="False"
+                                    Name="PacketsDataGrid"
+                                    FontSize="15"
+                                    CanUserAddRows="False"
+                                    CanUserDeleteRows="False" 
+                                    CanUserResizeColumns="False"
+                                    CanUserReorderColumns="False"
+                                    CanUserSortColumns="False"
+                                    HeadersVisibility="Column"
+                                    HorizontalAlignment="Left"
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    SelectionChanged="PacketsDataGrid_SelectionChanged"
+                                    SelectionMode="Single"
+                                    BorderThickness="1">
                                 <DataGrid.CellStyle>
                                     <Style TargetType="DataGridCell">
                                         <Setter Property="TextBlock.TextAlignment" Value="Center" />

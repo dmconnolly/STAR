@@ -233,5 +233,14 @@ namespace STAR.View {
             lblStartTime.Content = capture.GetStartTime.ToString("hh:mm:ss:fff"); 
             lblEndTime.Content = capture.GetEndTime.ToString("hh:mm:ss:fff"); 
         }
+
+        //Method for displaying packet data when clicked on datagrid
+        private void PacketsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Console.WriteLine("Yooo!");
+            
+            //For now, just changing the timestamp
+
+        }
     }
 }
