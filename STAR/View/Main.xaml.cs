@@ -3,12 +3,17 @@ using Microsoft.Win32;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using STAR.ViewModel;
 using STAR.Model;
+<<<<<<< HEAD
 using System.Windows.Controls.DataVisualization.Charting;
+=======
+using ListBox = System.Windows.Forms.ListBox;
+>>>>>>> ec732f7634797db91018ed1745e987e150890f61
 
 namespace STAR.View {
     public partial class Main : Window {
@@ -203,6 +208,9 @@ namespace STAR.View {
 
             //Call method to show stats
             displayGeneralStats();
+
+            //Select first packet in the grid
+            PacketsDataGrid.SelectedIndex = 0;
         }
 
         // When files are loaded, this method is called
@@ -218,6 +226,21 @@ namespace STAR.View {
         private void Help_Click(object sender, RoutedEventArgs e) {
             Help helpWindow = new Help();
             helpWindow.Show();
+        }
+
+        //Navigating to next packet
+        private void btnNext_Click(object sender, RoutedEventArgs e)
+        {
+            PacketsDataGrid.SelectedIndex++;
+        }
+
+        //Navigating to previous packet
+        private void btnPrevious_Click(object sender, RoutedEventArgs e)
+        {
+            if (PacketsDataGrid.SelectedIndex >= 1)
+            {
+                PacketsDataGrid.SelectedIndex--;
+            }
         }
 
         //When Filter button is pressed (used for filtering different errors
@@ -253,10 +276,20 @@ namespace STAR.View {
                 //Set source and destination
                 lblPort.Content = selected.EntryPort;
                 lblDestination.Content = selected.ExitPort;
+
+                //Display different data based on packet type
+                //Non-errors have protocol ID, destination path address and destination logical address
+                if (selected.PacketType != typeof(ErrorPacket))
+                {
+                    
+                }
+                
+
             }
 
         }
 
+<<<<<<< HEAD
 
             private void GraphGeneration()
             {
@@ -293,5 +326,22 @@ namespace STAR.View {
 
         }
 
+=======
+        private void ErrorPacketsListView_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            packetNavigation();
+        }
+
+        private void packetNavigation()
+        {
+            PacketView p = (PacketView)ErrorPacketsListView.SelectedItem;
+            if (p != null)
+            {
+                PacketsDataGrid.ScrollIntoView(p);
+                PacketsDataGrid.UpdateLayout();
+                PacketsDataGrid.SelectedItem = p;
+            }
+        }
+>>>>>>> ec732f7634797db91018ed1745e987e150890f61
     }
 }

@@ -88,6 +88,10 @@
                                         <Setter Property="TextBlock.TextAlignment" Value="Center" />
                                         <Setter Property="BorderThickness" Value="0" />
                                         <Style.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter Property="FontWeight" Value="Bold" />
+                                                <Setter Property="Foreground" Value="White" />
+                                            </Trigger>
                                             <MultiDataTrigger>
                                                 <MultiDataTrigger.Conditions>
                                                     <Condition Binding="{Binding DataPacket}" Value="true" />
@@ -157,42 +161,43 @@
                                 </Grid.RowDefinitions>
                                 <Grid Grid.Row="0">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" MinWidth="144" />
+                                        <ColumnDefinition Width="90*" />
+                                        <ColumnDefinition Width="Auto" MinWidth="105" />
+                                        <ColumnDefinition Width="77*" />
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="*" />
-                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="27" />
+                                        <RowDefinition Height="34"/>
+                                        <RowDefinition Height="Auto" MinHeight="33" />
+                                        <RowDefinition Height="31" />
+                                        <RowDefinition />
+                                        <RowDefinition Height="Auto" MinHeight="29" />
                                     </Grid.RowDefinitions>
-                                    <Label Grid.Column="0" Grid.ColumnSpan="2" FontSize="20">
+                                    <Label Grid.Column="0" FontSize="20" Margin="0,0,30,0">
                                         Data Packet
                                     </Label>
-                                    <Label Grid.Row="1" Grid.Column="0" Margin="0,0,0,10">Timestamp</Label>
-                                    <Label Grid.Row="2" Grid.Column="0" Margin="0,0,0,10">Protocol ID</Label>
-                                    <Label Grid.Row="2" Grid.Column="2" Margin="0,0,0,10">Address</Label>
-                                    <Label Grid.Row="4" Grid.Column="0" Margin="0,0,0,10">Port</Label>
-                                    <Label Grid.Row="4" Grid.Column="2" Margin="0,0,0,10">Destination</Label>
-                                    <Label Grid.Row="6" Grid.Column="0" Margin="0,0,0,10">Contents</Label>
-                                    <TextBox x:Name="txtContents" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="3" Margin="0,0,0,10" IsReadOnly="True"/>
-                                    <Button x:Name="btnPrevious" Grid.Row="7" Grid.Column="0" Width="100" HorizontalAlignment="Left">
+                                    <Label Grid.Row="1" Grid.Column="0" Margin="0,0,30,0">Timestamp</Label>
+                                    <Label Grid.Row="3" Grid.Column="0" Margin="0,0,30,7">Protocol ID</Label>
+                                    <Label x:Name="lblDestPathAdd" Grid.Row="4" Margin="0,0,30,41" Grid.RowSpan="2" Content="Dest. Path Address"/>
+                                    <Label Grid.Row="2" Margin="0,0,30,8">Port</Label>
+                                    <Label Grid.Row="2" Grid.Column="2">Destination</Label>
+                                    <Label Grid.Row="5" Grid.Column="0" Margin="0,0,30,10">Contents</Label>
+                                    <TextBox x:Name="txtContents" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="3" Margin="0,0,0,5" IsReadOnly="True"/>
+                                    <Button x:Name="btnPrevious" Grid.Row="6" Grid.Column="0" Width="100" HorizontalAlignment="Left" Click="btnPrevious_Click">
                                         Previous
                                     </Button>
-                                    <Button x:Name="btnNext" Grid.Row="7" Grid.Column="3" Width="100" HorizontalAlignment="Right">
+                                    <Button x:Name="btnNext" Grid.Row="6" Grid.Column="2" Width="100" HorizontalAlignment="Right" Click="btnNext_Click" Grid.ColumnSpan="2">
                                         Next
                                     </Button>
-                                    <Label x:Name="lblTimestamp" Content="13-09-2016 14:33:02.453" Grid.Column="1" Margin="0,1,10,0" Grid.Row="1" Grid.ColumnSpan="3"/>
-                                    <Label x:Name="lblProtocolID" Content="ReadCommand" Grid.Row="2" Grid.Column="1"/>
-                                    <Label x:Name="lblPort" Content="2" Grid.Column="1" Grid.Row="4"/>
-                                    <Label x:Name="lblDestination" Content="1" Grid.Column="3" Margin="2,0,0,0" Grid.Row="4"/>
-                                    <Label x:Name="lblAddress" Content="address" Grid.Column="3" Grid.Row="2"/>
+                                    <Label x:Name="lblTimestamp" Content="--:--:--" Grid.Column="1" Margin="0,1,0,0" Grid.Row="1"/>
+                                    <Label x:Name="lblProtocolID" Content="--" Grid.Row="3" Grid.Column="1" Margin="0,0,0,7"/>
+                                    <Label x:Name="lblPort" Content="2" Grid.Column="1" Grid.Row="2"/>
+                                    <Label x:Name="lblDestination" Content="1" Grid.Column="3" Margin="0,0,0,1" Grid.Row="2"/>
+                                    <Label x:Name="lblDestinationPathAddress" Content="--" Grid.Column="1" Grid.Row="4" Margin="0,0,0,41" Grid.RowSpan="2"/>
+                                    <Label x:Name="lblSrcPathAdd" Grid.Row="4" Margin="0,0,0,41" Grid.RowSpan="2" Content="Source Path Address" Grid.Column="2"/>
+                                    <Label x:Name="lblSourcePathAddress" Content="--" Grid.Column="3" Grid.Row="4" Margin="0,0,0,41" Grid.RowSpan="2"/>
                                 </Grid>
 
                                 <Grid Grid.Row="1">
@@ -201,7 +206,7 @@
                                         <RowDefinition Height="Auto" />
                                     </Grid.RowDefinitions>
                                     <Label Grid.Row="0" FontSize="20">Packet Errors</Label>
-                                    <ListView Name="ErrorPacketsListView"  Grid.Row="1" Height="150" FontSize="15" DataContext="{DynamicResource PacketCollectionViewSource}" ItemsSource="{Binding}" SelectionMode="Single" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Visible" >
+                                    <ListView Name="ErrorPacketsListView"  Grid.Row="1" Height="150" FontSize="15" DataContext="{DynamicResource PacketCollectionViewSource}" ItemsSource="{Binding}" SelectionChanged="ErrorPacketsListView_OnSelectionChanged" SelectionMode="Single" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Visible" >
                                         <ListView.ItemTemplate>
                                             <DataTemplate>
                                                 <WrapPanel>
