@@ -253,6 +253,9 @@ namespace STAR.View {
         private void PacketsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Console.WriteLine("Yooo!");
+            
+            //For now, just changing the timestamp
+
         }
     }
 }

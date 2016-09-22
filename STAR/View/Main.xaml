@@ -84,12 +84,12 @@
                             CanUserReorderColumns="False"
                             CanUserSortColumns="False"
                             HeadersVisibility="Column"
-                            Margin="0,0,10,0"
                             HorizontalAlignment="Left"
                             Grid.Row="1"
                             Grid.Column="1"
                             BorderThickness="1"
-                            SelectionChanged="PacketsDataGrid_SelectionChanged">
+                            SelectionChanged="PacketsDataGrid_SelectionChanged"
+                            SelectionMode="Single">
                         <DataGrid.CellStyle>
                             <Style TargetType="DataGridCell">
                                 <Setter Property="TextBlock.TextAlignment" Value="Center" />
