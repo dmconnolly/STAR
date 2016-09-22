@@ -54,8 +54,8 @@
                             <ComboBoxItem Content="Parity Errors"/>
                             <ComboBoxItem Content="Disconnect Errors"/>
                         </ComboBox>
-                        <TextBox x:Name="TextBox" Width="200" Background="White" Margin="0"></TextBox>
-                        <Button x:Name="Button" Click="Button_OnClick" Width="100">Filter</Button>
+                        <!--<TextBox x:Name="TextBox" Width="200" Background="White" Margin="0"></TextBox>
+                        <Button x:Name="Button" Click="Button_OnClick" Width="100">Filter</Button>-->
                     </StackPanel>
 
                     <StackPanel Grid.Row="1" Margin="0,0,10,0" >
@@ -218,7 +218,7 @@
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
                             <Label Grid.Row="0" FontSize="20">Packet Errors</Label>
-                            <ListView Name="lvPacketsView"  Grid.Row="1" Height="150" FontSize="15" DataContext="{DynamicResource PacketCollectionViewSource}" ItemsSource="{Binding}" SelectionMode="Single" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Visible" >
+                            <ListView Name="ErrorPacketsListView"  Grid.Row="1" Height="150" FontSize="15" DataContext="{DynamicResource PacketCollectionViewSource}" ItemsSource="{Binding}" SelectionMode="Single" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Visible" >
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <WrapPanel>

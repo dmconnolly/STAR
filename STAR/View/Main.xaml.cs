@@ -26,6 +26,9 @@ namespace STAR.View {
         // reason we bind to this instead of the ObservableCollection
         private ICollectionView packetCollectionView;
 
+
+        private ICollectionView errorCollectionView;
+
         // Sorting method for CollectionViewSource
         private SortDescription packetCollectionViewSort;
 
@@ -34,6 +37,8 @@ namespace STAR.View {
 
         // Filter predicate for packet error view
         private Predicate<object> lvPacketViewFilter;
+
+        private Predicate<object> errorPacketCollectionViewFilter;
 
         //Interface to the packet errors, which currently displays all errors and their types
         private ICollectionView lvpacketCollectionView;
@@ -61,6 +66,12 @@ namespace STAR.View {
             // Packet collection view
             packetCollectionView = CollectionViewSource.GetDefaultView(packetView);
             lvpacketCollectionView = CollectionViewSource.GetDefaultView(packetView);
+            
+            errorCollectionView = new CollectionViewSource
+            {
+                Source = packetView
+            }.View;
+
 
             // Packet collection view sort description
             packetCollectionViewSort = new SortDescription(
@@ -104,8 +115,26 @@ namespace STAR.View {
                 return portFilterCheckbox[pktView.EntryPort - 1].IsChecked == true ? true : false;
             };
 
+            errorPacketCollectionViewFilter = item =>
+            {
+                PacketView pktView = item as PacketView;
+                if (packetView == null)
+                {
+                    return false;
+                }
+                // If the checkbox for the errors is checked
+                if (!pktView.PacketTypeString.Equals("Error"))
+                {
+                    return false;
+                }
+
+                return portFilterCheckbox[pktView.EntryPort - 1].IsChecked == true ? true : false;
+            };
+
             // Apply filter to packet collection view
             packetCollectionView.Filter = packetCollectionViewFilter;
+
+            errorCollectionView.Filter = errorPacketCollectionViewFilter;
 
             // Bind WPF DataGrid to the packet collection view.
             // Now, whenever the packet collection is modified or
@@ -114,7 +143,7 @@ namespace STAR.View {
             // INotifyPropertyChanged callback.
             PacketsDataGrid.ItemsSource = packetCollectionView;
 
-            lvPacketsView.ItemsSource = lvpacketCollectionView;
+            ErrorPacketsListView.ItemsSource = errorCollectionView;
 
             // Set up array of port filter checkboxes
             portFilterCheckbox = new CheckBox[8] {
@@ -157,6 +186,7 @@ namespace STAR.View {
         // Refresh packet filtering
         private void RefreshPacketDataGridFilter() {
             packetCollectionView.Refresh();
+            errorCollectionView.Refresh();
         }
 
         // Once all files are parsed, update packet collection
@@ -167,8 +197,11 @@ namespace STAR.View {
             packetCollectionView.SortDescriptions.Remove(packetCollectionViewSort);
             packetCollectionView.Filter = null;
 
+            errorCollectionView.SortDescriptions.Add(packetCollectionViewSort);
+            errorCollectionView.Filter = errorPacketCollectionViewFilter;
+
             // Add packets to the collection
-            foreach(Packet packet in capture.Packets) {
+            foreach (Packet packet in capture.Packets) {
                 packetView.Add(new PacketView(packet));
             }
 
