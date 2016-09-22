@@ -25,8 +25,6 @@ namespace STAR.View {
         // UI and supports filtering, sorting and grouping. For this
         // reason we bind to this instead of the ObservableCollection
         private ICollectionView packetCollectionView;
-
-
         private ICollectionView errorCollectionView;
 
         // Sorting method for CollectionViewSource
@@ -34,10 +32,7 @@ namespace STAR.View {
 
         // Filter predicate for packet collection view
         private Predicate<object> packetCollectionViewFilter;
-
-        // Filter predicate for packet error view
-        private Predicate<object> lvPacketViewFilter;
-
+        // Filter predicate for error collection view
         private Predicate<object> errorPacketCollectionViewFilter;
 
         //Interface to the packet errors, which currently displays all errors and their types
@@ -91,16 +86,6 @@ namespace STAR.View {
                 if(pktView.PacketTypeString.Equals("Error")) {
                     if(ChkShowErrors.IsChecked != true) {
                         return false;
-                    }
-                    if(pktView.Message.Equals("Parity")) {
-                        if((ComboBox.SelectedItem.ToString() != "System.Windows.Controls.ComboBoxItem: Parity Errors") && (ComboBox.SelectedItem.ToString() != "System.Windows.Controls.ComboBoxItem: All Errors")) {
-                            return false;
-                        }
-                    }
-                    if(pktView.Message.Equals("Disconnect")) {
-                        if((ComboBox.SelectedItem.ToString() != "System.Windows.Controls.ComboBoxItem: Disconnect Errors") && (ComboBox.SelectedItem.ToString() != "System.Windows.Controls.ComboBoxItem: All Errors")) {
-                            return false;
-                        }
                     }
                 } else {
                     if(pktView.Valid) {
@@ -254,10 +239,12 @@ namespace STAR.View {
 
         //Method for displaying packet data when clicked on datagrid
         private void PacketsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            Console.WriteLine("Yooo!");
-            
-            //For now, just changing the timestamp
+        {   
+            //Get current packet
+            PacketView selected = (PacketView)PacketsDataGrid.SelectedItem;
+
+            //Set timestamp
+            lblTimestamp.Content = selected.TimeString;
 
         }
     }
