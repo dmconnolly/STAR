@@ -66,7 +66,8 @@ namespace STAR.View {
             // Filter predicate for packet collection view
             packetCollectionViewFilter = item => {
                 PacketView pktView = item as PacketView;
-                if(packetView == null) {
+                if (packetView == null)
+                {
                     return false;
                 }
                 // If the checkbox for the errors is checked
@@ -173,6 +174,8 @@ namespace STAR.View {
             packetCollectionView.SortDescriptions.Add(packetCollectionViewSort);
             packetCollectionView.Filter = packetCollectionViewFilter;
 
+            //Put capture's stats data into statisticsMain object
+            statisticsMain = capture.Stats;
             // Put capture's stats data into statisticsMain object
             // Sorry if this is messy, don't hate me Danny pls
             statisticsMain = capture.Stats;
@@ -209,5 +212,6 @@ namespace STAR.View {
             lblTotalPackets.Content = statisticsMain.PacketCount;
             lblTotalErrors.Content = statisticsMain.ErrorMessageCount;
         }
+
     }
 }
