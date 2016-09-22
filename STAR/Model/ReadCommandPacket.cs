@@ -121,7 +121,7 @@ namespace STAR.Model {
                 return;
             }
 
-            // Header RmapCRC
+            // Header CRC
             m_headerCRC = m_remainingBytes[byteIndex];
 
             List<byte> headerBytes = new List<byte>(byteIndex + 3);
