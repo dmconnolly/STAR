@@ -69,6 +69,7 @@ namespace STAR.ViewModel {
             List<string> allPacketTimes = new List<string>();
             List<string> allPacketEndMarkers = new List<string>();
             List<List<byte>> allPacketBytes = new List<List<byte>>();
+            List<bool> duplicatePacket = new List<bool>();
 
             if(lineCount >= 2) {
                 int lineIndex = 0;
@@ -91,6 +92,8 @@ namespace STAR.ViewModel {
                 }
 
                 exitPort = (byte)(entryPort + (entryPort % 2 == 0 ? -1 : 1));
+
+                string lastByteString = "";
 
                 while(lineIndex < lineCount) {
                     string time, startCode, endCode, byteString, errorText;
@@ -125,6 +128,8 @@ namespace STAR.ViewModel {
                     } else if(startCode.Equals("P", StringComparison.Ordinal)) {
                         // This is a packet
                         byteString = lines[lineIndex];
+                        duplicatePacket.Add(byteString == lastByteString);
+                        lastByteString = byteString;
 
                         if(++lineIndex >= lines.Length) {
                             break;
@@ -177,6 +182,7 @@ namespace STAR.ViewModel {
                         };
                     }
                     dynamic packet = Activator.CreateInstance(packetType, args);
+                    packet.DuplicatePacketError = duplicatePacket[i];
                     m_packets.Add(packet);
                 }
             }

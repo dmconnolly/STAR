@@ -20,6 +20,7 @@ namespace STAR.ViewModel {
         public string EndCode          { get; private set; }
         public bool   Valid            { get; private set; }
         public bool   CRCError         { get; private set; }
+        public bool   DuplicatePacketError { get; private set; }
 
         public byte   DestinationKey       { get; private set; }
         public byte[] SourcePathAddress    { get; private set; }
@@ -61,6 +62,12 @@ namespace STAR.ViewModel {
             EndCode = (packet as DataPacket).EndCode;
             Valid = (packet as DataPacket).Valid;
             Message = Valid ? "" : "No EOP";
+
+            DuplicatePacketError = (packet as DataPacket).DuplicatePacketError;
+            if(DuplicatePacketError) {
+                Message = "Duplicate";
+                Valid = false;
+            }
 
             CRCError = (packet as DataPacket).CRCError;
             if(CRCError) {
