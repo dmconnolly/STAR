@@ -142,8 +142,8 @@ namespace STAR.View {
             // is changed, the UI will be updated through use of the
             // INotifyPropertyChanged callback.
             PacketsDataGrid.ItemsSource = packetCollectionView;
-
-        //ErrorPacketsListView.ItemsSource = errorCollectionView;
+            // Same for status view
+            ErrorPacketsListView.ItemsSource = errorCollectionView;
 
             // Set up array of port filter checkboxes
             portFilterCheckbox = new CheckBox[8] {
@@ -197,8 +197,8 @@ namespace STAR.View {
             packetCollectionView.SortDescriptions.Remove(packetCollectionViewSort);
             packetCollectionView.Filter = null;
 
-            errorCollectionView.SortDescriptions.Add(packetCollectionViewSort);
-            errorCollectionView.Filter = errorPacketCollectionViewFilter;
+            errorCollectionView.SortDescriptions.Remove(packetCollectionViewSort);
+            errorCollectionView.Filter = null;
 
             // Add packets to the collection
             foreach (Packet packet in capture.Packets) {
@@ -208,13 +208,8 @@ namespace STAR.View {
             // Re-add the sort description and filter
             packetCollectionView.SortDescriptions.Add(packetCollectionViewSort);
             packetCollectionView.Filter = packetCollectionViewFilter;
-
-            //Put capture's stats data into statisticsMain object
-            //statisticsMain = capture.Stats;
-            // Put capture's stats data into statisticsMain object
-            // Sorry if this is messy, don't hate me Danny pls
-          //statisticsMain = capture.Stats;
-
+            errorCollectionView.SortDescriptions.Add(packetCollectionViewSort);
+            errorCollectionView.Filter = errorPacketCollectionViewFilter;
 
             //Call method to show stats
             displayGeneralStats();

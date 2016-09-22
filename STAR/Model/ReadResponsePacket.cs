@@ -12,6 +12,7 @@ namespace STAR.Model {
         private byte[] m_dataBytes;
         private byte   m_dataCRC;
 
+        public byte   PacketTypeByte { get { return m_packetTypeByte; }}
         public byte   Status { get { return m_status; }}
         public byte   DestinationLogicalAddress { get { return m_destinationLogicalAddress; }}
         public ushort TransactionId { get { return m_transactionId; }}
