@@ -2,6 +2,7 @@
 using Microsoft.Win32;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -251,6 +252,26 @@ namespace STAR.View {
                 //Set source and destination
                 lblPort.Content = selected.EntryPort;
                 lblDestination.Content = selected.ExitPort;
+
+                //Display different data based on packet type
+                //I don't like a long if statement either, but this won't work with a switch case apparently
+                if (selected.PacketType == typeof(WriteCommandPacket))
+                {
+                    
+                }
+                else if (selected.PacketType == typeof(ReadCommandPacket))
+                {
+                    
+                }
+                else if (selected.PacketType == typeof(WriteResponsePacket))
+                {
+                    
+                }
+                else if (selected.PacketType == typeof(ReadResponsePacket))
+                {
+
+                }
+
             }
 
         }
