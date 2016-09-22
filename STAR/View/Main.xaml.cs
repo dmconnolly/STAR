@@ -9,11 +9,10 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using STAR.ViewModel;
 using STAR.Model;
-<<<<<<< HEAD
 using System.Windows.Controls.DataVisualization.Charting;
-=======
+
+
 using ListBox = System.Windows.Forms.ListBox;
->>>>>>> ec732f7634797db91018ed1745e987e150890f61
 
 namespace STAR.View {
     public partial class Main : Window {
@@ -289,8 +288,6 @@ namespace STAR.View {
 
         }
 
-<<<<<<< HEAD
-
             private void GraphGeneration()
             {
 
@@ -326,7 +323,6 @@ namespace STAR.View {
 
         }
 
-=======
         private void ErrorPacketsListView_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             packetNavigation();
@@ -342,6 +338,5 @@ namespace STAR.View {
                 PacketsDataGrid.SelectedItem = p;
             }
         }
->>>>>>> ec732f7634797db91018ed1745e987e150890f61
     }
 }
