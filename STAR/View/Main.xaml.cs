@@ -275,5 +275,21 @@ namespace STAR.View {
             }
 
         }
+
+        private void ErrorPacketsListView_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            packetNavigation();
+        }
+
+        private void packetNavigation()
+        {
+            PacketView p = (PacketView)ErrorPacketsListView.SelectedItem;
+            if (p != null)
+            {
+                PacketsDataGrid.ScrollIntoView(p);
+                PacketsDataGrid.UpdateLayout();
+                PacketsDataGrid.SelectedItem = p;
+            }
+        }
     }
 }
