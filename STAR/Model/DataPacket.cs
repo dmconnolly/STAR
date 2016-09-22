@@ -10,12 +10,16 @@ namespace STAR.Model {
      * the elements which are shared among all four packet types
      */
     class DataPacket : Packet {
-        private ushort m_protocolId;
-        private byte[] m_pathAddress;
-        private byte m_logicalAddress;
-        private string m_endCode;
-        private bool m_valid;
-        private long m_cargoByteCount;
+        protected ushort m_protocolId;
+        protected byte[] m_pathAddress;
+        protected byte m_logicalAddress;
+        protected string m_endCode;
+        protected bool m_valid;
+        protected long m_cargoByteCount;
+
+        protected int m_totalPacketBytes;
+        protected bool m_CRCError = false;
+        protected List<byte> m_remainingBytes;
 
         // Accessors for class member variables
         public ushort Protocol { get { return m_protocolId; }}
@@ -25,10 +29,6 @@ namespace STAR.Model {
         public string EndCode { get { return m_endCode; }}
         public long CargoByteCount { get { return m_cargoByteCount; }}
         public bool CRCError { get { return m_CRCError; } }
-
-        protected int m_totalPacketBytes;
-        protected bool m_CRCError = false;
-        protected List<byte> m_remainingBytes;
 
         // Takes a list of bytes representing the packet
         // returns the Type that the packet should be
@@ -92,6 +92,7 @@ namespace STAR.Model {
         // and whether the packet ended with EOP and not EEP
         public DataPacket(byte entryPort, byte exitPort, string dateString, List<byte> packetBytes, string endCode)
                 : base(entryPort, exitPort, dateString) {
+
             int byteCount = packetBytes.Count;
             m_totalPacketBytes = byteCount;
 

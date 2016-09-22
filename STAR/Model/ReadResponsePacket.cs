@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace STAR.Model {
     class ReadResponsePacket : DataPacket {
+        private byte   m_packetTypeByte;
         private byte   m_status;
         private byte   m_destinationLogicalAddress;
         private ushort m_transactionId;
@@ -25,6 +27,13 @@ namespace STAR.Model {
             int byteIndex = 0;
 
             if(byteIndex >= byteCount) {
+                return;
+            }
+
+            // Packet type
+            m_packetTypeByte = m_remainingBytes[byteIndex];
+
+            if(++byteIndex >= byteCount) {
                 return;
             }
 
@@ -56,7 +65,7 @@ namespace STAR.Model {
             if(2+byteIndex >= byteCount) {
                 return;
             }
-            byteIndex += 2;
+            byteIndex += 1;
 
             // Data length
             {
@@ -73,16 +82,30 @@ namespace STAR.Model {
                 byteIndex += 3;
             }
 
-            // Header RmapCRC
             if(++byteIndex >= byteCount) {
                 return;
             }
+
+            // Header CRC
             m_headerCRC = m_remainingBytes[byteIndex];
+
+            List<byte> headerBytes = new List<byte>(byteIndex+3);
+            headerBytes.Add(m_logicalAddress);
+            headerBytes.Add((byte)m_protocolId);
+            headerBytes.AddRange(m_remainingBytes.Take(byteIndex));
+
+            if(!m_CRCError && !RmapCRC.validCRC(headerBytes.ToArray(), m_headerCRC)) {
+                m_CRCError = true;
+            }
+
+            if(byteIndex + 2 >= byteCount) {
+                return;
+            }
 
             // Data
             {
                 List<byte> tmpBytes = new List<byte>();
-                for(; byteIndex<(byteCount-1); ++byteIndex) {
+                for(++byteIndex; byteIndex < (byteCount - 1); ++byteIndex) {
                     tmpBytes.Add(m_remainingBytes[byteIndex]);
                 }
                 m_dataBytes = tmpBytes.ToArray();
