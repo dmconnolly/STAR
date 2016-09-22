@@ -88,7 +88,8 @@
                             HorizontalAlignment="Left"
                             Grid.Row="1"
                             Grid.Column="1"
-                            BorderThickness="1">
+                            BorderThickness="1"
+                            SelectionChanged="PacketsDataGrid_SelectionChanged">
                         <DataGrid.CellStyle>
                             <Style TargetType="DataGridCell">
                                 <Setter Property="TextBlock.TextAlignment" Value="Center" />
