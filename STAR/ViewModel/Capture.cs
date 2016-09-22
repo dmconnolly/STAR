@@ -181,8 +181,8 @@ namespace STAR.ViewModel {
         }
 
         private int getSequenceIdIndex(List<List<byte>> allPacketBytes) {
-            const int sequenceCountReq = 4;
-            const int bytesToCheck = 4;
+            const int sequenceCountReq = 5;
+            const int bytesToCheck = 10;
             const int packetsToCheck = 6;
             
             for(int i=0; i<(bytesToCheck+1); ++i) {
