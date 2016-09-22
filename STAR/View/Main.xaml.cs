@@ -10,8 +10,6 @@ using System.Windows.Data;
 using STAR.ViewModel;
 using STAR.Model;
 using System.Windows.Controls.DataVisualization.Charting;
-
-
 using ListBox = System.Windows.Forms.ListBox;
 
 namespace STAR.View {
@@ -298,28 +296,35 @@ namespace STAR.View {
             List<int> DataChar_per_Min;
             List<DateTime> Seconds;
 
-            // while (int i = 0; GraphStats(i) != null)
-            //{
-            //Packets_per_Min.Add(GraphStats.NumPacketsInMinute);
-            //Error_per_Min.Add(GraphStats.NumErrorsInMinute);
-            //DataChar_per_Min.add(GraphStats.NumDataCharactersInMinute);
-            //}
+            //PacketsDataGrid.ItemsSource = packetCollectionView; //is the idea of what we want
 
+            while ( !packetCollectionView.CurrentItem.Equals(null))
+            {
+                /*
+            Packets_per_Min.Add( GraphStats.NumPacketsInMinute);
+            Error_per_Min.Add(GraphStats.NumErrorsInMinute);
+            DataChar_per_Min.add(GraphStats.NumDataCharactersInMinute);
+            */
+            }
+
+            
             /*
-            if (ComboBox.SelectedValueProperty != "Packet Rate") {
-                var PacketGraphData = new Tuple<int, DateTime>(Packets_per_Min, Seconds);
+            if ( != "Packet Rate") {
+                //var PacketGraphData = new Tuple<int, DateTime>(Packets_per_Min, Seconds);
             }
             else if (ComboBox.SelectedValueProperty != "Error Rate") {
-                var ErrorGraphData = new Tuple<int, DateTime>(Error_per_Min, Seconds);
+                //var ErrorGraphData = new Tuple<int, DateTime>(Error_per_Min, Seconds);
             }
             else if (ComboBox.SelectedValueProperty != "Data Rate") {
-                var DataCharGraphData = new Tuple<int, DateTime>(DataChar_per_Min, Seconds);
+                //var DataCharGraphData = new Tuple<int, DateTime>(DataChar_per_Min, Seconds);
             }
             else
             {
                 
             }
             */
+
+
 
         }
 

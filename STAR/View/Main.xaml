@@ -277,31 +277,37 @@
                                     <GraphTools:LinearAxis Orientation="Y"></GraphTools:LinearAxis>
                                 </GraphTools:Chart.Axes>
 
-                                <GraphTools:PieSeries                  
+                                <!--
+                                <GraphTools:PieSeries         Name="PIE"         
                                     DependentValueBinding="{Binding Path=Value}"                 
                                     IndependentValueBinding="{Binding Path=Key}"
-                                    ItemsSource="{Binding Source={StaticResource PacketCollectionViewSource}, Path=data}"
+                                    ItemsSource="{Binding Source={DyanmicResource PacketCollectionViewSource}, Path=data}"
                                     >
                                 </GraphTools:PieSeries>
-
-                                <GraphTools:LineSeries                  
+                                -->
+                                
+                                <GraphTools:LineSeries        Name="LINE"          
                                     DependentValueBinding="{Binding Path=Value}"                 
                                     IndependentValueBinding="{Binding Path=Key}"
-                                    ItemsSource="{Binding Source={StaticResource PacketCollectionViewSource}, Path=data}"
+                                    DataContext="{DynamicResource PacketCollectionViewSource}"
+                                    ItemsSource="{Binding}"
                                     >
+                                   
                                 </GraphTools:LineSeries>
 
-                                <GraphTools:BarSeries                  
+                                <GraphTools:BarSeries          Name="BAR"        
                                     DependentValueBinding="{Binding Path=Value}"                 
                                     IndependentValueBinding="{Binding Path=Key}"
-                                    ItemsSource="{Binding Source={StaticResource PacketCollectionViewSource}, Path=data}"
-                                    >
+                                    DataContext="{DynamicResource PacketCollectionViewSource}"
+                                    ItemsSource="{Binding}"
+                                                               >
                                 </GraphTools:BarSeries>
 
-                                <GraphTools:AreaSeries                  
+                                <GraphTools:AreaSeries           Name="AREA"       
                                     DependentValueBinding="{Binding Path=Value}"                 
                                     IndependentValueBinding="{Binding Path=Key}"
-                                    ItemsSource="{Binding Source={StaticResource PacketCollectionViewSource}, Path=data}"
+                                    DataContext="{DynamicResource PacketCollectionViewSource}"
+                                    ItemsSource="{Binding}"
                                     >
                                 </GraphTools:AreaSeries>
                                 
