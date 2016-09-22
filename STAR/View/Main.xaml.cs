@@ -209,13 +209,6 @@ namespace STAR.View {
             packetCollectionView.SortDescriptions.Add(packetCollectionViewSort);
             packetCollectionView.Filter = packetCollectionViewFilter;
 
-            //Put capture's stats data into statisticsMain object
-            //statisticsMain = capture.Stats;
-            // Put capture's stats data into statisticsMain object
-            // Sorry if this is messy, don't hate me Danny pls
-          //statisticsMain = capture.Stats;
-
-
             //Call method to show stats
             displayGeneralStats();
         }
@@ -249,6 +242,8 @@ namespace STAR.View {
             lblTotalPackets.Content = stats.PacketCount;
             lblTotalErrors.Content = stats.ErrorMessageCount;
             lblTotalDataCharacters.Content = stats.TotalByteCount;
+            lblStartTime.Content = capture.GetStartTime.ToString("hh:mm:ss:fff"); 
+            lblEndTime.Content = capture.GetEndTime.ToString("hh:mm:ss:fff"); 
         }
     }
 }
