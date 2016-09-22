@@ -1,12 +1,14 @@
 ﻿using System;
 using Microsoft.Win32;
 using System.Collections.ObjectModel;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using STAR.ViewModel;
 using STAR.Model;
+using System.Windows.Controls.DataVisualization.Charting;
 
 namespace STAR.View {
     public partial class Main : Window {
@@ -254,5 +256,42 @@ namespace STAR.View {
             }
 
         }
+
+
+            private void GraphGeneration()
+            {
+
+            Statistics GraphStats = capture.Stats;
+
+            List<int> Packets_per_Min;
+            List<int> Error_per_Min;
+            List<int> DataChar_per_Min;
+            List<DateTime> Seconds;
+
+            // while (int i = 0; GraphStats(i) != null)
+            //{
+            //Packets_per_Min.Add(GraphStats.NumPacketsInMinute);
+            //Error_per_Min.Add(GraphStats.NumErrorsInMinute);
+            //DataChar_per_Min.add(GraphStats.NumDataCharactersInMinute);
+            //}
+
+            /*
+            if (ComboBox.SelectedValueProperty != "Packet Rate") {
+                var PacketGraphData = new Tuple<int, DateTime>(Packets_per_Min, Seconds);
+            }
+            else if (ComboBox.SelectedValueProperty != "Error Rate") {
+                var ErrorGraphData = new Tuple<int, DateTime>(Error_per_Min, Seconds);
+            }
+            else if (ComboBox.SelectedValueProperty != "Data Rate") {
+                var DataCharGraphData = new Tuple<int, DateTime>(DataChar_per_Min, Seconds);
+            }
+            else
+            {
+                
+            }
+            */
+
+        }
+
     }
 }
