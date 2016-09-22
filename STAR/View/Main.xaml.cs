@@ -175,7 +175,7 @@ namespace STAR.View {
             packetCollectionView.Filter = packetCollectionViewFilter;
 
             //Put capture's stats data into statisticsMain object
-            statisticsMain = capture.Stats;
+            //statisticsMain = capture.Stats;
             // Put capture's stats data into statisticsMain object
             // Sorry if this is messy, don't hate me Danny pls
             statisticsMain = capture.Stats;

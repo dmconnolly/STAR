@@ -67,18 +67,22 @@ namespace STAR.View
              *              if (matchedSecond == false) {
              *                  secondForPacket[pointer] = packetView.m_timeInSeconds;
              *              }
-             * }
+             *     }
              * for (i = 0; i < list.size(); i++)
              * value.Add(i, elem.at);
              */
 
-
+            //Note: Pull statistics from Capture Class, not from Statistics
             Chart graph = this.FindName("XyChart") as Chart;
+            //if (graphInput = "Error Rate") {
+            //graph.Series["Error Rate"].Points[0].Title = "Number of Seconds";
+            //graph.Series["Error Rate"].Points[1].Title = "Number of Errors";
+            //}
             //graph.DataSource = value 
             //graph.Series[""].Xvalues = "key";
             //graph.Series[""].Yvalues = "value";
 
-            
+
         }
     }
 }

@@ -32,6 +32,14 @@ namespace STAR.Model {
             }
         }
 
+        public DateTime TimeStampInSeconds
+        {
+            get
+            {
+                return m_timeInSeconds;
+            }
+        }
+
         public static string timeString(DateTime dateTime) {
             return string.Format("{0:" + timeFormatInput + "}", dateTime);
         }
