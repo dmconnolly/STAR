@@ -208,6 +208,7 @@ namespace STAR.View {
             lblPacketRate.Content = stats.TotalPacketsPerSecond;
             lblTotalPackets.Content = stats.PacketCount;
             lblTotalErrors.Content = stats.ErrorMessageCount;
+            lblTotalDataCharacters.Content = stats.TotalByteCount;
         }
     }
 }
