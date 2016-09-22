@@ -16,10 +16,14 @@ namespace STAR.View
             InitializeComponent();
 
             Capture statisticCapture = new Capture();
-            Statistics statistics = statisticCapture.Stats; 
-
+            Statistics statistics = statisticCapture.Stats;
+            
+             
+            
             //Note: Pull statistics from Capture Class, not from Statistics
             Chart graph = this.FindName("XyChart") as Chart;
+
+            
             //if (graphInput = "Error Rate") {
             //graph.Series["Error Rate"].Points[0].Title = "Number of Seconds";
             //graph.Series["Error Rate"].Points[1].Title = "Number of Errors";

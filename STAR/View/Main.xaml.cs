@@ -50,11 +50,13 @@ namespace STAR.View {
         public Main() {
             InitializeComponent();
 
+
             // Packet collection
             packetView = new ObservableCollection<PacketView>();
 
             // Packet capture
             capture = new Capture();
+            
 
             // File dialog
             openFileDialog = new OpenFileDialog();
@@ -232,7 +234,8 @@ namespace STAR.View {
         }
 
         //When Filter button is pressed (used for filtering different errors
-        private void Button_OnClick(object sender, RoutedEventArgs e) {
+        private void Button_OnClick(object sender, RoutedEventArgs e)
+        {
             RefreshPacketDataGridFilter();
         }
 
