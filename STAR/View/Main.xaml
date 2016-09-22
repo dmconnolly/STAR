@@ -88,6 +88,10 @@
                                         <Setter Property="TextBlock.TextAlignment" Value="Center" />
                                         <Setter Property="BorderThickness" Value="0" />
                                         <Style.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter Property="FontWeight" Value="Bold" />
+                                                <Setter Property="Foreground" Value="White" />
+                                            </Trigger>
                                             <MultiDataTrigger>
                                                 <MultiDataTrigger.Conditions>
                                                     <Condition Binding="{Binding DataPacket}" Value="true" />
