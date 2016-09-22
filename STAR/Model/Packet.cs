@@ -8,7 +8,7 @@ namespace STAR.Model {
         private byte m_entryPort;
         private byte m_exitPort;
         private DateTime m_timestamp;
-        private DateTime m_timeInSeconds;
+        private DateTime m_timeInMinutes;
 
         // Gets the source port
         public byte EntryPort {
@@ -32,12 +32,9 @@ namespace STAR.Model {
             }
         }
 
-        public DateTime TimeStampInSeconds
+        public DateTime TimeStampInMinutes
         {
-            get
-            {
-                return m_timeInSeconds;
-            }
+            get { return m_timeInMinutes; }
         }
 
         public static string timeString(DateTime dateTime) {
@@ -56,7 +53,8 @@ namespace STAR.Model {
             m_timestamp = parseDateString(dateString);
 
             // Gets the time with the milliseconds cut off
-            m_timeInSeconds = m_timestamp.AddMilliseconds(0 - m_timestamp.Millisecond);
+            m_timeInMinutes = TimeStampInMinutes.AddSeconds(0 - TimeStampInMinutes.Second);
+            m_timeInMinutes = TimeStampInMinutes.AddMilliseconds(0 - TimeStampInMinutes.Millisecond);
         }
 
         // Parse the date string and return a DateTime

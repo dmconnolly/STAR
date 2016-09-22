@@ -16,10 +16,10 @@ namespace STAR.ViewModel {
         private double m_totalPacketsPerSecond;
         private double m_totalErrorsPerSecond;
         private double m_totalBytesPerSecond;
-        private int[] m_numPacketsInSecond;
-        private int[] m_numErrorsInSecond;
-        private long[] m_numDataCharactersInSecond;
-        private DateTime[] m_secondsForStatistics;
+        private int[] m_numPacketsInMinute;
+        private int[] m_numErrorsInMinute;
+        private long[] m_numDataCharactersInMinute;
+        private DateTime[] m_minutesForStatistics;
 
         // Accessors for class member variables
         public long PacketCount { get { return m_packetCount; }}
@@ -31,17 +31,17 @@ namespace STAR.ViewModel {
         public double TotalPacketsPerSecond { get { return m_totalPacketsPerSecond; }}
         public double TotalErrorsPerSecond { get { return m_totalErrorsPerSecond; }}
         public double TotalBytesPerSecond { get { return m_totalBytesPerSecond; }}
-        public long[] NumDataCharactersInSecond { get { return m_numDataCharactersInSecond; } }
-        public int[] NumErrorsInSecond {get { return m_numErrorsInSecond; }}
-        public int[] NumPacketsInSecond { get { return m_numPacketsInSecond;} }
-        public DateTime[] SecondsForStatistics {  get { return m_secondsForStatistics; } }
+        public long[] NumDataCharactersInMinute { get { return m_numDataCharactersInMinute; } }
+        public int[] NumErrorsInMinute {get { return m_numErrorsInMinute; }}
+        public int[] NumPacketsInMinute { get { return m_numPacketsInMinute;} }
+        public DateTime[] MinutesForStatistics {  get { return m_minutesForStatistics; } }
         
 
         public Statistics() {
-            m_numPacketsInSecond = new int[1];
-            m_numErrorsInSecond = new int[1];
-            m_numDataCharactersInSecond = new long[1];
-            m_secondsForStatistics = new DateTime[2];
+            m_numPacketsInMinute = new int[1];
+            m_numErrorsInMinute = new int[1];
+            m_numDataCharactersInMinute = new long[1];
+            m_minutesForStatistics = new DateTime[2];
             Clear();
         }
 
@@ -50,7 +50,7 @@ namespace STAR.ViewModel {
         {
             int pointer = 0;
             bool matchedSecond;
-            m_secondsForStatistics[0] = DateTime.MinValue;
+            m_minutesForStatistics[0] = DateTime.MinValue;
             Clear();
 
 
@@ -80,22 +80,22 @@ namespace STAR.ViewModel {
                         do
                         {
                             
-                            if (packet.TimeStampInSeconds == m_secondsForStatistics[pointer])
+                            if (packet.TimeStampInMinutes== m_minutesForStatistics[pointer])
                             {
-                                m_numPacketsInSecond[pointer]++;
-                                m_numDataCharactersInSecond[pointer] = m_numDataCharactersInSecond[pointer] + (packet as DataPacket).CargoByteCount;
+                                m_numPacketsInMinute[pointer]++;
+                                m_numDataCharactersInMinute[pointer] = m_numDataCharactersInMinute[pointer] + (packet as DataPacket).CargoByteCount;
                                 matchedSecond = true;
                             }
                             pointer++;
-                        } while ((m_secondsForStatistics[pointer] != DateTime.MinValue) && (matchedSecond != true));
+                        } while ((pointer < m_minutesForStatistics.Length) && (matchedSecond != true));
                         if (matchedSecond == false)
                         {
-                            Array.Resize<DateTime>(ref m_secondsForStatistics, m_secondsForStatistics.Length + 1);
-                            Array.Resize<int>(ref m_numPacketsInSecond, m_secondsForStatistics.Length + 1);
-                            Array.Resize<long>(ref m_numDataCharactersInSecond, m_secondsForStatistics.Length + 1);
-                            m_secondsForStatistics[pointer] = packet.TimeStampInSeconds;
-                            m_numDataCharactersInSecond[pointer] = (packet as DataPacket).CargoByteCount;
-                            m_numPacketsInSecond[pointer]++;
+                            Array.Resize<DateTime>(ref m_minutesForStatistics, m_minutesForStatistics.Length + 1);
+                            Array.Resize<int>(ref m_numPacketsInMinute, m_minutesForStatistics.Length + 1);
+                            Array.Resize<long>(ref m_numDataCharactersInMinute, m_minutesForStatistics.Length + 1);
+                            m_minutesForStatistics[pointer] = packet.TimeStampInMinutes;
+                            m_numDataCharactersInMinute[pointer] = (packet as DataPacket).CargoByteCount;
+                            m_numPacketsInMinute[pointer]++;
                         }
                     }
                     else
@@ -105,22 +105,22 @@ namespace STAR.ViewModel {
                         do
                         {
 
-                            if (packet.TimeStampInSeconds == m_secondsForStatistics[pointer])
+                            if (packet.TimeStampInMinutes == m_minutesForStatistics[pointer])
                             {
-                                m_numDataCharactersInSecond[pointer] = m_numDataCharactersInSecond[pointer] + (packet as DataPacket).CargoByteCount;
+                                m_numDataCharactersInMinute[pointer] = m_numDataCharactersInMinute[pointer] + (packet as DataPacket).CargoByteCount;
                                 matchedSecond = true;
                             }
                             pointer++;
-                        } while ((m_secondsForStatistics[pointer] != DateTime.MinValue) && (matchedSecond != true));
+                        } while ((pointer < m_minutesForStatistics.Length) && (matchedSecond != true));
                         if (matchedSecond == false)
                         {
-                            Array.Resize<DateTime>(ref m_secondsForStatistics, m_secondsForStatistics.Length + 1);
-                            Array.Resize<int>(ref m_numPacketsInSecond, m_secondsForStatistics.Length + 1);
-                            Array.Resize<long>(ref m_numDataCharactersInSecond, m_secondsForStatistics.Length + 1);
-                            Array.Resize<int>(ref m_numErrorsInSecond, m_secondsForStatistics.Length + 1);
-                            m_secondsForStatistics[pointer] = packet.TimeStampInSeconds;
-                            m_numDataCharactersInSecond[pointer] = (packet as DataPacket).CargoByteCount;
-                            m_numPacketsInSecond[pointer]++;
+                            Array.Resize<DateTime>(ref m_minutesForStatistics, m_minutesForStatistics.Length + 1);
+                            Array.Resize<int>(ref m_numPacketsInMinute, m_minutesForStatistics.Length + 1);
+                            Array.Resize<long>(ref m_numDataCharactersInMinute, m_minutesForStatistics.Length + 1);
+                            Array.Resize<int>(ref m_numErrorsInMinute, m_minutesForStatistics.Length + 1);
+                            m_minutesForStatistics[pointer] = packet.TimeStampInMinutes;
+                            m_numDataCharactersInMinute[pointer] = (packet as DataPacket).CargoByteCount;
+                            m_numPacketsInMinute[pointer]++;
                         }
                         m_invalidPacketCount++;
                     }
@@ -135,20 +135,21 @@ namespace STAR.ViewModel {
                     matchedSecond = false;
                     do
                     {
-                        if (packet.TimeStampInSeconds == m_secondsForStatistics[pointer])
+                        if (packet.TimeStampInMinutes == m_minutesForStatistics[pointer])
                         {
-                            m_numErrorsInSecond[pointer]++;
+                            m_numErrorsInMinute[pointer]++;
                             matchedSecond = true;
                         }
                         pointer++;
-                    } while ((pointer < m_numErrorsInSecond.Length) && (matchedSecond != true));
+                    } while ((pointer < m_minutesForStatistics.Length) && (matchedSecond != true));
                     if (matchedSecond == false)
                     {
-                        Array.Resize<DateTime>(ref m_secondsForStatistics, m_secondsForStatistics.Length + 1);
-                        Array.Resize<int>(ref m_numPacketsInSecond, m_secondsForStatistics.Length + 1);
-                        Array.Resize<long>(ref m_numDataCharactersInSecond, m_secondsForStatistics.Length + 1);
-                        Array.Resize<int>(ref m_numErrorsInSecond, m_secondsForStatistics.Length + 1);
-                        m_secondsForStatistics[pointer] = packet.TimeStampInSeconds;
+                        Array.Resize<DateTime>(ref m_minutesForStatistics, m_minutesForStatistics.Length + 1);
+                        Array.Resize<int>(ref m_numPacketsInMinute, m_minutesForStatistics.Length + 1);
+                        Array.Resize<long>(ref m_numDataCharactersInMinute, m_minutesForStatistics.Length + 1);
+                        Array.Resize<int>(ref m_numErrorsInMinute, m_minutesForStatistics.Length + 1);
+                        m_minutesForStatistics[pointer] = packet.TimeStampInMinutes;
+                        m_numErrorsInMinute[pointer] = 1;
                     }
                 }
                 // Calculate some stats based on what we've worked out so far
@@ -264,14 +265,14 @@ namespace STAR.ViewModel {
             m_totalPacketsPerSecond = 0;
             m_totalErrorsPerSecond = 0;
             m_totalBytesPerSecond = 0;
-            Array.Clear(m_numDataCharactersInSecond, 0, m_numDataCharactersInSecond.Length);
-            Array.Clear(m_numErrorsInSecond, 0, m_numErrorsInSecond.Length);
-            Array.Clear(m_numPacketsInSecond, 0, NumPacketsInSecond.Length);
-            Array.Clear(m_secondsForStatistics, 0, m_secondsForStatistics.Length);
-            Array.Resize<int>(ref m_numErrorsInSecond, 1);
-            Array.Resize<DateTime>(ref m_secondsForStatistics, 2);
-            Array.Resize<int>(ref m_numPacketsInSecond, 1);
-            Array.Resize<long>(ref m_numDataCharactersInSecond, 1);
+            Array.Clear(m_numDataCharactersInMinute, 0, m_numDataCharactersInMinute.Length);
+            Array.Clear(m_numErrorsInMinute, 0, m_numErrorsInMinute.Length);
+            Array.Clear(m_numPacketsInMinute, 0, NumPacketsInMinute.Length);
+            Array.Clear(m_minutesForStatistics, 0, m_minutesForStatistics.Length);
+            Array.Resize<int>(ref m_numErrorsInMinute, 1);
+            Array.Resize<DateTime>(ref m_minutesForStatistics, 2);
+            Array.Resize<int>(ref m_numPacketsInMinute, 1);
+            Array.Resize<long>(ref m_numDataCharactersInMinute, 1);
         }
 
         public void print() {
