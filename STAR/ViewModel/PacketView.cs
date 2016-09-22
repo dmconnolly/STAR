@@ -19,6 +19,7 @@ namespace STAR.ViewModel {
         public string Message          { get; private set; }
         public string EndCode          { get; private set; }
         public bool   Valid            { get; private set; }
+        public bool   CRCError         { get; private set; }
 
         public byte   DestinationKey       { get; private set; }
         public byte[] SourcePathAddress    { get; private set; }
@@ -60,6 +61,12 @@ namespace STAR.ViewModel {
             EndCode = (packet as DataPacket).EndCode;
             Valid = (packet as DataPacket).Valid;
             Message = Valid ? "" : "No EOP";
+
+            CRCError = (packet as DataPacket).CRCError;
+            if(CRCError) {
+                Message = "CRC Error";
+                Valid = false;
+            }
 
             if(PacketType == typeof(NonRmapPacket)) {
                 NonRmapPacket pkt = packet as NonRmapPacket;

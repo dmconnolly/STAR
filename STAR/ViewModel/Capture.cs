@@ -22,6 +22,8 @@ namespace STAR.ViewModel {
         public Packet[] Packets { get { return m_packets.ToArray(); }}
         public Statistics Stats { get { return m_stats; }}
         public byte[] PortsLoaded { get { return m_portsLoaded.ToArray(); }}
+        public DateTime GetStartTime { get { return startTime; }}
+        public DateTime GetEndTime { get { return endTime; } }
 
         // Constructor
         public Capture() {

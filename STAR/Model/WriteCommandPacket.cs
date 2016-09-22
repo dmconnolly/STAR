@@ -15,7 +15,7 @@ namespace STAR.Model {
         private byte[] m_dataBytes;
         private byte   m_dataCRC;
 
-        public byte   PacketTypeByte { get { return m_destinationKey; } }
+        public byte   PacketTypeByte { get { return m_packetTypeByte; }}
         public byte   DestinationKey { get { return m_destinationKey; }}
         public byte[] SourcePathAddress { get { return m_sourcePathAddress; }}
         public byte   SourceLogicalAddress { get { return m_sourceLogicalAddress; }}

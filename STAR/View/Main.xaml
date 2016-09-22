@@ -266,6 +266,10 @@
                     <Label x:Name="lblErrorRate" Content="---" Grid.Column="3" Margin="0,0,45,1" Grid.Row="3"/>
                     <Label Content="e/s" Grid.Column="3" Margin="43,0,0,1" Grid.Row="3"/>
                     <Label Content="bytes/s" Grid.Column="3" Margin="32,0,0,1" Grid.Row="2"/>
+                    <Label Content="Start Time" HorizontalAlignment="Left" Grid.Row="5" VerticalAlignment="Top"/>
+                    <Label Content="End Time" Grid.Column="2" HorizontalAlignment="Left" Grid.Row="5" VerticalAlignment="Top"/>
+                    <Label x:Name="lblStartTime" Content="---" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="5" VerticalAlignment="Top" RenderTransformOrigin="-0.105,0" Height="28" Width="84"/>
+                    <Label x:Name="lblEndTime" Content="---" Grid.Column="3" HorizontalAlignment="Left" Grid.Row="5" VerticalAlignment="Top" Width="83"/>
                 </Grid>
             </Grid>
         </Grid>
