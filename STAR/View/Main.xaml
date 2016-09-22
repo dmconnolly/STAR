@@ -186,10 +186,10 @@
                                     <Label Grid.Row="4" Grid.Column="2" Margin="0,0,0,10">Destination</Label>
                                     <Label Grid.Row="6" Grid.Column="0" Margin="0,0,0,10">Contents</Label>
                                     <TextBox x:Name="txtContents" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="3" Margin="0,0,0,10" IsReadOnly="True"/>
-                                    <Button x:Name="btnPrevious" Grid.Row="7" Grid.Column="0" Width="100" HorizontalAlignment="Left">
+                                    <Button x:Name="btnPrevious" Grid.Row="7" Grid.Column="0" Width="100" HorizontalAlignment="Left" Click="btnPrevious_Click">
                                         Previous
                                     </Button>
-                                    <Button x:Name="btnNext" Grid.Row="7" Grid.Column="3" Width="100" HorizontalAlignment="Right">
+                                    <Button x:Name="btnNext" Grid.Row="7" Grid.Column="3" Width="100" HorizontalAlignment="Right" Click="btnNext_Click">
                                         Next
                                     </Button>
                                     <Label x:Name="lblTimestamp" Content="13-09-2016 14:33:02.453" Grid.Column="1" Margin="0,1,10,0" Grid.Row="1" Grid.ColumnSpan="3"/>

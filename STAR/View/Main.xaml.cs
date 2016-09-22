@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using STAR.ViewModel;
 using STAR.Model;
+using ListBox = System.Windows.Forms.ListBox;
 
 namespace STAR.View {
     public partial class Main : Window {
@@ -202,6 +203,9 @@ namespace STAR.View {
 
             //Call method to show stats
             displayGeneralStats();
+
+            //Select first packet in the grid
+            PacketsDataGrid.SelectedIndex = 0;
         }
 
         // When files are loaded, this method is called
@@ -217,6 +221,21 @@ namespace STAR.View {
         private void Help_Click(object sender, RoutedEventArgs e) {
             Help helpWindow = new Help();
             helpWindow.Show();
+        }
+
+        //Navigating to next packet
+        private void btnNext_Click(object sender, RoutedEventArgs e)
+        {
+            PacketsDataGrid.SelectedIndex++;
+        }
+
+        //Navigating to previous packet
+        private void btnPrevious_Click(object sender, RoutedEventArgs e)
+        {
+            if (PacketsDataGrid.SelectedIndex >= 1)
+            {
+                PacketsDataGrid.SelectedIndex--;
+            }
         }
 
         //When Filter button is pressed (used for filtering different errors
