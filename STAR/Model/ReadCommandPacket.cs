@@ -11,14 +11,14 @@ namespace STAR.Model {
         private uint   m_dataLength;
         private byte   m_headerCRC;
 
-        public byte DestinationKey { get { return m_destinationKey; }}
+        public byte   DestinationKey { get { return m_destinationKey; }}
         public byte[] SourcePathAddress { get { return m_sourcePathAddress; }}
-        public byte SourceLogicalAddress { get { return m_sourceLogicalAddress; }}
+        public byte   SourceLogicalAddress { get { return m_sourceLogicalAddress; }}
         public ushort TransactionId { get { return m_transactionId; }}
-        public byte ExtendedWriteAddress { get { return m_extendedWriteAddress; }}
-        public uint ReadAddress { get { return m_readAddress; }}
-        public uint DataLength { get { return m_dataLength; }}
-        public byte HeaderCRC { get { return m_headerCRC; }}
+        public byte   ExtendedWriteAddress { get { return m_extendedWriteAddress; }}
+        public uint   ReadAddress { get { return m_readAddress; }}
+        public uint   DataLength { get { return m_dataLength; }}
+        public byte   HeaderCRC { get { return m_headerCRC; }}
 
         public ReadCommandPacket(byte entryPort, byte exitPort, string dateString, List<byte> packetBytes, string endCode)
                 : base(entryPort, exitPort, dateString, packetBytes, endCode) {

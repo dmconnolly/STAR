@@ -47,7 +47,6 @@ namespace STAR.ViewModel {
 
             PacketType = packet.GetType();
 
-
             if(PacketType == typeof(ErrorPacket)) {
                 // Error packet
                 PacketTypeString = "Error";
@@ -62,7 +61,10 @@ namespace STAR.ViewModel {
             Valid = (packet as DataPacket).Valid;
             Message = Valid ? "" : "No EOP";
 
-            if(PacketType == typeof(WriteCommandPacket)) {
+            if(PacketType == typeof(NonRmapPacket)) {
+                NonRmapPacket pkt = packet as NonRmapPacket;
+                PacketTypeString = "Non RMAP";
+            } else if(PacketType == typeof(WriteCommandPacket)) {
                 WriteCommandPacket pkt = packet as WriteCommandPacket;
                 PacketTypeString = "Write command";
                 DestinationKey = pkt.DestinationKey;
@@ -94,7 +96,6 @@ namespace STAR.ViewModel {
                 DataLength = pkt.DataLength;
                 HeaderCRC = pkt.HeaderCRC;
             } else {
-                // Read response
                 ReadResponsePacket pkt = packet as ReadResponsePacket;
                 PacketTypeString = "Read response";
                 Status = pkt.Status;

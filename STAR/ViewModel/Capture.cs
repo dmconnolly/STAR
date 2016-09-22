@@ -39,7 +39,7 @@ namespace STAR.ViewModel {
             string[] lines;
             {
                 List<string> linesList = File.ReadLines(@path).ToList();
-                linesList.RemoveAll(String.IsNullOrEmpty);
+                linesList.RemoveAll(string.IsNullOrEmpty);
                 lines = linesList.ToArray();
             }
             int lineCount = lines.Length;
@@ -47,6 +47,10 @@ namespace STAR.ViewModel {
             DateTime endTime = DateTime.MinValue;
             byte entryPort;
             byte exitPort;
+
+            List<string> allPacketTimes = new List<string>();
+            List<string> allPacketEndMarkers = new List<string>();
+            List<List<byte>> allPacketBytes = new List<List<byte>>();
 
             if(lineCount >= 2) {
                 int lineIndex = 0;
@@ -117,19 +121,9 @@ namespace STAR.ViewModel {
                             packetBytes.Add(Convert.ToByte(byteStringSplit[i], 16));
                         }
 
-                        Type packetType = DataPacket.GetType(packetBytes);
-                        dynamic packet = Activator.CreateInstance(
-                            packetType,
-                            new object[] {
-                                entryPort,
-                                exitPort,
-                                time,
-                                packetBytes,
-                                endCode
-                            }
-                        );
-
-                        m_packets.Add(packet);
+                        allPacketTimes.Add(time);
+                        allPacketBytes.Add(packetBytes);
+                        allPacketEndMarkers.Add(endCode);
                     } else {
                         // Unknown start code
                         // throw error?
@@ -138,6 +132,33 @@ namespace STAR.ViewModel {
 
                     ++lineIndex;
                 }
+                
+                int sequenceIndex = tryGetSequenceIdIndex(allPacketBytes);
+                bool rmapPackets = sequenceIndex < 0;
+
+                for(int i=0; i<allPacketBytes.Count; i++) {
+                    if(rmapPackets) {
+                        Type packetType = DataPacket.GetRmapPacketType(allPacketBytes[i]);
+                        dynamic packet = Activator.CreateInstance(
+                            packetType,
+                            new object[] {
+                                entryPort,
+                                exitPort,
+                                allPacketTimes[i],
+                                allPacketBytes[i],
+                                allPacketEndMarkers[i]
+                            }
+                        );
+                        m_packets.Add(packet);
+                    } else {
+                        NonRmapPacket packet = new NonRmapPacket(
+                            entryPort, exitPort, allPacketTimes[i],
+                            allPacketBytes[i], allPacketEndMarkers[i],
+                            sequenceIndex
+                        );
+                        m_packets.Add(packet);
+                    }
+                }
             }
 
             // Sort packet by timestamp (DateTime Ticks)
@@ -145,6 +166,45 @@ namespace STAR.ViewModel {
 
             // Collect statistics
             m_stats.collect(startTime, endTime, m_packets);
+        }
+
+        private int tryGetSequenceIdIndex(List<List<byte>> allPacketBytes) {
+            const int sequenceCountReq = 4;
+            const int bytesToCheck = 5;
+            const int packetsToCheck = 6;
+            
+            for(int i=1; i<(bytesToCheck+1); ++i) {
+                byte sequenceCount = 0;
+                byte lastValue = 0;
+                byte firstValue = 0;
+
+                for(int j=0; j<packetsToCheck; ++j) {
+                    List<byte> packetBytes = allPacketBytes[j];
+                    if(i >= packetBytes.Count()) {
+                        return -1;
+                    }
+
+                    if(j == 0) {
+                        firstValue = packetBytes[i];
+                        lastValue = firstValue;
+                    } else {
+                        if((packetBytes[i] == firstValue+j) ||
+                                ((lastValue == 255) && (packetBytes[i] == 0))) {
+                            ++sequenceCount;
+                            lastValue = packetBytes[i];
+                            if(lastValue == 255) {
+                                firstValue = (byte)(0 - j);
+                            }
+                        } else {
+                            break;
+                        }
+                    }
+                    if(sequenceCount >= sequenceCountReq) {
+                        return i;
+                    }
+                }
+            }
+            return -1;
         }
     }
 }

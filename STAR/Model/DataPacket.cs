@@ -24,7 +24,7 @@ namespace STAR.Model {
         public bool Valid { get { return m_valid; }}
         public string EndCode { get { return m_endCode; }}
         public long CargoByteCount { get { return m_cargoByteCount; }}
-        protected bool CRCError { get { return m_CRCError; } }
+        public bool CRCError { get { return m_CRCError; } }
 
         protected bool m_CRCError = false;
         protected List<byte> m_remainingBytes;
@@ -32,7 +32,7 @@ namespace STAR.Model {
         // Takes a list of bytes representing the packet
         // returns the Type that the packet should be
         // used when parsing a file and storing packet data
-        public static Type GetType(List<byte> packetBytes) {
+        public static Type GetRmapPacketType(List<byte> packetBytes) {
             int i=0;
             for(; i<packetBytes.Count(); ++i) {
                 if(packetBytes[i] >= 32) {
@@ -123,8 +123,9 @@ namespace STAR.Model {
                     }
 
                     m_protocolId = (ushort)(
-                        m_remainingBytes[2+byteIndex] +
-                        (m_remainingBytes[1+byteIndex] << 8));
+                        packetBytes[2+byteIndex] +
+                        (packetBytes[1+byteIndex] << 8)
+                    );
 
                     byteIndex += 2;
                 }
