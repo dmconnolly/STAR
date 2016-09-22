@@ -251,10 +251,12 @@ namespace STAR.View {
 
         //Method for displaying packet data when clicked on datagrid
         private void PacketsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            Console.WriteLine("Yooo!");
-            
-            //For now, just changing the timestamp
+        {   
+            //Get current packet
+            PacketView selected = (PacketView)PacketsDataGrid.SelectedItem;
+
+            //Set timestamp
+            lblTimestamp.Content = selected.TimeString;
 
         }
     }
