@@ -273,23 +273,12 @@ namespace STAR.View {
                 lblDestination.Content = selected.ExitPort;
 
                 //Display different data based on packet type
-                //I don't like a long if statement either, but this won't work with a switch case apparently
-                if (selected.PacketType == typeof(WriteCommandPacket))
+                //Non-errors have protocol ID, destination path address and destination logical address
+                if (selected.PacketType != typeof(ErrorPacket))
                 {
                     
                 }
-                else if (selected.PacketType == typeof(ReadCommandPacket))
-                {
-                    
-                }
-                else if (selected.PacketType == typeof(WriteResponsePacket))
-                {
-                    
-                }
-                else if (selected.PacketType == typeof(ReadResponsePacket))
-                {
-
-                }
+                
 
             }
 
