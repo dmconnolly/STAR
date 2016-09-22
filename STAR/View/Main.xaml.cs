@@ -208,11 +208,9 @@ namespace STAR.View {
             // Re-add the sort description and filter
             packetCollectionView.SortDescriptions.Add(packetCollectionViewSort);
             packetCollectionView.Filter = packetCollectionViewFilter;
-<<<<<<< HEAD
-=======
+
             errorCollectionView.SortDescriptions.Add(packetCollectionViewSort);
             errorCollectionView.Filter = errorPacketCollectionViewFilter;
->>>>>>> f4bfd2583294bdbaff58d034c8dfc518cbdaaf24
 
             //Call method to show stats
             displayGeneralStats();
