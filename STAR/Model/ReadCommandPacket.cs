@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace STAR.Model {
     class ReadCommandPacket : DataPacket {
+        private byte   m_packetTypeByte;
         private byte   m_destinationKey;
         private byte[] m_sourcePathAddress;
         private byte   m_sourceLogicalAddress;
@@ -11,6 +13,7 @@ namespace STAR.Model {
         private uint   m_dataLength;
         private byte   m_headerCRC;
 
+        public byte   PacketTypeByte { get { return m_packetTypeByte; }}
         public byte   DestinationKey { get { return m_destinationKey; }}
         public byte[] SourcePathAddress { get { return m_sourcePathAddress; }}
         public byte   SourceLogicalAddress { get { return m_sourceLogicalAddress; }}
@@ -29,6 +32,13 @@ namespace STAR.Model {
             int byteIndex = 0;
 
             if(byteIndex >= byteCount) {
+                return;
+            }
+
+            // Packet type
+            m_packetTypeByte = m_remainingBytes[byteIndex];
+
+            if(++byteIndex >= byteCount) {
                 return;
             }
 
@@ -107,12 +117,21 @@ namespace STAR.Model {
                 byteIndex += 3;
             }
 
-            // Header RmapCRC
             if(++byteIndex >= byteCount) {
                 return;
             }
 
+            // Header CRC
             m_headerCRC = m_remainingBytes[byteIndex];
+
+            List<byte> headerBytes = new List<byte>(byteIndex + 3);
+            headerBytes.Add(m_logicalAddress);
+            headerBytes.Add((byte)m_protocolId);
+            headerBytes.AddRange(m_remainingBytes.Take(byteIndex));
+
+            if(!m_CRCError && !RmapCRC.validCRC(headerBytes.ToArray(), m_headerCRC)) {
+                m_CRCError = true;
+            }
 
             m_remainingBytes = null;
         }
