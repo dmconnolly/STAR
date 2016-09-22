@@ -26,13 +26,14 @@ namespace STAR.Model {
         public long CargoByteCount { get { return m_cargoByteCount; }}
         public bool CRCError { get { return m_CRCError; } }
 
+        protected int m_totalPacketBytes;
         protected bool m_CRCError = false;
         protected List<byte> m_remainingBytes;
 
         // Takes a list of bytes representing the packet
         // returns the Type that the packet should be
         // used when parsing a file and storing packet data
-        public static Type GetRmapPacketType(List<byte> packetBytes) {
+        public static Type GetPacketType(List<byte> packetBytes) {
             int i=0;
             for(; i<packetBytes.Count(); ++i) {
                 if(packetBytes[i] >= 32) {
@@ -42,6 +43,10 @@ namespace STAR.Model {
 
             if(++i >= packetBytes.Count()) {
                 return typeof(DataPacket);
+            }
+
+            if(packetBytes[i] > 1) {
+                return typeof(NonRmapPacket);
             }
 
             byte flagsByte;
@@ -87,7 +92,8 @@ namespace STAR.Model {
         // and whether the packet ended with EOP and not EEP
         public DataPacket(byte entryPort, byte exitPort, string dateString, List<byte> packetBytes, string endCode)
                 : base(entryPort, exitPort, dateString) {
-            long byteCount = packetBytes.Count;
+            int byteCount = packetBytes.Count;
+            m_totalPacketBytes = byteCount;
 
             // Parse packet bytes for address (up to and including first byte >= 32)
             List<byte> addressBytes = new List<byte>();
@@ -103,11 +109,6 @@ namespace STAR.Model {
             }
 
             m_pathAddress = addressBytes.ToArray();
-
-            // Store the rest of the packet bytes in address class member array
-            if(++byteIndex >= byteCount) {
-                return;
-            }
 
             // Next byte is logical address
             m_logicalAddress = packetBytes[byteIndex];

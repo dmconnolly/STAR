@@ -52,6 +52,8 @@ namespace STAR.Model {
 
             // Reply RmapCRC
             m_replyCRC = m_remainingBytes[byteIndex];
+
+            m_remainingBytes = null;
         }
     }
 }

@@ -148,39 +148,41 @@ namespace STAR.ViewModel {
 
                     ++lineIndex;
                 }
-                
-                int sequenceIndex = tryGetSequenceIdIndex(allPacketBytes);
-                bool rmapPackets = sequenceIndex < 0;
 
+                int sequenceIdIndex = -1;
                 for(int i=0; i<allPacketBytes.Count; i++) {
-                    if(rmapPackets) {
-                        Type packetType = DataPacket.GetRmapPacketType(allPacketBytes[i]);
-                        dynamic packet = Activator.CreateInstance(
-                            packetType,
-                            new object[] {
-                                entryPort,
-                                exitPort,
-                                allPacketTimes[i],
-                                allPacketBytes[i],
-                                allPacketEndMarkers[i]
-                            }
-                        );
-                        m_packets.Add(packet);
+                    Type packetType = DataPacket.GetPacketType(allPacketBytes[i]);
+                    object[] args;
+                    if(packetType == typeof(NonRmapPacket)) {
+                        if(sequenceIdIndex == -1) {
+                            sequenceIdIndex = getSequenceIdIndex(allPacketBytes);
+                        }
+                        args = new object[] {
+                            entryPort,
+                            exitPort,
+                            allPacketTimes[i],
+                            allPacketBytes[i],
+                            allPacketEndMarkers[i],
+                            sequenceIdIndex
+                        };
                     } else {
-                        NonRmapPacket packet = new NonRmapPacket(
-                            entryPort, exitPort, allPacketTimes[i],
-                            allPacketBytes[i], allPacketEndMarkers[i],
-                            sequenceIndex
-                        );
-                        m_packets.Add(packet);
+                        args = new object[] {
+                            entryPort,
+                            exitPort,
+                            allPacketTimes[i],
+                            allPacketBytes[i],
+                            allPacketEndMarkers[i]
+                        };
                     }
+                    dynamic packet = Activator.CreateInstance(packetType, args);
+                    m_packets.Add(packet);
                 }
             }
         }
 
-        private int tryGetSequenceIdIndex(List<List<byte>> allPacketBytes) {
+        private int getSequenceIdIndex(List<List<byte>> allPacketBytes) {
             const int sequenceCountReq = 4;
-            const int bytesToCheck = 5;
+            const int bytesToCheck = 4;
             const int packetsToCheck = 6;
             
             for(int i=0; i<(bytesToCheck+1); ++i) {
@@ -197,6 +199,7 @@ namespace STAR.ViewModel {
                     int k = 0;
                     for(; k<packetBytes.Count(); ++k) {
                         if(packetBytes[k] >= 32) {
+                            ++k;
                             break;
                         }
                     }
@@ -205,7 +208,7 @@ namespace STAR.ViewModel {
                         firstValue = packetBytes[k+i];
                         lastValue = firstValue;
                     } else {
-                        if((packetBytes[i] == firstValue+j) ||
+                        if((packetBytes[k+i] == firstValue + j) ||
                                 ((lastValue == 255) && (packetBytes[k+i] == 0))) {
                             ++sequenceCount;
                             lastValue = packetBytes[k+i];
@@ -217,7 +220,7 @@ namespace STAR.ViewModel {
                         }
                     }
                     if(sequenceCount >= sequenceCountReq) {
-                        return k;
+                        return k+i;
                     }
                 }
             }

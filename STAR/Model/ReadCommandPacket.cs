@@ -111,7 +111,10 @@ namespace STAR.Model {
             if(++byteIndex >= byteCount) {
                 return;
             }
+
             m_headerCRC = m_remainingBytes[byteIndex];
+
+            m_remainingBytes = null;
         }
     }
 }

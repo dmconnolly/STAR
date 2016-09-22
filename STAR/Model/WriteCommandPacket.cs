@@ -133,6 +133,8 @@ namespace STAR.Model {
             if(!m_CRCError && !RmapCRC.validCRC(DataBytes, m_dataCRC)) {
                 m_CRCError = true;
             }
+
+            m_remainingBytes = null;
         }
     }
 }
