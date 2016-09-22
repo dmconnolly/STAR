@@ -151,7 +151,6 @@ namespace STAR.ViewModel {
                         m_secondsForStatistics[pointer] = packet.TimeStampInSeconds;
                     }
                 }
-
                 // Calculate some stats based on what we've worked out so far
                 m_measurementTimeSeconds = (endTime.Ticks - startTime.Ticks)/ticksPerSecond;
                 m_totalPacketsPerSecond = m_packetCount/m_measurementTimeSeconds;
@@ -247,6 +246,11 @@ namespace STAR.ViewModel {
                 //  m_statisticQuality[4] = 3; Console.WriteLine("The rate of data character generation is low, which would suggest a lot of disconnection errors.");
                 //}
             }
+            // Calculate some stats based on what we've worked out so far
+            m_measurementTimeSeconds = (endTime - startTime).TotalSeconds;
+            m_totalPacketsPerSecond = m_packetCount / m_measurementTimeSeconds;
+            m_totalErrorsPerSecond = m_errorMessageCount / m_measurementTimeSeconds;
+            m_totalBytesPerSecond = m_totalByteCount / m_measurementTimeSeconds;
         }
 
         // Clear the statistics

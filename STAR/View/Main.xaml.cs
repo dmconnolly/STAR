@@ -13,27 +13,36 @@ namespace STAR.View {
         // Storage for all data read in from files and processed
         private Capture capture;
 
-        //Bring statistics from capture into main
-        private Statistics statisticsMain;
-
         // File selection dialog
         private OpenFileDialog openFileDialog;
+
         // ObservableCollection allows external code to be notified
         // when changes are made to the collection. This means that
         // when we add packets to the collection, the UI is updated.
         private ObservableCollection<PacketView> packetView;
+
         // Interface to the packet collection which is bound to the
         // UI and supports filtering, sorting and grouping. For this
         // reason we bind to this instead of the ObservableCollection
         private ICollectionView packetCollectionView;
+
+
+        private ICollectionView errorCollectionView;
+
         // Sorting method for CollectionViewSource
         private SortDescription packetCollectionViewSort;
+
         // Filter predicate for packet collection view
         private Predicate<object> packetCollectionViewFilter;
-        //Filter predicate for packet errors
+
+        // Filter predicate for packet error view
         private Predicate<object> lvPacketViewFilter;
+
+        private Predicate<object> errorPacketCollectionViewFilter;
+
         //Interface to the packet errors, which currently displays all errors and their types
         private ICollectionView lvpacketCollectionView;
+
         // Array of checkboxes for port filters
         // used when updating packet view filter
         private CheckBox[] portFilterCheckbox;
@@ -57,6 +66,12 @@ namespace STAR.View {
             // Packet collection view
             packetCollectionView = CollectionViewSource.GetDefaultView(packetView);
             lvpacketCollectionView = CollectionViewSource.GetDefaultView(packetView);
+            
+            errorCollectionView = new CollectionViewSource
+            {
+                Source = packetView
+            }.View;
+
 
             // Packet collection view sort description
             packetCollectionViewSort = new SortDescription(
@@ -100,8 +115,26 @@ namespace STAR.View {
                 return portFilterCheckbox[pktView.EntryPort - 1].IsChecked == true ? true : false;
             };
 
+            errorPacketCollectionViewFilter = item =>
+            {
+                PacketView pktView = item as PacketView;
+                if (packetView == null)
+                {
+                    return false;
+                }
+                // If the checkbox for the errors is checked
+                if (!pktView.PacketTypeString.Equals("Error"))
+                {
+                    return false;
+                }
+
+                return portFilterCheckbox[pktView.EntryPort - 1].IsChecked == true ? true : false;
+            };
+
             // Apply filter to packet collection view
             packetCollectionView.Filter = packetCollectionViewFilter;
+
+            errorCollectionView.Filter = errorPacketCollectionViewFilter;
 
             // Bind WPF DataGrid to the packet collection view.
             // Now, whenever the packet collection is modified or
@@ -110,7 +143,7 @@ namespace STAR.View {
             // INotifyPropertyChanged callback.
             PacketsDataGrid.ItemsSource = packetCollectionView;
 
-            lvPacketsView.ItemsSource = lvpacketCollectionView;
+        //ErrorPacketsListView.ItemsSource = errorCollectionView;
 
             // Set up array of port filter checkboxes
             portFilterCheckbox = new CheckBox[8] {
@@ -138,9 +171,7 @@ namespace STAR.View {
 
                 BackgroundWorker bgWorker = new BackgroundWorker();
                 bgWorker.DoWork += delegate {
-                    foreach(string filename in openFileDialog.FileNames) {
-                        capture.processFile(filename);
-                    }
+                    capture.processFiles(openFileDialog.FileNames);
                 };
                 bgWorker.RunWorkerCompleted += ParseFileWorkerCompleted;
                 bgWorker.RunWorkerAsync();
@@ -155,6 +186,7 @@ namespace STAR.View {
         // Refresh packet filtering
         private void RefreshPacketDataGridFilter() {
             packetCollectionView.Refresh();
+            errorCollectionView.Refresh();
         }
 
         // Once all files are parsed, update packet collection
@@ -165,8 +197,11 @@ namespace STAR.View {
             packetCollectionView.SortDescriptions.Remove(packetCollectionViewSort);
             packetCollectionView.Filter = null;
 
+            errorCollectionView.SortDescriptions.Add(packetCollectionViewSort);
+            errorCollectionView.Filter = errorPacketCollectionViewFilter;
+
             // Add packets to the collection
-            foreach(Packet packet in capture.Packets) {
+            foreach (Packet packet in capture.Packets) {
                 packetView.Add(new PacketView(packet));
             }
 
@@ -178,7 +213,8 @@ namespace STAR.View {
             //statisticsMain = capture.Stats;
             // Put capture's stats data into statisticsMain object
             // Sorry if this is messy, don't hate me Danny pls
-            statisticsMain = capture.Stats;
+          //statisticsMain = capture.Stats;
+
 
             //Call method to show stats
             displayGeneralStats();
@@ -206,12 +242,13 @@ namespace STAR.View {
 
         //Method for loading in overall statistics
         private void displayGeneralStats() {
-            lblDataRate.Content = statisticsMain.TotalBytesPerSecond;
-            lblErrorRate.Content = statisticsMain.TotalErrorsPerSecond;
-            lblPacketRate.Content = statisticsMain.TotalPacketsPerSecond;
-            lblTotalPackets.Content = statisticsMain.PacketCount;
-            lblTotalErrors.Content = statisticsMain.ErrorMessageCount;
+            Statistics stats = capture.Stats;
+            lblDataRate.Content = stats.TotalBytesPerSecond;
+            lblErrorRate.Content = stats.TotalErrorsPerSecond;
+            lblPacketRate.Content = stats.TotalPacketsPerSecond;
+            lblTotalPackets.Content = stats.PacketCount;
+            lblTotalErrors.Content = stats.ErrorMessageCount;
+            lblTotalDataCharacters.Content = stats.TotalByteCount;
         }
-
     }
 }
