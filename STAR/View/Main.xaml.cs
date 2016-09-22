@@ -13,27 +13,31 @@ namespace STAR.View {
         // Storage for all data read in from files and processed
         private Capture capture;
 
-        //Bring statistics from capture into main
-        private Statistics statisticsMain;
-
         // File selection dialog
         private OpenFileDialog openFileDialog;
+
         // ObservableCollection allows external code to be notified
         // when changes are made to the collection. This means that
         // when we add packets to the collection, the UI is updated.
         private ObservableCollection<PacketView> packetView;
+
         // Interface to the packet collection which is bound to the
         // UI and supports filtering, sorting and grouping. For this
         // reason we bind to this instead of the ObservableCollection
         private ICollectionView packetCollectionView;
+
         // Sorting method for CollectionViewSource
         private SortDescription packetCollectionViewSort;
+
         // Filter predicate for packet collection view
         private Predicate<object> packetCollectionViewFilter;
-        //Filter predicate for packet errors
+
+        // Filter predicate for packet error view
         private Predicate<object> lvPacketViewFilter;
+
         //Interface to the packet errors, which currently displays all errors and their types
         private ICollectionView lvpacketCollectionView;
+
         // Array of checkboxes for port filters
         // used when updating packet view filter
         private CheckBox[] portFilterCheckbox;
@@ -172,12 +176,6 @@ namespace STAR.View {
             packetCollectionView.SortDescriptions.Add(packetCollectionViewSort);
             packetCollectionView.Filter = packetCollectionViewFilter;
 
-            //Put capture's stats data into statisticsMain object
-            statisticsMain = capture.Stats;
-            // Put capture's stats data into statisticsMain object
-            // Sorry if this is messy, don't hate me Danny pls
-            statisticsMain = capture.Stats;
-
             //Call method to show stats
             displayGeneralStats();
         }
@@ -204,11 +202,12 @@ namespace STAR.View {
 
         //Method for loading in overall statistics
         private void displayGeneralStats() {
-            lblDataRate.Content = statisticsMain.TotalBytesPerSecond;
-            lblErrorRate.Content = statisticsMain.TotalErrorsPerSecond;
-            lblPacketRate.Content = statisticsMain.TotalPacketsPerSecond;
-            lblTotalPackets.Content = statisticsMain.PacketCount;
-            lblTotalErrors.Content = statisticsMain.ErrorMessageCount;
+            Statistics stats = capture.Stats;
+            lblDataRate.Content = stats.TotalBytesPerSecond;
+            lblErrorRate.Content = stats.TotalErrorsPerSecond;
+            lblPacketRate.Content = stats.TotalPacketsPerSecond;
+            lblTotalPackets.Content = stats.PacketCount;
+            lblTotalErrors.Content = stats.ErrorMessageCount;
         }
     }
 }
