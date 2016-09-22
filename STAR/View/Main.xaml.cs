@@ -240,8 +240,15 @@ namespace STAR.View {
             //Get current packet
             PacketView selected = (PacketView)PacketsDataGrid.SelectedItem;
 
-            //Set timestamp
-            lblTimestamp.Content = selected.TimeString;
+            if (selected != null)
+            {
+                //Set timestamp
+                lblTimestamp.Content = selected.TimeString;
+
+                //Set source and destination
+                lblPort.Content = selected.EntryPort;
+                lblDestination.Content = selected.ExitPort;
+            }
 
         }
     }
