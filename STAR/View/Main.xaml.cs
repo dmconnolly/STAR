@@ -138,9 +138,7 @@ namespace STAR.View {
 
                 BackgroundWorker bgWorker = new BackgroundWorker();
                 bgWorker.DoWork += delegate {
-                    foreach(string filename in openFileDialog.FileNames) {
-                        capture.processFile(filename);
-                    }
+                    capture.processFiles(openFileDialog.FileNames);
                 };
                 bgWorker.RunWorkerCompleted += ParseFileWorkerCompleted;
                 bgWorker.RunWorkerAsync();
@@ -212,6 +210,5 @@ namespace STAR.View {
             lblTotalPackets.Content = statisticsMain.PacketCount;
             lblTotalErrors.Content = statisticsMain.ErrorMessageCount;
         }
-
     }
 }

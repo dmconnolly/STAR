@@ -15,6 +15,9 @@ namespace STAR.ViewModel {
         private Statistics m_stats; // Storage of statistics for the whole data set
         private List<byte> m_portsLoaded; // List of the entry ports we have loaded data from
 
+        private DateTime startTime = DateTime.MinValue;
+        private DateTime endTime = DateTime.MinValue;
+
         // Accessors for class member data
         public Packet[] Packets { get { return m_packets.ToArray(); }}
         public Statistics Stats { get { return m_stats; }}
@@ -29,13 +32,28 @@ namespace STAR.ViewModel {
 
         // Clears any stored packet data
         public void Clear() {
+            startTime = DateTime.MinValue;
+            endTime = DateTime.MinValue;
             m_packets.Clear();
             m_stats.Clear();
             m_portsLoaded.Clear();
         }
 
+        // Process an array of files
+        public void processFiles(string[] paths) {
+            foreach(string path in paths) {
+                processFile(path);
+            }
+
+            // Sort packet by timestamp (DateTime Ticks)
+            m_packets.OrderBy(packet => packet.TimeStamp);
+
+            // Collect statistics
+            m_stats.collect(startTime, endTime, m_packets);
+        }
+
         // Processes a file and extracts the packet data
-        public void processFile(string path) {
+        private void processFile(string path) {
             string[] lines;
             {
                 List<string> linesList = File.ReadLines(@path).ToList();
@@ -43,8 +61,6 @@ namespace STAR.ViewModel {
                 lines = linesList.ToArray();
             }
             int lineCount = lines.Length;
-            DateTime startTime = DateTime.MinValue;
-            DateTime endTime = DateTime.MinValue;
             byte entryPort;
             byte exitPort;
 
@@ -160,12 +176,6 @@ namespace STAR.ViewModel {
                     }
                 }
             }
-
-            // Sort packet by timestamp (DateTime Ticks)
-            m_packets.OrderBy(packet => packet.TimeStamp);
-
-            // Collect statistics
-            m_stats.collect(startTime, endTime, m_packets);
         }
 
         private int tryGetSequenceIdIndex(List<List<byte>> allPacketBytes) {
@@ -173,7 +183,7 @@ namespace STAR.ViewModel {
             const int bytesToCheck = 5;
             const int packetsToCheck = 6;
             
-            for(int i=1; i<(bytesToCheck+1); ++i) {
+            for(int i=0; i<(bytesToCheck+1); ++i) {
                 byte sequenceCount = 0;
                 byte lastValue = 0;
                 byte firstValue = 0;
@@ -184,14 +194,21 @@ namespace STAR.ViewModel {
                         return -1;
                     }
 
+                    int k = 0;
+                    for(; k<packetBytes.Count(); ++k) {
+                        if(packetBytes[k] >= 32) {
+                            break;
+                        }
+                    }
+
                     if(j == 0) {
-                        firstValue = packetBytes[i];
+                        firstValue = packetBytes[k+i];
                         lastValue = firstValue;
                     } else {
                         if((packetBytes[i] == firstValue+j) ||
-                                ((lastValue == 255) && (packetBytes[i] == 0))) {
+                                ((lastValue == 255) && (packetBytes[k+i] == 0))) {
                             ++sequenceCount;
-                            lastValue = packetBytes[i];
+                            lastValue = packetBytes[k+i];
                             if(lastValue == 255) {
                                 firstValue = (byte)(0 - j);
                             }
@@ -200,7 +217,7 @@ namespace STAR.ViewModel {
                         }
                     }
                     if(sequenceCount >= sequenceCountReq) {
-                        return i;
+                        return k;
                     }
                 }
             }
