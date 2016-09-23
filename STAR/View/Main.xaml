@@ -21,20 +21,12 @@
                 <MenuItem Header="_Open Files" Click="OpenFilesButton_Click"/>
                 <MenuItem Header="_Exit"/>
             </MenuItem>
-            <MenuItem Header="_Options">
-                <!-- Empty -->
-            </MenuItem>
-            <MenuItem Header="_Tools">
-                <MenuItem Header="_Manage users"/>
-                <MenuItem Header="_Display Error Causes" />
-                <MenuItem Header="_Show groups" IsCheckable="True" IsChecked="True" />
-            </MenuItem>
             <MenuItem Header="_Help" Click="Help_Click">
                 <!-- Empty -->
             </MenuItem>
         </Menu>
-        <TabControl Grid.Row="1" Margin="0,10,0,0">
-            <TabItem Header="Packet View" Height="24" Margin="-2,-2,-1.8,0" VerticalAlignment="Top">
+        <TabControl Grid.Row="1" Margin="10,10,10,10">
+            <TabItem Header="Packet View" VerticalAlignment="Top">
                 <Grid Margin="10">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -191,7 +183,11 @@
                                         <WrapPanel>
                                             <TextBlock Text="{Binding Path=TimeString}"/>
                                             <TextBlock Text=" " />
-                                            <TextBlock Text="{Binding Path=Message}" />
+                                            <TextBlock Text="{Binding Path=EntryPort}" Foreground="Blue"/>
+                                            <TextBlock Text="-" Foreground="Blue" />
+                                            <TextBlock Text="{Binding Path=ExitPort}" Foreground="Blue"/>
+                                            <TextBlock Text=" " />
+                                            <TextBlock Text="{Binding Path=Message}" Foreground="Red"/>
                                         </WrapPanel>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
@@ -200,7 +196,7 @@
                     </Grid>
                 </Grid>
             </TabItem>
-            <TabItem Header="Graph View" Height="22" Margin="-2.2,-2,-2,0" VerticalAlignment="Top">
+            <TabItem Header="Graph View" VerticalAlignment="Top">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="1*"/>
