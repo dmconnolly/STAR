@@ -83,6 +83,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Extensions\RangeObservableCollection.cs" />
     <Compile Include="Model\NonRmapPacket.cs" />
     <Compile Include="Model\RmapCRC.cs" />
     <Compile Include="Model\ReadResponsePacket.cs" />
