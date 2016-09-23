@@ -21,16 +21,7 @@
                 <MenuItem Header="_Open Files" Click="OpenFilesButton_Click"/>
                 <MenuItem Header="_Exit"/>
             </MenuItem>
-            <MenuItem Header="_Options">
-                <!-- Empty -->
-            </MenuItem>
-            <MenuItem Header="_Tools">
-                <MenuItem Header="_Manage users"/>
-                <MenuItem Header="_Display Error Causes" />
-                <MenuItem Header="_Show groups" IsCheckable="True" IsChecked="True" />
-            </MenuItem>
             <MenuItem Header="_Help" Click="Help_Click">
-                <!-- Empty -->
             </MenuItem>
         </Menu>
         <TabControl Grid.Row="1" Margin="0,10,0,0">
@@ -66,11 +57,10 @@
                             </StackPanel>
 
                             <DataGrid
-                                    DataContext="{DynamicResource PacketCollectionViewSource}"
-                                    ItemsSource="{Binding}"
                                     AutoGenerateColumns="False"
                                     Name="PacketsDataGrid"
                                     FontSize="15"
+                                    IsReadOnly="True"
                                     CanUserAddRows="False"
                                     CanUserDeleteRows="False" 
                                     CanUserResizeColumns="False"
@@ -78,7 +68,6 @@
                                     CanUserSortColumns="False"
                                     HeadersVisibility="Column"
                                     HorizontalAlignment="Left"
-                                    IsReadOnly="True"
                                     Grid.Row="0"
                                     Grid.Column="1"
                                     SelectionChanged="PacketsDataGrid_SelectionChanged"

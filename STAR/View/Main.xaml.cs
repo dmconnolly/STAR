@@ -277,9 +277,9 @@ namespace STAR.View {
         //Method for loading in overall statistics
         private void displayGeneralStats() {
             Statistics stats = capture.Stats;
-            lblDataRate.Content = stats.TotalBytesPerSecond;
-            lblErrorRate.Content = stats.TotalErrorsPerSecond;
-            lblPacketRate.Content = stats.TotalPacketsPerSecond;
+            lblDataRate.Content = stats.TotalBytesPerSecond.ToString("F");
+            lblErrorRate.Content = stats.TotalErrorsPerSecond.ToString("F");
+            lblPacketRate.Content = stats.TotalPacketsPerSecond.ToString("F");
             lblTotalPackets.Content = stats.PacketCount;
             lblTotalErrors.Content = stats.ErrorMessageCount;
             lblTotalDataCharacters.Content = stats.TotalByteCount;
