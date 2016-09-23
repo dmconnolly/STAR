@@ -1,5 +1,7 @@
-﻿using STAR.Model;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using STAR.Model;
 using System;
+using System.Windows;
 
 namespace STAR.ViewModel {
     /*
@@ -120,6 +122,24 @@ namespace STAR.ViewModel {
                 DataBytes = pkt.DataBytes;
                 DataCRC = pkt.DataCRC;
             }
+        }
+    }
+    [TestClass]
+    public class PacketViewTester
+    {
+        [TestMethod]
+        public void testVariableGetters()
+        {
+            PacketView testPacketView = new PacketView();
+
+            bool isAccurate = false;
+
+            if (testPacketView.CRCError == false && testPacketView.Valid == false && testPacketView.DataPacket == false)
+            {
+                isAccurate = true;
+            }
+
+            Assert.IsTrue(isAccurate);
         }
     }
 }

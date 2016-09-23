@@ -9,8 +9,11 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using STAR.ViewModel;
 using STAR.Model;
+using System.Windows.Controls.DataVisualization.Charting;
+using ListBox = System.Windows.Forms.ListBox;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using STAR.Extensions;
-using OxyPlot;
+//using Oxyplot;
 
 namespace STAR.View {
     public partial class Main : Window {
@@ -48,6 +51,7 @@ namespace STAR.View {
         public IList<DataPoint> packetRatePoints { get; private set; }
         public IList<DataPoint> dataRatePoints { get; private set; }
         public IList<DataPoint> errorRatePoints { get; private set; }
+        public bool loadTester;
 
         public Main() {
             InitializeComponent();
@@ -159,7 +163,9 @@ namespace STAR.View {
         }
 
         // Allow user to select files to parse using file dialog
-        private void OpenFilesButton_Click(object sender, RoutedEventArgs e) {
+        private void OpenFilesButton_Click(object sender, RoutedEventArgs e)
+        {
+            loadTester = false;
             if(openFileDialog.ShowDialog() == true) {
                 capture.Clear();
                 packetView.Clear();
@@ -179,6 +185,8 @@ namespace STAR.View {
                 };
                 bgWorker.RunWorkerCompleted += ParseFileWorkerCompleted;
                 bgWorker.RunWorkerAsync();
+
+                loadTester = true;
             }
         }
 
@@ -277,9 +285,9 @@ namespace STAR.View {
         //Method for loading in overall statistics
         private void displayGeneralStats() {
             Statistics stats = capture.Stats;
-            lblDataRate.Content = stats.TotalBytesPerSecond;
-            lblErrorRate.Content = stats.TotalErrorsPerSecond;
-            lblPacketRate.Content = stats.TotalPacketsPerSecond;
+            lblDataRate.Content = stats.TotalBytesPerSecond.ToString("F");
+            lblErrorRate.Content = stats.TotalErrorsPerSecond.ToString("F");
+            lblPacketRate.Content = stats.TotalPacketsPerSecond.ToString("F");
             lblTotalPackets.Content = stats.PacketCount;
             lblTotalErrors.Content = stats.ErrorMessageCount;
             lblTotalDataCharacters.Content = stats.TotalByteCount;
@@ -299,31 +307,40 @@ namespace STAR.View {
         }
 
         private void drawGraphs() {
-            BackgroundWorker[] workers = new BackgroundWorker[3];
+            packetRatePoints.Clear();
+            //packetRatePoints.Add(new DataPoint(1, 6));
+            //packetRatePoints.Add(new DataPoint(2, 4));
+            //packetRatePoints.Add(new DataPoint(3, 12));
+            //packetRatePoints.Add(new DataPoint(4, 12));
+            //packetRatePoints.Add(new DataPoint(5, 15));
+            //packetRatePoints.Add(new DataPoint(6, 9));
+            Console.WriteLine("Here");
+            BackgroundWorker[] workers = {
+                new BackgroundWorker(),
+                new BackgroundWorker(),
+                new BackgroundWorker()
+            };
 
-            workers[0] = new BackgroundWorker();
             workers[0].DoWork += delegate {
                 packetRatePoints.Clear();
-                foreach(DataPoint point in Graphing.getPacketRatePoints(capture)) {
-                    packetRatePoints.Add(point);
+                foreach(OxyPlot.DataPoint point in Graphing.getGraphPoints(capture, Graphing.GraphType.PacketRate)) {
+                    //packetRatePoints.Add(point);
                 }
             };
             workers[0].RunWorkerAsync();
 
-            workers[1] = new BackgroundWorker();
             workers[1].DoWork += delegate {
-                packetRatePoints.Clear();
-                foreach(DataPoint point in Graphing.getDataRatePoints(capture)) {
-                    dataRatePoints.Add(point);
+                dataRatePoints.Clear();
+                foreach(OxyPlot.DataPoint point in Graphing.getGraphPoints(capture, Graphing.GraphType.DataRate)) {
+                    //dataRatePoints.Add(point);
                 }
             };
             workers[1].RunWorkerAsync();
 
-            workers[2] = new BackgroundWorker();
             workers[2].DoWork += delegate {
-                packetRatePoints.Clear();
-                foreach(DataPoint point in Graphing.getErrorRatePoints(capture)) {
-                    errorRatePoints.Add(point);
+                errorRatePoints.Clear();
+                foreach(OxyPlot.DataPoint point in Graphing.getGraphPoints(capture, Graphing.GraphType.ErrorRate)) {
+                    //errorRatePoints.Add(point);
                 }
             };
             workers[2].RunWorkerAsync();
@@ -362,5 +379,65 @@ namespace STAR.View {
             string returnString = Convert.ToString(singleByte);
             return returnString;
         }
+
+        [TestClass]
+        public class MainTester
+        {
+            [TestMethod]
+            public void testFileLoading()
+            {
+                bool loadTester = false;
+                Assert.IsTrue(loadTester);
+            }
+
+            [TestMethod]
+            public void testClearing()
+            {
+                bool clearTester = false;
+                Assert.IsFalse(clearTester);
+            }
+
+            [TestMethod]
+            public void testHelp()
+            {
+                bool helpTester = true;
+                Assert.IsTrue(helpTester);
+            }
+
+            [TestMethod]
+            public void testGraph()
+            {
+                bool graphTester = true;
+                Assert.IsFalse(graphTester);
+            }
+
+            [TestMethod]
+            public void testRefresh()
+            {
+                bool refreshTester = true;
+                Assert.IsTrue(refreshTester);
+            }
+
+            [TestMethod]
+            public void testNavigation()
+            {
+                bool navigationTester = true;
+                Assert.IsFalse(navigationTester);
+            }
+
+            [TestMethod]
+            public void testFilter()
+            {
+                bool filterTester = false;
+                Assert.IsFalse(filterTester);
+            }
+
+            [TestMethod]
+            public void testConverter()
+            {
+                bool converterTester = false;
+                Assert.IsTrue(converterTester);
+            }
+    }
     }
 }
