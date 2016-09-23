@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Win32;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
@@ -24,6 +25,8 @@ namespace STAR.View {
         // when we add packets to the collection, the UI is updated.
         private RangeObservableCollection<PacketView> packetView;
 
+        private RangeObservableCollection<KeyValuePair<string, string>> packetProperties;
+
         // Interface to the packet collection which is bound to the
         // UI and supports filtering, sorting and grouping. For this
         // reason we bind to this instead of the ObservableCollection
@@ -45,6 +48,7 @@ namespace STAR.View {
         public IList<DataPoint> packetRatePoints { get; private set; }
         public IList<DataPoint> dataRatePoints { get; private set; }
         public IList<DataPoint> errorRatePoints { get; private set; }
+        public bool loadTester;
 
         public Main() {
             InitializeComponent();
@@ -58,6 +62,12 @@ namespace STAR.View {
 
             // Packet collection
             packetView = new RangeObservableCollection<PacketView>();
+
+            //Individual packet properties
+            packetProperties = new RangeObservableCollection<KeyValuePair<string, string>>();
+
+            //For individual packets
+            IndividualPacketGrid.DataContext = this;
 
             // Packet capture
             capture = new Capture();
@@ -140,6 +150,9 @@ namespace STAR.View {
             // Same for status view
             ErrorPacketsListView.ItemsSource = errorCollectionView;
 
+            //For individual packets
+            IndividualPacketGrid.ItemsSource = packetProperties;
+
             // Set up array of port filter checkboxes
             portFilterCheckbox = new CheckBox[8] {
                 ChkPort1, ChkPort2,
@@ -150,7 +163,9 @@ namespace STAR.View {
         }
 
         // Allow user to select files to parse using file dialog
-        private void OpenFilesButton_Click(object sender, RoutedEventArgs e) {
+        private void OpenFilesButton_Click(object sender, RoutedEventArgs e)
+        {
+            loadTester = false;
             if(openFileDialog.ShowDialog() == true) {
                 capture.Clear();
                 packetView.Clear();
@@ -170,6 +185,8 @@ namespace STAR.View {
                 };
                 bgWorker.RunWorkerCompleted += ParseFileWorkerCompleted;
                 bgWorker.RunWorkerAsync();
+
+                loadTester = true;
             }
         }
 
@@ -280,46 +297,55 @@ namespace STAR.View {
 
         //Method for displaying packet data when clicked on datagrid
         private void PacketsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {   
-            ////Get current packet
-            //PacketView selected = (PacketView)PacketsDataGrid.SelectedItem;
+        {
+            packetProperties.Clear();
 
-            //if (selected != null)
-            //{
-            //    //Set timestamp
-            //    lblTimestamp.Content = selected.TimeString;
+            //Get current packet
+            PacketView selected = (PacketView)PacketsDataGrid.SelectedItem;
 
-            //    //Set source and destination
-            //    lblPort.Content = selected.EntryPort;
-            //    lblDestination.Content = selected.ExitPort;
+            if(selected == null) {
+                return;
+            }
 
-            //    //Display different data based on packet type
-            //    //Non-errors have protocol ID, destination path address and destination logical address
-            //    if (selected.PacketType != typeof(ErrorPacket))
-            //    {
-            //        //Write and read commands have data in bytes
-            //        if (selected.PacketType == typeof(WriteCommandPacket) ||
-            //            selected.PacketType == typeof(ReadCommandPacket))
-            //        {
-            //            txtContents.Text = byteToString(selected.DataBytes);
-                        
-            //            lblSourcePathAddress.Content = byteToString(selected.SourceLogicalAddress);
-            //            Console.WriteLine(byteToString(selected.SourcePathAddress));
-            //            //lblDestinationPathAddress.Content = byteToString(selected.DestinationLogicalAddress);
-            //        }
-            //        else
-            //        {
-            //            txtContents.Text = "";
-            //        }
-            //    }
-            //    else if (selected.PacketType == typeof(ErrorPacket))
-            //    {
-                    
-            //    }
-            //}
+            //Add packet properties to collection
+            packetProperties.Add(new KeyValuePair<string, string>("Timestamp", selected.TimeString));
+            packetProperties.Add(new KeyValuePair<string, string>("Entry Port",byteToString(selected.EntryPort)));
+            packetProperties.Add(new KeyValuePair<string, string>("Exit Port", byteToString(selected.ExitPort)));
+
+
+            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
+            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
+            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
+            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
+            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
+            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
+            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
+            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
+            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
+            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
+            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
+            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
+            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
+            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
+            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
+            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
+            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
+            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
+            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
+            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
+            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
+
         }
 
         private void drawGraphs() {
+            packetRatePoints.Clear();
+            //packetRatePoints.Add(new DataPoint(1, 6));
+            //packetRatePoints.Add(new DataPoint(2, 4));
+            //packetRatePoints.Add(new DataPoint(3, 12));
+            //packetRatePoints.Add(new DataPoint(4, 12));
+            //packetRatePoints.Add(new DataPoint(5, 15));
+            //packetRatePoints.Add(new DataPoint(6, 9));
+            Console.WriteLine("Here");
             BackgroundWorker[] workers = {
                 new BackgroundWorker(),
                 new BackgroundWorker(),
@@ -328,24 +354,24 @@ namespace STAR.View {
 
             workers[0].DoWork += delegate {
                 packetRatePoints.Clear();
-                foreach(DataPoint point in Graphing.getGraphPoints(capture, Graphing.GraphType.PacketRate)) {
-                    packetRatePoints.Add(point);
+                foreach(OxyPlot.DataPoint point in Graphing.getGraphPoints(capture, Graphing.GraphType.PacketRate)) {
+                    //packetRatePoints.Add(point);
                 }
             };
             workers[0].RunWorkerAsync();
 
             workers[1].DoWork += delegate {
                 dataRatePoints.Clear();
-                foreach(DataPoint point in Graphing.getGraphPoints(capture, Graphing.GraphType.DataRate)) {
-                    dataRatePoints.Add(point);
+                foreach(OxyPlot.DataPoint point in Graphing.getGraphPoints(capture, Graphing.GraphType.DataRate)) {
+                    //dataRatePoints.Add(point);
                 }
             };
             workers[1].RunWorkerAsync();
 
             workers[2].DoWork += delegate {
                 errorRatePoints.Clear();
-                foreach(DataPoint point in Graphing.getGraphPoints(capture, Graphing.GraphType.ErrorRate)) {
-                    errorRatePoints.Add(point);
+                foreach(OxyPlot.DataPoint point in Graphing.getGraphPoints(capture, Graphing.GraphType.ErrorRate)) {
+                    //errorRatePoints.Add(point);
                 }
             };
             workers[2].RunWorkerAsync();
@@ -384,5 +410,65 @@ namespace STAR.View {
             string returnString = Convert.ToString(singleByte);
             return returnString;
         }
+
+        [TestClass]
+        public class MainTester
+        {
+            [TestMethod]
+            public void testFileLoading()
+            {
+                bool loadTester = false;
+                Assert.IsTrue(loadTester);
+            }
+
+            [TestMethod]
+            public void testClearing()
+            {
+                bool clearTester = false;
+                Assert.IsFalse(clearTester);
+            }
+
+            [TestMethod]
+            public void testHelp()
+            {
+                bool helpTester = true;
+                Assert.IsTrue(helpTester);
+            }
+
+            [TestMethod]
+            public void testGraph()
+            {
+                bool graphTester = true;
+                Assert.IsFalse(graphTester);
+            }
+
+            [TestMethod]
+            public void testRefresh()
+            {
+                bool refreshTester = true;
+                Assert.IsTrue(refreshTester);
+            }
+
+            [TestMethod]
+            public void testNavigation()
+            {
+                bool navigationTester = true;
+                Assert.IsFalse(navigationTester);
+            }
+
+            [TestMethod]
+            public void testFilter()
+            {
+                bool filterTester = false;
+                Assert.IsFalse(filterTester);
+            }
+
+            [TestMethod]
+            public void testConverter()
+            {
+                bool converterTester = false;
+                Assert.IsTrue(converterTester);
+            }
+    }
     }
 }

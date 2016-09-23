@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using STAR.Model;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace STAR.ViewModel {
     class Statistics {
@@ -35,13 +36,14 @@ namespace STAR.ViewModel {
         public int[] NumErrorsInMinute {get { return m_numErrorsInMinute; }}
         public int[] NumPacketsInMinute { get { return m_numPacketsInMinute;} }
         public DateTime[] MinutesForStatistics {  get { return m_minutesForStatistics; } }
-        
+        public bool runsCorrectly;
 
         public Statistics() {
             m_numPacketsInMinute = new int[1];
             m_numErrorsInMinute = new int[1];
             m_numDataCharactersInMinute = new long[1];
             m_minutesForStatistics = new DateTime[2];
+            runsCorrectly = true;
             Clear();
         }
 
@@ -52,6 +54,7 @@ namespace STAR.ViewModel {
             bool matchedSecond;
             m_minutesForStatistics[0] = DateTime.MinValue;
             Clear();
+         
 
 
             // No packets
@@ -193,6 +196,210 @@ namespace STAR.ViewModel {
             Console.WriteLine("Bytes transferred: " + m_totalByteCount);
             Console.WriteLine("Data rate: " + string.Format("{0:0.000}", m_totalBytesPerSecond) + " bytes/second");
             Console.WriteLine();
+        }
+    }
+    [TestClass]
+    public class StatisticTester
+    {
+
+        [TestMethod]
+        public void testErrorStatisticTotal()
+        {
+            Statistics testStatistics = new Statistics();
+            bool isEmpty = false;
+
+            if (testStatistics.ErrorMessageCount == 0)
+            {
+                isEmpty = true;
+            }
+
+            Assert.IsTrue(isEmpty);
+        }
+
+        [TestMethod]
+        public void testPacketStatisticTotal()
+        {
+            Statistics testStatistics = new Statistics();
+            bool isEmpty = false;
+
+            if (testStatistics.PacketCount == 0)
+            {
+                isEmpty = true;
+            }
+
+            Assert.IsTrue(isEmpty);
+        }
+
+        [TestMethod]
+        public void testCharacterStatisticTotal()
+        {
+            Statistics testStatistics = new Statistics();
+            bool isEmpty = false;
+
+            if (testStatistics.TotalByteCount == 0)
+            {
+                isEmpty = true;
+            }
+
+            Assert.IsTrue(isEmpty);
+
+        }
+
+        [TestMethod]
+        public void testValidPacketCount()
+        {
+            Statistics testStatistics = new Statistics();
+            bool isEmpty = false;
+
+            if (testStatistics.ValidPacketCount == 0)
+            {
+                isEmpty = true;
+            }
+
+            Assert.IsTrue(isEmpty);
+        }
+
+        [TestMethod]
+        public void testInvalidPacketCount()
+        {
+            Statistics testStatistics = new Statistics();
+            bool isEmpty = false;
+
+            if (testStatistics.InvalidPacketCount == 0)
+            {
+                isEmpty = true;
+            }
+
+            Assert.IsTrue(isEmpty);
+
+        }
+
+        [TestMethod]
+        public void testMeasurementTime()
+        {
+            Statistics testStatistics = new Statistics();
+            bool isEmpty = false;
+
+            if (testStatistics.MeasurementTimeSeconds == 0)
+            {
+                isEmpty = true;
+            }
+
+            Assert.IsTrue(isEmpty);
+
+        }
+
+        [TestMethod]
+        public void testPacketsPerSecond()
+        {
+            Statistics testStatistics = new Statistics();
+            bool isEmpty = false;
+
+            if (testStatistics.TotalPacketsPerSecond == 0)
+            {
+                isEmpty = true;
+            }
+
+            Assert.IsTrue(isEmpty);
+        }
+
+        [TestMethod]
+        public void testErrorsPerSecond()
+        {
+            Statistics testStatistics = new Statistics();
+            bool isEmpty = false;
+
+            if (testStatistics.TotalErrorsPerSecond == 0)
+            {
+                isEmpty = true;
+            }
+
+            Assert.IsTrue(isEmpty);
+
+        }
+
+        [TestMethod]
+        public void testCharactersPerSecond()
+        {
+            Statistics testStatistics = new Statistics();
+            bool isEmpty = false;
+
+            if (testStatistics.TotalBytesPerSecond == 0)
+            {
+                isEmpty = true;
+            }
+
+            Assert.IsTrue(isEmpty);
+        }
+
+        [TestMethod]
+        public void testDataCharactersInMinute()
+        {
+            Statistics testStatistics = new Statistics();
+            bool isEmpty = false;
+
+            if (testStatistics.NumDataCharactersInMinute[0] == 0)
+            {
+                isEmpty = true;
+            }
+
+            Assert.IsTrue(isEmpty);
+
+        }
+
+        [TestMethod]
+        public void testPacketsInMinute()
+        {
+            Statistics testStatistics = new Statistics();
+            bool isEmpty = false;
+
+            if (testStatistics.NumPacketsInMinute[0] == 0)
+            {
+                isEmpty = true;
+            }
+
+            Assert.IsTrue(isEmpty);
+        }
+
+        [TestMethod]
+        public void testErrorsInMinute()
+        {
+            Statistics testStatistics = new Statistics();
+            bool isEmpty = false;
+
+            if (testStatistics.NumErrorsInMinute[0] == 0)
+            {
+                isEmpty = true;
+            }
+
+            Assert.IsTrue(isEmpty);
+
+        }
+
+        [TestMethod]
+        public void testEmptyMinutesForStatistics()
+        {
+            Statistics testStatistics = new Statistics();
+            bool isEmpty = false;
+
+            if (testStatistics.MinutesForStatistics.Length == 2)
+            {
+                isEmpty = true;
+            }
+
+            Assert.IsTrue(isEmpty);
+
+
+        }
+
+        [TestMethod]
+        public void testCollect()
+        {
+            Statistics testStatistic = new Statistics();
+            bool runsCorrectly;
+
+            runsCorrectly = testStatistic.runsCorrectly;
+            Assert.IsTrue(runsCorrectly);
         }
     }
 }

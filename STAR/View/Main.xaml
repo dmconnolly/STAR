@@ -22,10 +22,11 @@
                 <MenuItem Header="_Exit"/>
             </MenuItem>
             <MenuItem Header="_Help" Click="Help_Click">
+                <!-- Empty -->
             </MenuItem>
         </Menu>
-        <TabControl Grid.Row="1" Margin="0,10,0,0">
-            <TabItem Header="Packet View" Height="24" Margin="-2,-2,-1.8,0" VerticalAlignment="Top">
+        <TabControl Grid.Row="1" Margin="10,10,10,10">
+            <TabItem Header="Packet View" VerticalAlignment="Top">
                 <Grid Margin="10">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -57,10 +58,11 @@
                             </StackPanel>
 
                             <DataGrid
+                                    DataContext="{DynamicResource PacketCollectionViewSource}"
+                                    ItemsSource="{Binding}"
                                     AutoGenerateColumns="False"
                                     Name="PacketsDataGrid"
                                     FontSize="15"
-                                    IsReadOnly="True"
                                     CanUserAddRows="False"
                                     CanUserDeleteRows="False" 
                                     CanUserResizeColumns="False"
@@ -68,6 +70,7 @@
                                     CanUserSortColumns="False"
                                     HeadersVisibility="Column"
                                     HorizontalAlignment="Left"
+                                    IsReadOnly="True"
                                     Grid.Row="0"
                                     Grid.Column="1"
                                     SelectionChanged="PacketsDataGrid_SelectionChanged"
@@ -149,7 +152,7 @@
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="0">
-                                <Label FontSize="20" Margin="0,0,0,7">
+                                <Label FontSize="20" Margin="0,0,0,406">
                                     Packet Details
                                 </Label>
                                 <DataGrid x:Name="IndividualPacketGrid" HorizontalAlignment="Left" Margin="0,75,0,0" VerticalAlignment="Top" Height="359" Width="415" MinColumnWidth="247" GridLinesVisibility="None" IsReadOnly="True">
@@ -180,7 +183,11 @@
                                         <WrapPanel>
                                             <TextBlock Text="{Binding Path=TimeString}"/>
                                             <TextBlock Text=" " />
-                                            <TextBlock Text="{Binding Path=Message}" />
+                                            <TextBlock Text="{Binding Path=EntryPort}" Foreground="Blue"/>
+                                            <TextBlock Text="-" Foreground="Blue" />
+                                            <TextBlock Text="{Binding Path=ExitPort}" Foreground="Blue"/>
+                                            <TextBlock Text=" " />
+                                            <TextBlock Text="{Binding Path=Message}" Foreground="Red"/>
                                         </WrapPanel>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
@@ -189,7 +196,7 @@
                     </Grid>
                 </Grid>
             </TabItem>
-            <TabItem Header="Graph View" Height="22" Margin="-2.2,-2,-2,0" VerticalAlignment="Top">
+            <TabItem Header="Graph View" VerticalAlignment="Top">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="1*"/>
@@ -233,7 +240,7 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <Label FontSize="20">Statistics</Label>
-                        <Label Grid.Column="0" Grid.Row="1">Total Data Characters</Label>
+                        <Label Grid.Column="0" Grid.Row="1" Margin="0,0,0,10">Total Data Characters</Label>
                         <Label Grid.Column="1" Grid.Row="1" x:Name="lblTotalDataCharacters" Content="---" />
                         <Label Grid.Column="3" Grid.Row="1" >Total Packets</Label>
                         <Label Grid.Column="4" Grid.Row="1" x:Name="lblTotalPackets" Content="---" />

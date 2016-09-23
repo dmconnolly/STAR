@@ -1,5 +1,7 @@
-﻿using STAR.Model;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using STAR.Model;
 using System;
+using System.Windows;
 
 namespace STAR.ViewModel {
     /*
@@ -37,6 +39,11 @@ namespace STAR.ViewModel {
         public byte   Status               { get; private set; }
         public byte   ReplyCRC             { get; private set; }
         public byte   DestinationLogicalAddress { get; private set; }
+
+        public PacketView()
+        {
+            
+        }
 
         // Constructor for PacketView
         // Takes a Packet of any time as a parameter
@@ -127,6 +134,25 @@ namespace STAR.ViewModel {
                 DataBytes = pkt.DataBytes;
                 DataCRC = pkt.DataCRC;
             }
+        }
+    }
+    [TestClass]
+    public class PacketViewTester
+    {
+        [TestMethod]
+        public void testVariableGetters()
+        {
+            Packet testPacket = new Packet(1,2, "09-09-2016 00:35:07.223");
+            PacketView testPacketView = new PacketView(testPacket);
+
+            bool isAccurate = false;
+
+            if (testPacketView.CRCError == false && testPacketView.Valid == false && testPacketView.DataPacket == false)
+            {
+                isAccurate = true;
+            }
+
+            Assert.IsTrue(isAccurate);
         }
     }
 }
