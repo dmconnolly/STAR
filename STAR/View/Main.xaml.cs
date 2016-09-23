@@ -239,6 +239,12 @@ namespace STAR.View {
         private void btnNext_Click(object sender, RoutedEventArgs e)
         {
             PacketsDataGrid.SelectedIndex++;
+            PacketView p = (PacketView)PacketsDataGrid.SelectedItem;
+            if (p != null)
+            {
+                PacketsDataGrid.ScrollIntoView(p);
+                PacketsDataGrid.UpdateLayout();
+            }
         }
 
         //Navigating to previous packet
@@ -247,6 +253,12 @@ namespace STAR.View {
             if (PacketsDataGrid.SelectedIndex >= 1)
             {
                 PacketsDataGrid.SelectedIndex--;
+                PacketView p = (PacketView)PacketsDataGrid.SelectedItem;
+                if (p != null)
+                {
+                    PacketsDataGrid.ScrollIntoView(p);
+                    PacketsDataGrid.UpdateLayout();
+                }
             }
         }
 
