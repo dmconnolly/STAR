@@ -458,7 +458,6 @@ namespace STAR.View {
                 bool converterTester = false;
                 Assert.IsTrue(converterTester);
             }
-<<<<<<< HEAD
 
             [TestMethod]
             public void testInvalidVariables()
@@ -468,8 +467,6 @@ namespace STAR.View {
                 Assert.IsTrue(isInvalid);
             }
     }
-=======
         }
->>>>>>> 09c6e3975ee09f9af3ccce36541770f183056f26
     }
-}
+
