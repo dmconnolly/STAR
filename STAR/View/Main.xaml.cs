@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using STAR.ViewModel;
 using STAR.Model;
+using STAR.Extensions;
 using OxyPlot;
 
 namespace STAR.View {
@@ -22,7 +23,7 @@ namespace STAR.View {
         // ObservableCollection allows external code to be notified
         // when changes are made to the collection. This means that
         // when we add packets to the collection, the UI is updated.
-        private ObservableCollection<PacketView> packetView;
+        private RangeObservableCollection<PacketView> packetView;
 
         // Interface to the packet collection which is bound to the
         // UI and supports filtering, sorting and grouping. For this
@@ -60,7 +61,7 @@ namespace STAR.View {
             errorRateGraph.DataContext = this;
 
             // Packet collection
-            packetView = new ObservableCollection<PacketView>();
+            packetView = new RangeObservableCollection<PacketView>();
 
             // Packet capture
             capture = new Capture();
@@ -195,19 +196,20 @@ namespace STAR.View {
             // massively speeds up addition of packets
             packetCollectionView.SortDescriptions.Remove(packetCollectionViewSort);
             packetCollectionView.Filter = null;
-
             errorCollectionView.SortDescriptions.Remove(packetCollectionViewSort);
             errorCollectionView.Filter = null;
 
             // Add packets to the collection
-            foreach (Packet packet in capture.Packets) {
-                packetView.Add(new PacketView(packet));
+            List<PacketView> tmpPacketViews = new List<PacketView>(capture.Packets.Length);
+            foreach(Packet packet in capture.Packets) {
+                tmpPacketViews.Add(new PacketView(packet));
             }
+            packetView.Clear();
+            packetView.AddRange(tmpPacketViews);
 
             // Re-add the sort description and filter
             packetCollectionView.SortDescriptions.Add(packetCollectionViewSort);
             packetCollectionView.Filter = packetCollectionViewFilter;
-
             errorCollectionView.SortDescriptions.Add(packetCollectionViewSort);
             errorCollectionView.Filter = errorPacketCollectionViewFilter;
 
@@ -319,10 +321,7 @@ namespace STAR.View {
                 {
                     
                 }
-                
-
             }
-
         }
 
         private void drawGraphs() {
