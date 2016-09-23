@@ -158,7 +158,7 @@ namespace STAR.ViewModel
     public class PacketViewTester
     {
         [TestMethod]
-        public void testVariableGetters()
+        public void testInvalidVariableGetters()
         {
             Packet testPacket = new Packet(1, 2, "09-09-2016 00:35:07.223");
             PacketView testPacketView = new PacketView(testPacket);
@@ -177,7 +177,7 @@ namespace STAR.ViewModel
 
             }
 
-            Assert.IsTrue(isAccurate);
+            Assert.IsFalse(isAccurate);
         }
     }
 }
