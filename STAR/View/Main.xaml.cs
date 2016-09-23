@@ -290,45 +290,46 @@ namespace STAR.View {
         //Method for displaying packet data when clicked on datagrid
         private void PacketsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {   
-            //Get current packet
-            PacketView selected = (PacketView)PacketsDataGrid.SelectedItem;
+            ////Get current packet
+            //PacketView selected = (PacketView)PacketsDataGrid.SelectedItem;
 
-            if (selected != null)
-            {
-                //Set timestamp
-                lblTimestamp.Content = selected.TimeString;
+            //if (selected != null)
+            //{
+            //    //Set timestamp
+            //    lblTimestamp.Content = selected.TimeString;
 
-                //Set source and destination
-                lblPort.Content = selected.EntryPort;
-                lblDestination.Content = selected.ExitPort;
+            //    //Set source and destination
+            //    lblPort.Content = selected.EntryPort;
+            //    lblDestination.Content = selected.ExitPort;
 
-                //Display different data based on packet type
-                //Non-errors have protocol ID, destination path address and destination logical address
-                if (selected.PacketType != typeof(ErrorPacket))
-                {
-                    //Write and read commands have data in bytes
-                    if (selected.PacketType == typeof(WriteCommandPacket) ||
-                        selected.PacketType == typeof(ReadCommandPacket))
-                    {
-                        txtContents.Text = byteToString(selected.DataBytes);
+            //    //Display different data based on packet type
+            //    //Non-errors have protocol ID, destination path address and destination logical address
+            //    if (selected.PacketType != typeof(ErrorPacket))
+            //    {
+            //        //Write and read commands have data in bytes
+            //        if (selected.PacketType == typeof(WriteCommandPacket) ||
+            //            selected.PacketType == typeof(ReadCommandPacket))
+            //        {
+            //            txtContents.Text = byteToString(selected.DataBytes);
                         
-                        lblSourcePathAddress.Content = byteToString(selected.SourceLogicalAddress);
-                        Console.WriteLine(byteToString(selected.SourcePathAddress));
-                        //lblDestinationPathAddress.Content = byteToString(selected.DestinationLogicalAddress);
-                    }
-                    else
-                    {
-                        txtContents.Text = "";
-                    }
-                }
-                else if (selected.PacketType == typeof(ErrorPacket))
-                {
+            //            lblSourcePathAddress.Content = byteToString(selected.SourceLogicalAddress);
+            //            Console.WriteLine(byteToString(selected.SourcePathAddress));
+            //            //lblDestinationPathAddress.Content = byteToString(selected.DestinationLogicalAddress);
+            //        }
+            //        else
+            //        {
+            //            txtContents.Text = "";
+            //        }
+            //    }
+            //    else if (selected.PacketType == typeof(ErrorPacket))
+            //    {
                     
-                }
-            }
+            //    }
+            //}
         }
 
         private void drawGraphs() {
+<<<<<<< HEAD
             packetRatePoints.Clear();
             //packetRatePoints.Add(new DataPoint(1, 6));
             //packetRatePoints.Add(new DataPoint(2, 4));
@@ -337,6 +338,37 @@ namespace STAR.View {
             //packetRatePoints.Add(new DataPoint(5, 15));
             //packetRatePoints.Add(new DataPoint(6, 9));
             Console.WriteLine("Here");
+=======
+            BackgroundWorker[] workers = {
+                new BackgroundWorker(),
+                new BackgroundWorker(),
+                new BackgroundWorker()
+            };
+
+            workers[0].DoWork += delegate {
+                packetRatePoints.Clear();
+                foreach(DataPoint point in Graphing.getGraphPoints(capture, Graphing.GraphType.PacketRate)) {
+                    packetRatePoints.Add(point);
+                }
+            };
+            workers[0].RunWorkerAsync();
+
+            workers[1].DoWork += delegate {
+                dataRatePoints.Clear();
+                foreach(DataPoint point in Graphing.getGraphPoints(capture, Graphing.GraphType.DataRate)) {
+                    dataRatePoints.Add(point);
+                }
+            };
+            workers[1].RunWorkerAsync();
+
+            workers[2].DoWork += delegate {
+                errorRatePoints.Clear();
+                foreach(DataPoint point in Graphing.getGraphPoints(capture, Graphing.GraphType.ErrorRate)) {
+                    errorRatePoints.Add(point);
+                }
+            };
+            workers[2].RunWorkerAsync();
+>>>>>>> 40feb5241cf355b6da577f908103f77fb677dd56
         }
 
         private void ErrorPacketsListView_OnSelectionChanged(object sender, SelectionChangedEventArgs e)

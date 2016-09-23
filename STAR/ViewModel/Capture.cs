@@ -16,7 +16,7 @@ namespace STAR.ViewModel {
         private Statistics m_stats; // Storage of statistics for the whole data set
         private List<byte> m_portsLoaded; // List of the entry ports we have loaded data from
 
-        private DateTime startTime = DateTime.MinValue;
+        public DateTime startTime = DateTime.MinValue;
         private DateTime endTime = DateTime.MinValue;
 
         // Accessors for class member data
@@ -241,8 +241,25 @@ namespace STAR.ViewModel {
     public class CaptureTester
     {
         [TestMethod]
-        public void TestMethod1()
+        public void testClear()
         {
+            bool isCleared;
+            Capture testCapture = new Capture();
+
+            DateTime testTime = new DateTime();
+
+            testCapture.startTime = testTime;
+            testCapture.Clear();
+            
+
+            testTime
+            if (testTime == DateTime.MinValue)
+            {
+                isCleared = false;
+            }
+
+            Assert.IsFalse();
+                 
         }
     }
 }
