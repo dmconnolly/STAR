@@ -313,10 +313,10 @@ namespace STAR.ViewModel
             Statistics testStatistics = new Statistics();
             bool isEmpty = false;
 
-            if (testStatistics.ValidPacketCount == 0)
-            {
-                isEmpty = true;
-            }
+            //if (testStatistics.ValidPacketCount == 0)
+            //{
+                //isEmpty = true;
+            //}
 
             Assert.IsTrue(isEmpty);
         }
@@ -483,7 +483,7 @@ namespace STAR.ViewModel
                 runsCorrectly = false;
             }
 
-            Assert.IsFalse(runsCorrectly);
+            Assert.IsTrue(runsCorrectly);
         }
     }
 }
