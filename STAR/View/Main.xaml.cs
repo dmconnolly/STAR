@@ -28,6 +28,8 @@ namespace STAR.View {
         // when we add packets to the collection, the UI is updated.
         private RangeObservableCollection<PacketView> packetView;
 
+        private RangeObservableCollection<KeyValuePair<string, string>> packetProperties;
+
         // Interface to the packet collection which is bound to the
         // UI and supports filtering, sorting and grouping. For this
         // reason we bind to this instead of the ObservableCollection
@@ -63,6 +65,12 @@ namespace STAR.View {
 
             // Packet collection
             packetView = new RangeObservableCollection<PacketView>();
+
+            //Individual packet properties
+            packetProperties = new RangeObservableCollection<KeyValuePair<string, string>>();
+
+            //For individual packets
+            IndividualPacketView.DataContext = this;
 
             // Packet capture
             capture = new Capture();
@@ -290,42 +298,12 @@ namespace STAR.View {
         //Method for displaying packet data when clicked on datagrid
         private void PacketsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {   
-            ////Get current packet
-            //PacketView selected = (PacketView)PacketsDataGrid.SelectedItem;
+            //Get current packet
+            PacketView selected = (PacketView)PacketsDataGrid.SelectedItem;
 
-            //if (selected != null)
-            //{
-            //    //Set timestamp
-            //    lblTimestamp.Content = selected.TimeString;
+            //Add packet properties to collection
 
-            //    //Set source and destination
-            //    lblPort.Content = selected.EntryPort;
-            //    lblDestination.Content = selected.ExitPort;
 
-            //    //Display different data based on packet type
-            //    //Non-errors have protocol ID, destination path address and destination logical address
-            //    if (selected.PacketType != typeof(ErrorPacket))
-            //    {
-            //        //Write and read commands have data in bytes
-            //        if (selected.PacketType == typeof(WriteCommandPacket) ||
-            //            selected.PacketType == typeof(ReadCommandPacket))
-            //        {
-            //            txtContents.Text = byteToString(selected.DataBytes);
-                        
-            //            lblSourcePathAddress.Content = byteToString(selected.SourceLogicalAddress);
-            //            Console.WriteLine(byteToString(selected.SourcePathAddress));
-            //            //lblDestinationPathAddress.Content = byteToString(selected.DestinationLogicalAddress);
-            //        }
-            //        else
-            //        {
-            //            txtContents.Text = "";
-            //        }
-            //    }
-            //    else if (selected.PacketType == typeof(ErrorPacket))
-            //    {
-                    
-            //    }
-            //}
         }
 
         private void drawGraphs() {
