@@ -9,8 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using STAR.ViewModel;
 using STAR.Model;
-using System.Windows.Controls.DataVisualization.Charting;
-using ListBox = System.Windows.Forms.ListBox;
+using OxyPlot;
 
 namespace STAR.View {
     public partial class Main : Window {
@@ -46,16 +45,25 @@ namespace STAR.View {
         // used when updating packet view filter
         private CheckBox[] portFilterCheckbox;
 
+        public List<DataPoint> packetRatePoints { get; private set; }
+        public List<DataPoint> dataRatePoints { get; private set; }
+        public List<DataPoint> errorRatePoints { get; private set; }
+
         public Main() {
             InitializeComponent();
 
+            packetRatePoints = new List<DataPoint>();
+            packetRateGraph.DataContext = this;
+            dataRatePoints = new List<DataPoint>();
+            dataRateGraph.DataContext = this;
+            errorRatePoints = new List<DataPoint>();
+            errorRateGraph.DataContext = this;
 
             // Packet collection
             packetView = new ObservableCollection<PacketView>();
 
             // Packet capture
             capture = new Capture();
-            
 
             // File dialog
             openFileDialog = new OpenFileDialog();
@@ -208,6 +216,8 @@ namespace STAR.View {
 
             //Select first packet in the grid
             PacketsDataGrid.SelectedIndex = 0;
+
+            drawGraphs();
         }
 
         // When files are loaded, this method is called
@@ -303,46 +313,15 @@ namespace STAR.View {
 
         }
 
-            private void GraphGeneration()
-            {
-
-            Statistics GraphStats = capture.Stats;
-
-            List<int> Packets_per_Min;
-            List<int> Error_per_Min;
-            List<int> DataChar_per_Min;
-            List<DateTime> Seconds;
-
-            //PacketsDataGrid.ItemsSource = packetCollectionView; //is the idea of what we want
-
-            while ( !packetCollectionView.CurrentItem.Equals(null))
-            {
-                /*
-            Packets_per_Min.Add( GraphStats.NumPacketsInMinute);
-            Error_per_Min.Add(GraphStats.NumErrorsInMinute);
-            DataChar_per_Min.add(GraphStats.NumDataCharactersInMinute);
-            */
-            }
-
-            
-            /*
-            if ( != "Packet Rate") {
-                //var PacketGraphData = new Tuple<int, DateTime>(Packets_per_Min, Seconds);
-            }
-            else if (ComboBox.SelectedValueProperty != "Error Rate") {
-                //var ErrorGraphData = new Tuple<int, DateTime>(Error_per_Min, Seconds);
-            }
-            else if (ComboBox.SelectedValueProperty != "Data Rate") {
-                //var DataCharGraphData = new Tuple<int, DateTime>(DataChar_per_Min, Seconds);
-            }
-            else
-            {
-                
-            }
-            */
-
-
-
+        private void drawGraphs() {
+            packetRatePoints.Clear();
+            packetRatePoints.Add(new DataPoint(1, 6));
+            packetRatePoints.Add(new DataPoint(2, 4));
+            packetRatePoints.Add(new DataPoint(3, 12));
+            packetRatePoints.Add(new DataPoint(4, 12));
+            packetRatePoints.Add(new DataPoint(5, 15));
+            packetRatePoints.Add(new DataPoint(6, 9));
+            Console.WriteLine("Here");
         }
 
         private void ErrorPacketsListView_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
