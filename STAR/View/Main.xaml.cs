@@ -321,30 +321,31 @@ namespace STAR.View {
         }
 
         private void drawGraphs() {
-            BackgroundWorker[] workers = new BackgroundWorker[3];
+            BackgroundWorker[] workers = {
+                new BackgroundWorker(),
+                new BackgroundWorker(),
+                new BackgroundWorker()
+            };
 
-            workers[0] = new BackgroundWorker();
             workers[0].DoWork += delegate {
                 packetRatePoints.Clear();
-                foreach(DataPoint point in Graphing.getPacketRatePoints(capture)) {
+                foreach(DataPoint point in Graphing.getGraphPoints(capture, Graphing.GraphType.PacketRate)) {
                     packetRatePoints.Add(point);
                 }
             };
             workers[0].RunWorkerAsync();
 
-            workers[1] = new BackgroundWorker();
             workers[1].DoWork += delegate {
-                packetRatePoints.Clear();
-                foreach(DataPoint point in Graphing.getDataRatePoints(capture)) {
+                dataRatePoints.Clear();
+                foreach(DataPoint point in Graphing.getGraphPoints(capture, Graphing.GraphType.DataRate)) {
                     dataRatePoints.Add(point);
                 }
             };
             workers[1].RunWorkerAsync();
 
-            workers[2] = new BackgroundWorker();
             workers[2].DoWork += delegate {
-                packetRatePoints.Clear();
-                foreach(DataPoint point in Graphing.getErrorRatePoints(capture)) {
+                errorRatePoints.Clear();
+                foreach(DataPoint point in Graphing.getGraphPoints(capture, Graphing.GraphType.ErrorRate)) {
                     errorRatePoints.Add(point);
                 }
             };

@@ -8,7 +8,22 @@ using System.Threading.Tasks;
 
 namespace STAR.Model {
     class Graphing {
-        public static List<DataPoint> getPacketRatePoints(Capture capture) {
+        public enum GraphType {PacketRate, DataRate, ErrorRate}
+
+        public static List<DataPoint> getGraphPoints(Capture capture, GraphType type) {
+            switch(type) {
+                case GraphType.PacketRate:
+                    return getPacketRatePoints(capture);
+                case GraphType.DataRate:
+                    return getDataRatePoints(capture);
+                case GraphType.ErrorRate:
+                    return getErrorRatePoints(capture);
+                default:
+                    return null;
+            }
+        }
+
+        private static List<DataPoint> getPacketRatePoints(Capture capture) {
             Packet[] packets = capture.Packets;
             List<DataPoint> points = new List<DataPoint>();
             points.Add(new DataPoint(0, 5));
@@ -19,7 +34,7 @@ namespace STAR.Model {
             return points;
         }
 
-        public static List<DataPoint> getDataRatePoints(Capture capture) {
+        private static List<DataPoint> getDataRatePoints(Capture capture) {
             Packet[] packets = capture.Packets;
             List<DataPoint> points = new List<DataPoint>();
             points.Add(new DataPoint(0, 5));
@@ -30,7 +45,7 @@ namespace STAR.Model {
             return points;
         }
 
-        public static List<DataPoint> getErrorRatePoints(Capture capture) {
+        private static List<DataPoint> getErrorRatePoints(Capture capture) {
             Packet[] packets = capture.Packets;
             List<DataPoint> points = new List<DataPoint>();
             points.Add(new DataPoint(0, 5));
