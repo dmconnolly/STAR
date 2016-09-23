@@ -336,12 +336,6 @@ namespace STAR.View {
 
         private void drawGraphs() {
             packetRatePoints.Clear();
-            //packetRatePoints.Add(new DataPoint(1, 6));
-            //packetRatePoints.Add(new DataPoint(2, 4));
-            //packetRatePoints.Add(new DataPoint(3, 12));
-            //packetRatePoints.Add(new DataPoint(4, 12));
-            //packetRatePoints.Add(new DataPoint(5, 15));
-            //packetRatePoints.Add(new DataPoint(6, 9));
             Console.WriteLine("Here");
             BackgroundWorker[] workers = {
                 new BackgroundWorker(),
@@ -352,7 +346,7 @@ namespace STAR.View {
             workers[0].DoWork += delegate {
                 packetRatePoints.Clear();
                 foreach(OxyPlot.DataPoint point in Graphing.getGraphPoints(capture, Graphing.GraphType.PacketRate)) {
-                    //packetRatePoints.Add(point);
+                    packetRatePoints.Add(point);
                 }
             };
             workers[0].RunWorkerAsync();
@@ -360,7 +354,7 @@ namespace STAR.View {
             workers[1].DoWork += delegate {
                 dataRatePoints.Clear();
                 foreach(OxyPlot.DataPoint point in Graphing.getGraphPoints(capture, Graphing.GraphType.DataRate)) {
-                    //dataRatePoints.Add(point);
+                    dataRatePoints.Add(point);
                 }
             };
             workers[1].RunWorkerAsync();
@@ -368,7 +362,7 @@ namespace STAR.View {
             workers[2].DoWork += delegate {
                 errorRatePoints.Clear();
                 foreach(OxyPlot.DataPoint point in Graphing.getGraphPoints(capture, Graphing.GraphType.ErrorRate)) {
-                    //errorRatePoints.Add(point);
+                    errorRatePoints.Add(point);
                 }
             };
             workers[2].RunWorkerAsync();

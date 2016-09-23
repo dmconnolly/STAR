@@ -152,10 +152,14 @@
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="0">
-                                <Label FontSize="20" Margin="0,0,0,406">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="2*" />
+                                </Grid.RowDefinitions>
+                                <Label Grid.Row="0" FontSize="20">
                                     Packet Details
                                 </Label>
-                                <DataGrid x:Name="IndividualPacketGrid" HorizontalAlignment="Left" Margin="0,75,0,0" VerticalAlignment="Top" Height="359" Width="415" MinColumnWidth="247" GridLinesVisibility="None" IsReadOnly="True">
+                                <DataGrid Grid.Row="1" x:Name="IndividualPacketGrid" HeadersVisibility="Column" MinColumnWidth="247" GridLinesVisibility="None" IsReadOnly="True">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Binding="{Binding Path=Property}"  Header="Property"/>
                                         <DataGridTextColumn Binding="{Binding Path =Value}" Header="Value"/>
