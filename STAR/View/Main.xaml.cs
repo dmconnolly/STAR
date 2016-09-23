@@ -312,9 +312,8 @@ namespace STAR.View {
             packetProperties.Add(new StringPair("Timestamp", selected.TimeString));
             packetProperties.Add(new StringPair("Entry Port",byteToString(selected.EntryPort)));
             packetProperties.Add(new StringPair("Exit Port", byteToString(selected.ExitPort)));
-            //packetProperties.Add(new StringPair("Destination Path Address", byteToString(selected.Des)));
             packetProperties.Add(new StringPair("Destination Logical Address", byteToString(selected.DestinationLogicalAddress)));
-            //packetProperties.Add(new StringPair("Protocol ID", byteToString(selected.ProtocolID)));
+            packetProperties.Add(new StringPair("Protocol ID", selected.ProtocolId.ToString()));
             packetProperties.Add(new StringPair("Packet Type", selected.PacketTypeString));
             packetProperties.Add(new StringPair("Destination key", byteToString(selected.DestinationKey)));
             packetProperties.Add(new StringPair("Source Path Address", byteToString(selected.SourcePathAddress)));
@@ -329,14 +328,13 @@ namespace STAR.View {
             packetProperties.Add(new StringPair("Transaction ID", selected.TransactionId.ToString()));
             packetProperties.Add(new StringPair("Extended Write Address", byteToString(selected.ExtendedWriteAddress)));
             packetProperties.Add(new StringPair("Read Address", selected.ReadAddress.ToString()));
-            //packetProperties.Add(new StringPair("Sequence Number", byteToString(selected.S)));
-            //packetProperties.Add(new StringPair("Cargo", byteToString(selected.Cargo)));
+            packetProperties.Add(new StringPair("Sequence Number", selected.SequenceId.ToString()));
+            packetProperties.Add(new StringPair("Cargo", byteToString(selected.Cargo)));
             packetProperties.Add(new StringPair("Status", byteToString(selected.Status)));
         }
 
         private void drawGraphs() {
             packetRatePoints.Clear();
-            Console.WriteLine("Here");
             BackgroundWorker[] workers = {
                 new BackgroundWorker(),
                 new BackgroundWorker(),
@@ -345,7 +343,7 @@ namespace STAR.View {
 
             workers[0].DoWork += delegate {
                 packetRatePoints.Clear();
-                foreach(OxyPlot.DataPoint point in Graphing.getGraphPoints(capture, Graphing.GraphType.PacketRate)) {
+                foreach(DataPoint point in Graphing.getGraphPoints(capture, Graphing.GraphType.PacketRate)) {
                     packetRatePoints.Add(point);
                 }
             };
@@ -353,7 +351,7 @@ namespace STAR.View {
 
             workers[1].DoWork += delegate {
                 dataRatePoints.Clear();
-                foreach(OxyPlot.DataPoint point in Graphing.getGraphPoints(capture, Graphing.GraphType.DataRate)) {
+                foreach(DataPoint point in Graphing.getGraphPoints(capture, Graphing.GraphType.DataRate)) {
                     dataRatePoints.Add(point);
                 }
             };
@@ -361,7 +359,7 @@ namespace STAR.View {
 
             workers[2].DoWork += delegate {
                 errorRatePoints.Clear();
-                foreach(OxyPlot.DataPoint point in Graphing.getGraphPoints(capture, Graphing.GraphType.ErrorRate)) {
+                foreach(DataPoint point in Graphing.getGraphPoints(capture, Graphing.GraphType.ErrorRate)) {
                     errorRatePoints.Add(point);
                 }
             };
@@ -460,6 +458,7 @@ namespace STAR.View {
                 bool converterTester = false;
                 Assert.IsTrue(converterTester);
             }
+<<<<<<< HEAD
 
             [TestMethod]
             public void testInvalidVariables()
@@ -469,5 +468,8 @@ namespace STAR.View {
                 Assert.IsTrue(isInvalid);
             }
     }
+=======
+        }
+>>>>>>> 09c6e3975ee09f9af3ccce36541770f183056f26
     }
 }

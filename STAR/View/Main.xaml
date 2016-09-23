@@ -159,7 +159,20 @@
                                 <Label Grid.Row="0" FontSize="20">
                                     Packet Details
                                 </Label>
-                                <DataGrid Grid.Row="1" x:Name="IndividualPacketGrid" HeadersVisibility="Column" MinColumnWidth="247" GridLinesVisibility="None" IsReadOnly="True">
+                                <DataGrid 
+                                        Grid.Row="1"
+                                        x:Name="IndividualPacketGrid"
+                                        HeadersVisibility="Column"
+                                        MinColumnWidth="247"
+                                        GridLinesVisibility="None"
+                                        IsReadOnly="True"
+                                        AutoGenerateColumns="False"
+                                        FontSize="15"
+                                        CanUserAddRows="False"
+                                        CanUserDeleteRows="False" 
+                                        CanUserResizeColumns="False"
+                                        CanUserReorderColumns="False"
+                                        CanUserSortColumns="False">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Binding="{Binding Path=Property}"  Header="Property"/>
                                         <DataGridTextColumn Binding="{Binding Path =Value}" Header="Value"/>

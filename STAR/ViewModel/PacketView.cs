@@ -30,7 +30,9 @@ namespace STAR.ViewModel
         public bool   DuplicatePacketError { get; private set; }
         public byte[] Cargo { get; private set; }
 
+        public ushort ProtocolId           { get; private set; }
         public byte   DestinationKey       { get; private set; }
+        public uint   SequenceId           { get; private set; }
         public byte[] SourcePathAddress    { get; private set; }
         public byte   SourceLogicalAddress { get; private set; }
         public ushort TransactionId        { get; private set; }
@@ -74,6 +76,7 @@ namespace STAR.ViewModel
 
             // Common to all data packets
             DataPacket = true;
+            ProtocolId = (packet as DataPacket).Protocol;
             EndCode = (packet as DataPacket).EndCode;
             Valid = (packet as DataPacket).Valid;
             Message = Valid ? "" : "No EOP";
@@ -102,12 +105,17 @@ namespace STAR.ViewModel
             {
                 NonRmapPacket pkt = packet as NonRmapPacket;
                 PacketTypeString = "Non RMAP";
+<<<<<<< HEAD
             }
             else if (PacketType == typeof(WriteCommandPacket))
             {
+=======
+                SequenceId = pkt.SequenceNumber;
+                Cargo = pkt.Cargo;
+            } else if(PacketType == typeof(WriteCommandPacket)) {
+>>>>>>> 09c6e3975ee09f9af3ccce36541770f183056f26
                 WriteCommandPacket pkt = packet as WriteCommandPacket;
                 PacketTypeString = "Write command";
-                //Cargo = pkt.Cargo;
                 DestinationKey = pkt.DestinationKey;
                 SourcePathAddress = pkt.SourcePathAddress;
                 SourceLogicalAddress = pkt.SourceLogicalAddress;
