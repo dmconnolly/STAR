@@ -5,13 +5,16 @@ using System.Linq;
 using STAR.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace STAR.ViewModel {
+namespace STAR.ViewModel
+{
     /*
      * Class responsible for handling captured packet data
      * files from multiple ports can be loaded, parsed and their contents
      * stored in a meaningful format.
      */
-    class Capture {
+
+    class Capture
+    {
         private List<Packet> m_packets; // List of all captured packets
         private Statistics m_stats; // Storage of statistics for the whole data set
         private List<byte> m_portsLoaded; // List of the entry ports we have loaded data from
@@ -20,21 +23,42 @@ namespace STAR.ViewModel {
         private DateTime endTime = DateTime.MinValue;
 
         // Accessors for class member data
-        public Packet[] Packets { get { return m_packets.ToArray(); }}
-        public Statistics Stats { get { return m_stats; }}
-        public byte[] PortsLoaded { get { return m_portsLoaded.ToArray(); }}
-        public DateTime GetStartTime { get { return startTime; }}
-        public DateTime GetEndTime { get { return endTime; } }
+        public Packet[] Packets
+        {
+            get { return m_packets.ToArray(); }
+        }
+
+        public Statistics Stats
+        {
+            get { return m_stats; }
+        }
+
+        public byte[] PortsLoaded
+        {
+            get { return m_portsLoaded.ToArray(); }
+        }
+
+        public DateTime GetStartTime
+        {
+            get { return startTime; }
+        }
+
+        public DateTime GetEndTime
+        {
+            get { return endTime; }
+        }
 
         // Constructor
-        public Capture() {
+        public Capture()
+        {
             m_packets = new List<Packet>();
             m_stats = new Statistics();
             m_portsLoaded = new List<byte>();
         }
 
         // Clears any stored packet data
-        public void Clear() {
+        public void Clear()
+        {
             startTime = DateTime.MinValue;
             endTime = DateTime.MinValue;
             m_packets.Clear();
@@ -43,8 +67,10 @@ namespace STAR.ViewModel {
         }
 
         // Process an array of files
-        public void processFiles(string[] paths) {
-            foreach(string path in paths) {
+        public void processFiles(string[] paths)
+        {
+            foreach (string path in paths)
+            {
                 processFile(path);
             }
 
@@ -56,7 +82,8 @@ namespace STAR.ViewModel {
         }
 
         // Processes a file and extracts the packet data
-        private void processFile(string path) {
+        private void processFile(string path)
+        {
             string[] lines;
             {
                 List<string> linesList = File.ReadLines(@path).ToList();
@@ -72,31 +99,36 @@ namespace STAR.ViewModel {
             List<List<byte>> allPacketBytes = new List<List<byte>>();
             List<bool> duplicatePacket = new List<bool>();
 
-            if(lineCount >= 2) {
+            if (lineCount >= 2)
+            {
                 int lineIndex = 0;
 
                 // First two lines are timestamp for measurement start and port
                 {
                     DateTime tmpTime = Packet.parseDateString(lines[lineIndex++]);
-                    if(startTime == DateTime.MinValue || tmpTime.Ticks < startTime.Ticks) {
+                    if (startTime == DateTime.MinValue || tmpTime.Ticks < startTime.Ticks)
+                    {
                         startTime = tmpTime;
-                        if(endTime == DateTime.MinValue || startTime.Ticks > endTime.Ticks) {
+                        if (endTime == DateTime.MinValue || startTime.Ticks > endTime.Ticks)
+                        {
                             endTime = startTime;
                         }
                     }
                 }
                 entryPort = Convert.ToByte(lines[lineIndex++]);
 
-                if(!m_portsLoaded.Contains(entryPort)) {
+                if (!m_portsLoaded.Contains(entryPort))
+                {
                     m_portsLoaded.Add(entryPort);
                     m_portsLoaded.Sort();
                 }
 
-                exitPort = (byte)(entryPort + (entryPort % 2 == 0 ? -1 : 1));
+                exitPort = (byte) (entryPort + (entryPort%2 == 0 ? -1 : 1));
 
                 string lastByteString = "";
 
-                while(lineIndex < lineCount) {
+                while (lineIndex < lineCount)
+                {
                     string time, startCode, endCode, byteString, errorText;
 
                     // Next line is a timestamp
@@ -105,34 +137,41 @@ namespace STAR.ViewModel {
                     // Store this time in case file ends
                     {
                         DateTime tmpTime = Packet.parseDateString(time);
-                        if(tmpTime.Ticks > endTime.Ticks) {
+                        if (tmpTime.Ticks > endTime.Ticks)
+                        {
                             endTime = tmpTime;
                         }
                     }
 
-                    if(++lineIndex >= lines.Length) {
+                    if (++lineIndex >= lines.Length)
+                    {
                         break;
                     }
 
                     // Start code (E or P)
                     startCode = lines[lineIndex];
 
-                    if(++lineIndex >= lines.Length) {
+                    if (++lineIndex >= lines.Length)
+                    {
                         break;
                     }
 
-                    if(startCode.Equals("E", StringComparison.Ordinal)) {
+                    if (startCode.Equals("E", StringComparison.Ordinal))
+                    {
                         // This is an error packet
                         errorText = lines[lineIndex];
                         ErrorPacket errorMessage = new ErrorPacket(entryPort, exitPort, time, errorText);
                         m_packets.Add(errorMessage);
-                    } else if(startCode.Equals("P", StringComparison.Ordinal)) {
+                    }
+                    else if (startCode.Equals("P", StringComparison.Ordinal))
+                    {
                         // This is a packet
                         byteString = lines[lineIndex];
                         duplicatePacket.Add(byteString == lastByteString);
                         lastByteString = byteString;
 
-                        if(++lineIndex >= lines.Length) {
+                        if (++lineIndex >= lines.Length)
+                        {
                             break;
                         }
 
@@ -141,14 +180,17 @@ namespace STAR.ViewModel {
                         string[] byteStringSplit = byteString.Split(' ');
                         int byteCount = byteStringSplit.Count();
                         List<byte> packetBytes = new List<byte>(byteCount);
-                        for(int i=0; i<byteCount; ++i) {
+                        for (int i = 0; i < byteCount; ++i)
+                        {
                             packetBytes.Add(Convert.ToByte(byteStringSplit[i], 16));
                         }
 
                         allPacketTimes.Add(time);
                         allPacketBytes.Add(packetBytes);
                         allPacketEndMarkers.Add(endCode);
-                    } else {
+                    }
+                    else
+                    {
                         // Unknown start code
                         // throw error?
                         break;
@@ -158,14 +200,18 @@ namespace STAR.ViewModel {
                 }
 
                 int sequenceIdIndex = -1;
-                for(int i=0; i<allPacketBytes.Count; i++) {
+                for (int i = 0; i < allPacketBytes.Count; i++)
+                {
                     Type packetType = DataPacket.GetPacketType(allPacketBytes[i]);
                     object[] args;
-                    if(packetType == typeof(NonRmapPacket)) {
-                        if(sequenceIdIndex == -1) {
+                    if (packetType == typeof(NonRmapPacket))
+                    {
+                        if (sequenceIdIndex == -1)
+                        {
                             sequenceIdIndex = getSequenceIdIndex(allPacketBytes);
                         }
-                        args = new object[] {
+                        args = new object[]
+                        {
                             entryPort,
                             exitPort,
                             allPacketTimes[i],
@@ -173,8 +219,11 @@ namespace STAR.ViewModel {
                             allPacketEndMarkers[i],
                             sequenceIdIndex
                         };
-                    } else {
-                        args = new object[] {
+                    }
+                    else
+                    {
+                        args = new object[]
+                        {
                             entryPort,
                             exitPort,
                             allPacketTimes[i],
@@ -189,47 +238,61 @@ namespace STAR.ViewModel {
             }
         }
 
-        private int getSequenceIdIndex(List<List<byte>> allPacketBytes) {
+        private int getSequenceIdIndex(List<List<byte>> allPacketBytes)
+        {
             const int sequenceCountReq = 5;
             const int bytesToCheck = 10;
             const int packetsToCheck = 6;
-            
-            for(int i=0; i<(bytesToCheck+1); ++i) {
+
+            for (int i = 0; i < (bytesToCheck + 1); ++i)
+            {
                 byte sequenceCount = 0;
                 byte lastValue = 0;
                 byte firstValue = 0;
 
-                for(int j=0; j<packetsToCheck; ++j) {
+                for (int j = 0; j < packetsToCheck; ++j)
+                {
                     List<byte> packetBytes = allPacketBytes[j];
-                    if(i >= packetBytes.Count()) {
+                    if (i >= packetBytes.Count())
+                    {
                         return -1;
                     }
 
                     int k = 0;
-                    for(; k<packetBytes.Count(); ++k) {
-                        if(packetBytes[k] >= 32) {
+                    for (; k < packetBytes.Count(); ++k)
+                    {
+                        if (packetBytes[k] >= 32)
+                        {
                             ++k;
                             break;
                         }
                     }
 
-                    if(j == 0) {
-                        firstValue = packetBytes[k+i];
+                    if (j == 0)
+                    {
+                        firstValue = packetBytes[k + i];
                         lastValue = firstValue;
-                    } else {
-                        if((packetBytes[k+i] == firstValue + j) ||
-                                ((lastValue == 255) && (packetBytes[k+i] == 0))) {
+                    }
+                    else
+                    {
+                        if ((packetBytes[k + i] == firstValue + j) ||
+                            ((lastValue == 255) && (packetBytes[k + i] == 0)))
+                        {
                             ++sequenceCount;
-                            lastValue = packetBytes[k+i];
-                            if(lastValue == 255) {
-                                firstValue = (byte)(0 - j);
+                            lastValue = packetBytes[k + i];
+                            if (lastValue == 255)
+                            {
+                                firstValue = (byte) (0 - j);
                             }
-                        } else {
+                        }
+                        else
+                        {
                             break;
                         }
                     }
-                    if(sequenceCount >= sequenceCountReq) {
-                        return k+i;
+                    if (sequenceCount >= sequenceCountReq)
+                    {
+                        return k + i;
                     }
                 }
             }
@@ -243,23 +306,57 @@ namespace STAR.ViewModel {
         [TestMethod]
         public void testClear()
         {
-            bool isCleared;
+            bool isCleared = false;
             Capture testCapture = new Capture();
 
             DateTime testTime = new DateTime();
 
             testCapture.startTime = testTime;
             testCapture.Clear();
-            
 
-            testTime
+
+            testTime = testCapture.startTime;
             if (testTime == DateTime.MinValue)
             {
-                isCleared = false;
+                isCleared = true;
             }
 
-            Assert.IsFalse();
-                 
+            Assert.IsTrue(isCleared);
+
+        }
+
+        [TestMethod]
+        public void testProcess()
+        {
+            bool workingProcess = true;
+            string[] testFile = new string[2];
+
+            Capture testCapture = new Capture();
+
+            try
+            {
+                testCapture.processFiles(testFile);
+            }
+            catch (Exception)
+            {
+                workingProcess = false;
+
+            }
+
+            Assert.IsTrue(workingProcess);
+        }
+
+        [TestMethod]
+        public void testId()
+        {
+            Capture testCapture = new Capture();
+            List<List<byte>> testList = new List<List<byte>>();
+            bool isCorrect;
+
+            isCorrect = true;
+
+            Assert.IsTrue(isCorrect);
+
         }
     }
 }

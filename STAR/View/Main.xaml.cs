@@ -329,7 +329,6 @@ namespace STAR.View {
         }
 
         private void drawGraphs() {
-<<<<<<< HEAD
             packetRatePoints.Clear();
             //packetRatePoints.Add(new DataPoint(1, 6));
             //packetRatePoints.Add(new DataPoint(2, 4));
@@ -338,7 +337,6 @@ namespace STAR.View {
             //packetRatePoints.Add(new DataPoint(5, 15));
             //packetRatePoints.Add(new DataPoint(6, 9));
             Console.WriteLine("Here");
-=======
             BackgroundWorker[] workers = {
                 new BackgroundWorker(),
                 new BackgroundWorker(),
@@ -347,28 +345,27 @@ namespace STAR.View {
 
             workers[0].DoWork += delegate {
                 packetRatePoints.Clear();
-                foreach(DataPoint point in Graphing.getGraphPoints(capture, Graphing.GraphType.PacketRate)) {
-                    packetRatePoints.Add(point);
+                foreach(OxyPlot.DataPoint point in Graphing.getGraphPoints(capture, Graphing.GraphType.PacketRate)) {
+                    //packetRatePoints.Add(point);
                 }
             };
             workers[0].RunWorkerAsync();
 
             workers[1].DoWork += delegate {
                 dataRatePoints.Clear();
-                foreach(DataPoint point in Graphing.getGraphPoints(capture, Graphing.GraphType.DataRate)) {
-                    dataRatePoints.Add(point);
+                foreach(OxyPlot.DataPoint point in Graphing.getGraphPoints(capture, Graphing.GraphType.DataRate)) {
+                    //dataRatePoints.Add(point);
                 }
             };
             workers[1].RunWorkerAsync();
 
             workers[2].DoWork += delegate {
                 errorRatePoints.Clear();
-                foreach(DataPoint point in Graphing.getGraphPoints(capture, Graphing.GraphType.ErrorRate)) {
-                    errorRatePoints.Add(point);
+                foreach(OxyPlot.DataPoint point in Graphing.getGraphPoints(capture, Graphing.GraphType.ErrorRate)) {
+                    //errorRatePoints.Add(point);
                 }
             };
             workers[2].RunWorkerAsync();
->>>>>>> 40feb5241cf355b6da577f908103f77fb677dd56
         }
 
         private void ErrorPacketsListView_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
