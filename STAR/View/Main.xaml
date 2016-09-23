@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="Main" Height="830" Width="1280">
     <Window.Resources>
-        <CollectionViewSource x:Key="PacketCollectionViewSource" CollectionViewType="ListCollectionView" />
+        <CollectionViewSource x:Key="PacketCollectionViewSource" CollectionViewType="ListCollectionView" /> 
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -33,7 +33,7 @@
             </MenuItem>
         </Menu>
         <TabControl Grid.Row="1" Margin="0,10,0,0">
-            <TabItem Header="Packet View">
+            <TabItem Header="Packet View" Height="24" Margin="-2,-2,-1.8,0" VerticalAlignment="Top">
                 <Grid Margin="10">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -261,39 +261,80 @@
                     </Grid>
                 </Grid>
             </TabItem>
-            <TabItem Header="Graph View">
+            <TabItem Header="Graph View" Height="22" Margin="-2.2,-2,-2,0" VerticalAlignment="Top">
                 <!-- GRAPH GOES HERE -->
                 <Grid>
                     <Canvas>
-                        <Grid x:Name="OuterGrid" RenderTransformOrigin="0.5,0.5" Height="1" Canvas.Left="104" Canvas.Top="92" Width="1">
+                        <Grid x:Name="OuterGrid" RenderTransformOrigin="0.5,0.5" Height="2" Canvas.Left="557" Canvas.Top="166" Width="5">
+
+                            <GraphTools:Chart       
+                            HorizontalAlignment="Left" 
+                            VerticalAlignment="Top"
+                            Margin="50,50,50,50" Name="XYChart" 
+                           >            
+                                <GraphTools:Chart.Axes>
+                                    <GraphTools:LinearAxis Orientation="X" Interval="60" Title="Seconds"></GraphTools:LinearAxis>
+                                    <GraphTools:LinearAxis Orientation="Y"></GraphTools:LinearAxis>
+                                </GraphTools:Chart.Axes>
+
+                                <!--
+                                <GraphTools:PieSeries         Name="PIE"         
+                                    DependentValueBinding="{Binding Path=Value}"                 
+                                    IndependentValueBinding="{Binding Path=Key}"
+                                    ItemsSource="{Binding Source={DyanmicResource PacketCollectionViewSource}, Path=data}"
+                                    >
+                                </GraphTools:PieSeries>
+                                -->
+                                
+                                <GraphTools:LineSeries        Name="LINE"          
+                                    DependentValueBinding="{Binding Path=Value}"                 
+                                    IndependentValueBinding="{Binding Path=Key}"
+                                    DataContext="{DynamicResource PacketCollectionViewSource}"
+                                    ItemsSource="{Binding}"
+                                    >
+                                   
+                                </GraphTools:LineSeries>
+
+                                <GraphTools:BarSeries          Name="BAR"        
+                                    DependentValueBinding="{Binding Path=Value}"                 
+                                    IndependentValueBinding="{Binding Path=Key}"
+                                    DataContext="{DynamicResource PacketCollectionViewSource}"
+                                    ItemsSource="{Binding}"
+                                                               >
+                                </GraphTools:BarSeries>
+
+                                <GraphTools:AreaSeries           Name="AREA"       
+                                    DependentValueBinding="{Binding Path=Value}"                 
+                                    IndependentValueBinding="{Binding Path=Key}"
+                                    DataContext="{DynamicResource PacketCollectionViewSource}"
+                                    ItemsSource="{Binding}"
+                                    >
+                                </GraphTools:AreaSeries>
+                                
+                            </GraphTools:Chart>
+
+
+
                             <Grid.RenderTransform>
                                 <TransformGroup>
                                     <ScaleTransform ScaleY="200" ScaleX="200"/>
                                     <TranslateTransform X="50" Y="50"/>
                                 </TransformGroup>
                             </Grid.RenderTransform>
-                            <ContentControl>
-                                <Grid x:Name="InnerGrid" HorizontalAlignment="Left" VerticalAlignment="Top" Height="1" Width="1" RenderTransformOrigin="0.5,0.5">
-                                    <Grid.RenderTransform>
-                                        <ScaleTransform ScaleY="200" ScaleX="200"/>
-                                    </Grid.RenderTransform>
-
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width= "10"></ColumnDefinition>
-                                    </Grid.ColumnDefinitions>
-
-                                    <GraphTools:Chart HorizontalAlignment="Stretch" 
-                                          VerticalAlignment="Stretch" 
-                                          Margin="20,20,20,20"
-                                          Name="XyChart"
-                                          />
-                                    <GraphTools:AreaSeries Name="AREA"></GraphTools:AreaSeries>
-                                    <GraphTools:BarSeries Name="BAR"></GraphTools:BarSeries>
-                                    <GraphTools:PieSeries Name="PIE"></GraphTools:PieSeries>
-                                    <GraphTools:LineSeries Name="LINE"></GraphTools:LineSeries>
-                                </Grid>
-                            </ContentControl>
                         </Grid>
+                        <ComboBox x:Name="DataSelectBox" HorizontalAlignment="Left" Height="62" VerticalAlignment="Top" Width="302" Canvas.Left="160" Canvas.Top="550">
+                            <ComboBoxItem Content="Line"></ComboBoxItem>
+                            <ComboBoxItem Content="Area"></ComboBoxItem>
+                            <ComboBoxItem Content="Pie"></ComboBoxItem>
+                            <ComboBoxItem Content="Bar"></ComboBoxItem>
+                        </ComboBox>
+                        <ComboBox x:Name="TypeSelectBox" HorizontalAlignment="Left" Height="62" VerticalAlignment="Top" Width="302" Canvas.Right="160" Canvas.Top="550">
+                            <ComboBoxItem Content="Packet_Rate"></ComboBoxItem>
+                            <ComboBoxItem Content="Data_Rate"></ComboBoxItem>
+                            <ComboBoxItem Content="Error_Rate"></ComboBoxItem>
+                        </ComboBox>
+                        <Label x:Name="label" Content="Type Of Data" Height="33" Canvas.Left="156" Canvas.Top="512" Width="306" FontSize="18"/>
+                        <Label x:Name="label_Copy" Content="Type Of Graph" Height="33" Canvas.Left="806" Canvas.Top="512" Width="306" FontSize="18"/>
                     </Canvas>
                 </Grid>
             </TabItem>

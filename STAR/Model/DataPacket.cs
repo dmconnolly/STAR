@@ -19,6 +19,7 @@ namespace STAR.Model {
 
         protected int m_totalPacketBytes;
         protected bool m_CRCError = false;
+        protected bool m_duplicatePacketError = false;
         protected List<byte> m_remainingBytes;
 
         // Accessors for class member variables
@@ -29,6 +30,10 @@ namespace STAR.Model {
         public string EndCode { get { return m_endCode; }}
         public long CargoByteCount { get { return m_cargoByteCount; }}
         public bool CRCError { get { return m_CRCError; } }
+        public bool DuplicatePacketError {
+            set { m_duplicatePacketError = value; }
+            get { return m_duplicatePacketError; }
+        }
 
         // Takes a list of bytes representing the packet
         // returns the Type that the packet should be
