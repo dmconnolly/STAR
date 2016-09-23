@@ -326,7 +326,7 @@ namespace STAR.View {
 
             workers[0].DoWork += delegate {
                 packetRatePoints.Clear();
-                foreach(OxyPlot.DataPoint point in Graphing.getGraphPoints(capture, Graphing.GraphType.PacketRate)) {
+                foreach(DataPoint point in Graphing.getGraphPoints(capture, Graphing.GraphType.PacketRate)) {
                     packetRatePoints.Add(point);
                 }
             };
@@ -334,7 +334,7 @@ namespace STAR.View {
 
             workers[1].DoWork += delegate {
                 dataRatePoints.Clear();
-                foreach(OxyPlot.DataPoint point in Graphing.getGraphPoints(capture, Graphing.GraphType.DataRate)) {
+                foreach(DataPoint point in Graphing.getGraphPoints(capture, Graphing.GraphType.DataRate)) {
                     dataRatePoints.Add(point);
                 }
             };
@@ -342,7 +342,7 @@ namespace STAR.View {
 
             workers[2].DoWork += delegate {
                 errorRatePoints.Clear();
-                foreach(OxyPlot.DataPoint point in Graphing.getGraphPoints(capture, Graphing.GraphType.ErrorRate)) {
+                foreach(DataPoint point in Graphing.getGraphPoints(capture, Graphing.GraphType.ErrorRate)) {
                     errorRatePoints.Add(point);
                 }
             };
