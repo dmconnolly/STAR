@@ -324,14 +324,34 @@ namespace STAR.View {
         }
 
         private void drawGraphs() {
-            packetRatePoints.Clear();
-            packetRatePoints.Add(new DataPoint(1, 6));
-            packetRatePoints.Add(new DataPoint(2, 4));
-            packetRatePoints.Add(new DataPoint(3, 12));
-            packetRatePoints.Add(new DataPoint(4, 12));
-            packetRatePoints.Add(new DataPoint(5, 15));
-            packetRatePoints.Add(new DataPoint(6, 9));
-            Console.WriteLine("Here");
+            BackgroundWorker[] workers = new BackgroundWorker[3];
+
+            workers[0] = new BackgroundWorker();
+            workers[0].DoWork += delegate {
+                packetRatePoints.Clear();
+                foreach(DataPoint point in Graphing.getPacketRatePoints(capture)) {
+                    packetRatePoints.Add(point);
+                }
+            };
+            workers[0].RunWorkerAsync();
+
+            workers[1] = new BackgroundWorker();
+            workers[1].DoWork += delegate {
+                packetRatePoints.Clear();
+                foreach(DataPoint point in Graphing.getDataRatePoints(capture)) {
+                    dataRatePoints.Add(point);
+                }
+            };
+            workers[1].RunWorkerAsync();
+
+            workers[2] = new BackgroundWorker();
+            workers[2].DoWork += delegate {
+                packetRatePoints.Clear();
+                foreach(DataPoint point in Graphing.getErrorRatePoints(capture)) {
+                    errorRatePoints.Add(point);
+                }
+            };
+            workers[2].RunWorkerAsync();
         }
 
         private void ErrorPacketsListView_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
