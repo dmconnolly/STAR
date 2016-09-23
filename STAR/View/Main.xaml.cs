@@ -276,6 +276,23 @@ namespace STAR.View {
                 //Non-errors have protocol ID, destination path address and destination logical address
                 if (selected.PacketType != typeof(ErrorPacket))
                 {
+                    //Write and read commands have data in bytes
+                    if (selected.PacketType == typeof(WriteCommandPacket) ||
+                        selected.PacketType == typeof(ReadCommandPacket))
+                    //if (selected.PacketType == typeof(NonRmapPacket))
+                    {
+                        //txtContents.Text = selected.DataBytes.ToString();
+
+                        lblSourcePathAddress.Content = selected.SourcePathAddress.ToString();
+                        lblDestinationPathAddress.Content = selected.DestinationLogicalAddress.ToString();
+                    }
+                    else
+                    {
+                        txtContents.Text = "";
+                    }
+                }
+                else if (selected.PacketType == typeof(ErrorPacket))
+                {
                     
                 }
                 
