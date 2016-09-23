@@ -312,25 +312,25 @@ namespace STAR.View {
             packetProperties.Add(new StringPair("Timestamp", selected.TimeString));
             packetProperties.Add(new StringPair("Entry Port",byteToString(selected.EntryPort)));
             packetProperties.Add(new StringPair("Exit Port", byteToString(selected.ExitPort)));
-            packetProperties.Add(new StringPair("Destination Logical Address", byteToString(selected.DestinationLogicalAddress)));
-            packetProperties.Add(new StringPair("Protocol ID", selected.ProtocolId.ToString()));
             packetProperties.Add(new StringPair("Packet Type", selected.PacketTypeString));
-            packetProperties.Add(new StringPair("Destination key", byteToString(selected.DestinationKey)));
             packetProperties.Add(new StringPair("Source Path Address", byteToString(selected.SourcePathAddress)));
             packetProperties.Add(new StringPair("Source Logical Address", byteToString(selected.SourceLogicalAddress)));
+            packetProperties.Add(new StringPair("Destination key", byteToString(selected.DestinationKey)));
+            packetProperties.Add(new StringPair("Destination Logical Address", byteToString(selected.DestinationLogicalAddress)));
+            packetProperties.Add(new StringPair("Protocol ID", selected.ProtocolId.ToString()));
+            packetProperties.Add(new StringPair("Transaction ID", selected.TransactionId.ToString()));
+            packetProperties.Add(new StringPair("Read Address", selected.ReadAddress.ToString()));
             packetProperties.Add(new StringPair("Write Address", selected.WriteAddress.ToString()));
+            packetProperties.Add(new StringPair("Extended Write Address", byteToString(selected.ExtendedWriteAddress)));
             packetProperties.Add(new StringPair("Data Length", selected.DataLength.ToString()));
             packetProperties.Add(new StringPair("Header CRC", byteToString(selected.HeaderCRC))); 
             packetProperties.Add(new StringPair("Data", byteToString(selected.DataBytes)));
             packetProperties.Add(new StringPair("Data CRC", byteToString(selected.DataCRC)));
-            packetProperties.Add(new StringPair("End of Packet Marker", selected.EndCode));
-            packetProperties.Add(new StringPair("Message", selected.Message.ToString()));
-            packetProperties.Add(new StringPair("Transaction ID", selected.TransactionId.ToString()));
-            packetProperties.Add(new StringPair("Extended Write Address", byteToString(selected.ExtendedWriteAddress)));
-            packetProperties.Add(new StringPair("Read Address", selected.ReadAddress.ToString()));
             packetProperties.Add(new StringPair("Sequence Number", selected.SequenceId.ToString()));
             packetProperties.Add(new StringPair("Cargo", byteToString(selected.Cargo)));
             packetProperties.Add(new StringPair("Status", byteToString(selected.Status)));
+            packetProperties.Add(new StringPair("End of Packet Marker", selected.EndCode));
+            packetProperties.Add(new StringPair("Message", selected.Message));
         }
 
         private void drawGraphs() {
