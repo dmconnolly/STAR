@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Win32;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
@@ -9,11 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using STAR.ViewModel;
 using STAR.Model;
-using System.Windows.Controls.DataVisualization.Charting;
-using ListBox = System.Windows.Forms.ListBox;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using STAR.Extensions;
-//using Oxyplot;
+using OxyPlot;
 
 namespace STAR.View {
     public partial class Main : Window {
@@ -28,7 +25,7 @@ namespace STAR.View {
         // when we add packets to the collection, the UI is updated.
         private RangeObservableCollection<PacketView> packetView;
 
-        private RangeObservableCollection<KeyValuePair<string, string>> packetProperties;
+        private RangeObservableCollection<StringPair> packetProperties;
 
         // Interface to the packet collection which is bound to the
         // UI and supports filtering, sorting and grouping. For this
@@ -67,10 +64,11 @@ namespace STAR.View {
             packetView = new RangeObservableCollection<PacketView>();
 
             //Individual packet properties
-            packetProperties = new RangeObservableCollection<KeyValuePair<string, string>>();
+            packetProperties = new RangeObservableCollection<StringPair>();
 
             //For individual packets
-            IndividualPacketView.DataContext = this;
+            IndividualPacketGrid.DataContext = this;
+
 
             // Packet capture
             capture = new Capture();
@@ -152,6 +150,9 @@ namespace STAR.View {
             PacketsDataGrid.ItemsSource = packetCollectionView;
             // Same for status view
             ErrorPacketsListView.ItemsSource = errorCollectionView;
+
+            //For individual packets
+            IndividualPacketGrid.ItemsSource = packetProperties;
 
             // Set up array of port filter checkboxes
             portFilterCheckbox = new CheckBox[8] {
@@ -297,47 +298,25 @@ namespace STAR.View {
 
         //Method for displaying packet data when clicked on datagrid
         private void PacketsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {   
+        {
+            packetProperties.Clear();
+
             //Get current packet
             PacketView selected = (PacketView)PacketsDataGrid.SelectedItem;
 
+            if(selected == null) {
+                return;
+            }
+
             //Add packet properties to collection
-            packetProperties.Add(new KeyValuePair<string, string>("Timestamp", selected.TimeString));
-            packetProperties.Add(new KeyValuePair<string, string>("Entry Port",byteToString(selected.EntryPort)));
-            packetProperties.Add(new KeyValuePair<string, string>("Exit Port", byteToString(selected.ExitPort)));
-            Console.WriteLine();
-            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
-            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
-            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
-            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
-            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
-            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
-            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
-            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
-            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
-            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
-            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
-            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
-            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
-            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
-            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
-            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
-            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
-            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
-            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
-            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
-            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
+            packetProperties.Add(new StringPair("Timestamp", selected.TimeString));
+            packetProperties.Add(new StringPair("Entry Port",byteToString(selected.EntryPort)));
+            packetProperties.Add(new StringPair("Exit Port", byteToString(selected.ExitPort)));
 
         }
 
         private void drawGraphs() {
             packetRatePoints.Clear();
-            //packetRatePoints.Add(new DataPoint(1, 6));
-            //packetRatePoints.Add(new DataPoint(2, 4));
-            //packetRatePoints.Add(new DataPoint(3, 12));
-            //packetRatePoints.Add(new DataPoint(4, 12));
-            //packetRatePoints.Add(new DataPoint(5, 15));
-            //packetRatePoints.Add(new DataPoint(6, 9));
             Console.WriteLine("Here");
             BackgroundWorker[] workers = {
                 new BackgroundWorker(),
@@ -348,7 +327,7 @@ namespace STAR.View {
             workers[0].DoWork += delegate {
                 packetRatePoints.Clear();
                 foreach(OxyPlot.DataPoint point in Graphing.getGraphPoints(capture, Graphing.GraphType.PacketRate)) {
-                    //packetRatePoints.Add(point);
+                    packetRatePoints.Add(point);
                 }
             };
             workers[0].RunWorkerAsync();
@@ -356,7 +335,7 @@ namespace STAR.View {
             workers[1].DoWork += delegate {
                 dataRatePoints.Clear();
                 foreach(OxyPlot.DataPoint point in Graphing.getGraphPoints(capture, Graphing.GraphType.DataRate)) {
-                    //dataRatePoints.Add(point);
+                    dataRatePoints.Add(point);
                 }
             };
             workers[1].RunWorkerAsync();
@@ -364,7 +343,7 @@ namespace STAR.View {
             workers[2].DoWork += delegate {
                 errorRatePoints.Clear();
                 foreach(OxyPlot.DataPoint point in Graphing.getGraphPoints(capture, Graphing.GraphType.ErrorRate)) {
-                    //errorRatePoints.Add(point);
+                    errorRatePoints.Add(point);
                 }
             };
             workers[2].RunWorkerAsync();

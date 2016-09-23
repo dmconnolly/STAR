@@ -80,7 +80,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Extensions\RangeObservableCollection.cs" />
+    <Compile Include="ViewModel\RangeObservableCollection.cs" />
     <Compile Include="Model\Graphing.cs" />
     <Compile Include="Model\NonRmapPacket.cs" />
     <Compile Include="Model\RmapCRC.cs" />
@@ -96,6 +96,7 @@
     </Compile>
     <Compile Include="ViewModel\PacketView.cs" />
     <Compile Include="ViewModel\Statistics.cs" />
+    <Compile Include="ViewModel\StringPair.cs" />
     <Compile Include="View\Main.xaml.cs">
       <DependentUpon>Main.xaml</DependentUpon>
     </Compile>
@@ -134,7 +135,6 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Further Help.rtf" />
-    <None Include="Help\Graph Window Overview.rtf" />
     <None Include="Help\Introduction.rtf" />
     <None Include="Help\Main Window Overview.rtf" />
     <None Include="Help\Opening Files.rtf" />

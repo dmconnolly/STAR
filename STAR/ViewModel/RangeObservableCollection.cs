@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace STAR.Extensions {
+namespace STAR.ViewModel {
     // Extension method modified from the following stackoverflow answer:
     // http://stackoverflow.com/a/8607159
     class RangeObservableCollection<T> : ObservableCollection<T> {
