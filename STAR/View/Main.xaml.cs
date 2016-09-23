@@ -39,16 +39,13 @@ namespace STAR.View {
         // Filter predicate for error collection view
         private Predicate<object> errorPacketCollectionViewFilter;
 
-        //Interface to the packet errors, which currently displays all errors and their types
-        private ICollectionView lvpacketCollectionView;
-
         // Array of checkboxes for port filters
         // used when updating packet view filter
         private CheckBox[] portFilterCheckbox;
 
-        public List<DataPoint> packetRatePoints { get; private set; }
-        public List<DataPoint> dataRatePoints { get; private set; }
-        public List<DataPoint> errorRatePoints { get; private set; }
+        public IList<DataPoint> packetRatePoints { get; private set; }
+        public IList<DataPoint> dataRatePoints { get; private set; }
+        public IList<DataPoint> errorRatePoints { get; private set; }
 
         public Main() {
             InitializeComponent();
@@ -75,7 +72,6 @@ namespace STAR.View {
 
             // Packet collection view
             packetCollectionView = CollectionViewSource.GetDefaultView(packetView);
-            lvpacketCollectionView = CollectionViewSource.GetDefaultView(packetView);
             
             errorCollectionView = new CollectionViewSource
             {
