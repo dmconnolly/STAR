@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:STAR.View"
         xmlns:GraphTools="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
         mc:Ignorable="d"
-        Title="Main" Height="830" Width="1280">
+        Title="Main" Height="830" Width="1280"
+        xmlns:oxy="http://oxyplot.org/wpf">
     <Window.Resources>
         <CollectionViewSource x:Key="PacketCollectionViewSource" CollectionViewType="ListCollectionView" /> 
     </Window.Resources>
@@ -221,122 +222,71 @@
                                 </Grid>
                             </Grid>
                         </Grid>
-
-                        <Grid Grid.Column="2" Grid.Row="1">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1.5*"/>
-                                <ColumnDefinition Width="1*"/>
-                                <ColumnDefinition Width="1.5*"/>
-                                <ColumnDefinition Width="1*"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <Label FontSize="20">Statistics</Label>
-                            <Label Grid.Column="0" Grid.Row="1" Margin="0,0,0,10">Total Data Characters</Label>
-                            <Label Grid.Column="2" Grid.Row="1" Margin="0,0,0,10">Total Packets</Label>
-                            <Label Grid.Column="0" Grid.Row="2" Margin="0,0,0,10">Total Errors</Label>
-                            <Label Grid.Column="2" Grid.Row="2" Margin="0,0,0,10">Data Rate</Label>
-                            <Label Grid.Column="0" Grid.Row="3" Margin="0,0,0,10">Packet Rate</Label>
-                            <Label Grid.Column="2" Grid.Row="3" Margin="0,0,0,10">Error Rate</Label>
-                            <Label x:Name="lblTotalDataCharacters" Content="---" Grid.Column="1" Margin="2,1,0,0" Grid.Row="1"/>
-                            <Label x:Name="lblTotalPackets" Content="---" Grid.Column="3" Margin="2,0,0,0" Grid.Row="1"/>
-                            <Label x:Name="lblTotalErrors" Content="---" Grid.Column="1" Margin="1,1,0,0" Grid.Row="2"/>
-                            <Label x:Name="lblDataRate" Content="---" Grid.Column="3" Grid.Row="2" Margin="0,0,40,0"/>
-                            <Label x:Name="lblPacketRate" Content="---" Grid.Column="1" Margin="0,1,37,0" Grid.Row="3"/>
-                            <Label Content="p/s" Grid.Column="1" Margin="40,1,0,0" Grid.Row="3"/>
-                            <Label x:Name="lblErrorRate" Content="---" Grid.Column="3" Margin="0,0,45,1" Grid.Row="3"/>
-                            <Label Content="e/s" Grid.Column="3" Margin="43,0,0,1" Grid.Row="3"/>
-                            <Label Content="bytes/s" Grid.Column="3" Margin="32,0,0,1" Grid.Row="2"/>
-                            <Label Content="Start Time" HorizontalAlignment="Left" Grid.Row="5" VerticalAlignment="Top"/>
-                            <Label Content="End Time" Grid.Column="2" HorizontalAlignment="Left" Grid.Row="5" VerticalAlignment="Top"/>
-                            <Label x:Name="lblStartTime" Content="---" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="5" VerticalAlignment="Top" RenderTransformOrigin="-0.105,0" Height="28" Width="84"/>
-                            <Label x:Name="lblEndTime" Content="---" Grid.Column="3" HorizontalAlignment="Left" Grid.Row="5" VerticalAlignment="Top" Width="83"/>
-                        </Grid>
                     </Grid>
                 </Grid>
             </TabItem>
             <TabItem Header="Graph View" Height="22" Margin="-2.2,-2,-2,0" VerticalAlignment="Top">
-                <!-- GRAPH GOES HERE -->
                 <Grid>
-                    <Canvas>
-                        <Grid x:Name="OuterGrid" RenderTransformOrigin="0.5,0.5" Height="2" Canvas.Left="557" Canvas.Top="166" Width="5">
-
-                            <GraphTools:Chart       
-                            HorizontalAlignment="Left" 
-                            VerticalAlignment="Top"
-                            Margin="50,50,50,50" Name="XYChart" 
-                           >            
-                                <GraphTools:Chart.Axes>
-                                    <GraphTools:LinearAxis Orientation="X" Interval="60" Title="Seconds"></GraphTools:LinearAxis>
-                                    <GraphTools:LinearAxis Orientation="Y"></GraphTools:LinearAxis>
-                                </GraphTools:Chart.Axes>
-
-                                <!--
-                                <GraphTools:PieSeries         Name="PIE"         
-                                    DependentValueBinding="{Binding Path=Value}"                 
-                                    IndependentValueBinding="{Binding Path=Key}"
-                                    ItemsSource="{Binding Source={DyanmicResource PacketCollectionViewSource}, Path=data}"
-                                    >
-                                </GraphTools:PieSeries>
-                                -->
-                                
-                                <GraphTools:LineSeries        Name="LINE"          
-                                    DependentValueBinding="{Binding Path=Value}"                 
-                                    IndependentValueBinding="{Binding Path=Key}"
-                                    DataContext="{DynamicResource PacketCollectionViewSource}"
-                                    ItemsSource="{Binding}"
-                                    >
-                                   
-                                </GraphTools:LineSeries>
-
-                                <GraphTools:BarSeries          Name="BAR"        
-                                    DependentValueBinding="{Binding Path=Value}"                 
-                                    IndependentValueBinding="{Binding Path=Key}"
-                                    DataContext="{DynamicResource PacketCollectionViewSource}"
-                                    ItemsSource="{Binding}"
-                                                               >
-                                </GraphTools:BarSeries>
-
-                                <GraphTools:AreaSeries           Name="AREA"       
-                                    DependentValueBinding="{Binding Path=Value}"                 
-                                    IndependentValueBinding="{Binding Path=Key}"
-                                    DataContext="{DynamicResource PacketCollectionViewSource}"
-                                    ItemsSource="{Binding}"
-                                    >
-                                </GraphTools:AreaSeries>
-                                
-                            </GraphTools:Chart>
-
-
-
-                            <Grid.RenderTransform>
-                                <TransformGroup>
-                                    <ScaleTransform ScaleY="200" ScaleX="200"/>
-                                    <TranslateTransform X="50" Y="50"/>
-                                </TransformGroup>
-                            </Grid.RenderTransform>
-                        </Grid>
-                        <ComboBox x:Name="DataSelectBox" HorizontalAlignment="Left" Height="62" VerticalAlignment="Top" Width="302" Canvas.Left="160" Canvas.Top="550">
-                            <ComboBoxItem Content="Line"></ComboBoxItem>
-                            <ComboBoxItem Content="Area"></ComboBoxItem>
-                            <ComboBoxItem Content="Pie"></ComboBoxItem>
-                            <ComboBoxItem Content="Bar"></ComboBoxItem>
-                        </ComboBox>
-                        <ComboBox x:Name="TypeSelectBox" HorizontalAlignment="Left" Height="62" VerticalAlignment="Top" Width="302" Canvas.Right="160" Canvas.Top="550">
-                            <ComboBoxItem Content="Packet_Rate"></ComboBoxItem>
-                            <ComboBoxItem Content="Data_Rate"></ComboBoxItem>
-                            <ComboBoxItem Content="Error_Rate"></ComboBoxItem>
-                        </ComboBox>
-                        <Label x:Name="label" Content="Type Of Data" Height="33" Canvas.Left="156" Canvas.Top="512" Width="306" FontSize="18"/>
-                        <Label x:Name="label_Copy" Content="Type Of Graph" Height="33" Canvas.Left="806" Canvas.Top="512" Width="306" FontSize="18"/>
-                    </Canvas>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <oxy:Plot Grid.Row="0" Grid.Column="0" Name="packetRateGraph" Title="Packet Rate">
+                        <oxy:Plot.Series>
+                            <oxy:LineSeries ItemsSource="{Binding packetRatePoints}"/>
+                        </oxy:Plot.Series>
+                    </oxy:Plot>
+                    <oxy:Plot Grid.Row="0" Grid.Column="1" Name="dataRateGraph" Title="Data Rate">
+                        <oxy:Plot.Series>
+                            <oxy:LineSeries ItemsSource="{Binding dataRatePoints}"/>
+                        </oxy:Plot.Series>
+                    </oxy:Plot>
+                    <oxy:Plot Grid.Row="1" Grid.Column="0" Name="errorRateGraph" Title="Error Rate">
+                        <oxy:Plot.Series>
+                            <oxy:LineSeries ItemsSource="{Binding errorRatePoints}"/>
+                        </oxy:Plot.Series>
+                    </oxy:Plot>
+                    <Grid Margin="30,75,0,0" Grid.Column="2" Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1.5*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1.5*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Label FontSize="20">Statistics</Label>
+                        <Label Grid.Column="0" Grid.Row="1" Margin="0,0,0,10">Total Data Characters</Label>
+                        <Label Grid.Column="2" Grid.Row="1" Margin="0,0,0,10">Total Packets</Label>
+                        <Label Grid.Column="0" Grid.Row="2" Margin="0,0,0,10">Total Errors</Label>
+                        <Label Grid.Column="2" Grid.Row="2" Margin="0,0,0,10">Data Rate</Label>
+                        <Label Grid.Column="0" Grid.Row="3" Margin="0,0,0,10">Packet Rate</Label>
+                        <Label Grid.Column="2" Grid.Row="3" Margin="0,0,0,10">Error Rate</Label>
+                        <Label x:Name="lblTotalDataCharacters" Content="---" Grid.Column="1" Margin="2,1,0,0" Grid.Row="1"/>
+                        <Label x:Name="lblTotalPackets" Content="---" Grid.Column="3" Margin="2,0,0,0" Grid.Row="1"/>
+                        <Label x:Name="lblTotalErrors" Content="---" Grid.Column="1" Margin="1,1,0,0" Grid.Row="2"/>
+                        <Label x:Name="lblDataRate" Content="---" Grid.Column="3" Grid.Row="2" Margin="0,0,40,0"/>
+                        <Label x:Name="lblPacketRate" Content="---" Grid.Column="1" Margin="0,1,37,0" Grid.Row="3"/>
+                        <Label Content="p/s" Grid.Column="1" Margin="40,1,0,0" Grid.Row="3"/>
+                        <Label x:Name="lblErrorRate" Content="---" Grid.Column="3" Margin="0,0,45,1" Grid.Row="3"/>
+                        <Label Content="e/s" Grid.Column="3" Margin="43,0,0,1" Grid.Row="3"/>
+                        <Label Content="bytes/s" Grid.Column="3" Margin="32,0,0,1" Grid.Row="2"/>
+                        <Label Content="Start Time" HorizontalAlignment="Left" Grid.Row="5" VerticalAlignment="Top"/>
+                        <Label Content="End Time" Grid.Column="2" HorizontalAlignment="Left" Grid.Row="5" VerticalAlignment="Top"/>
+                        <Label x:Name="lblStartTime" Content="---" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="5" VerticalAlignment="Top" RenderTransformOrigin="-0.105,0" Height="28" Width="84"/>
+                        <Label x:Name="lblEndTime" Content="---" Grid.Column="3" HorizontalAlignment="Left" Grid.Row="5" VerticalAlignment="Top" Width="83"/>
+                    </Grid>
                 </Grid>
             </TabItem>
         </TabControl>
