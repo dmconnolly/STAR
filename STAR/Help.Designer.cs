@@ -40,6 +40,7 @@
             "Opening Files",
             "Main Window Overview",
             "Searching and Filtering",
+            "Graph Window Overview",
             "Further Help"});
             this.lstHelpList.Location = new System.Drawing.Point(13, 13);
             this.lstHelpList.Name = "lstHelpList";

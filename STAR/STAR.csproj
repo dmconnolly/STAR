@@ -133,6 +133,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Further Help.rtf" />
+    <None Include="Help\Graph Window Overview.rtf" />
     <None Include="Help\Introduction.rtf" />
     <None Include="Help\Main Window Overview.rtf" />
     <None Include="Help\Opening Files.rtf" />
