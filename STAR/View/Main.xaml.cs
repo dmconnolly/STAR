@@ -283,8 +283,9 @@ namespace STAR.View {
                         selected.PacketType == typeof(ReadCommandPacket))
                     {
                         txtContents.Text = byteToString(selected.DataBytes);
-
-                        lblSourcePathAddress.Content = selected.SourcePathAddress.ToString();
+                        
+                        lblSourcePathAddress.Content = byteToString(selected.SourceLogicalAddress);
+                        Console.WriteLine(byteToString(selected.SourcePathAddress));
                         //lblDestinationPathAddress.Content = byteToString(selected.DestinationLogicalAddress);
                     }
                     else
@@ -365,6 +366,13 @@ namespace STAR.View {
         {
             string returnString = BitConverter.ToString(byteArray);
             returnString.Replace("-","");
+            return returnString;
+        }
+
+        //Overload for single byte
+        private string byteToString(byte singleByte)
+        {
+            string returnString = Convert.ToString(singleByte);
             return returnString;
         }
     }
