@@ -278,6 +278,23 @@ namespace STAR.View {
                 //Non-errors have protocol ID, destination path address and destination logical address
                 if (selected.PacketType != typeof(ErrorPacket))
                 {
+                    //Write and read commands have data in bytes
+                    if (selected.PacketType == typeof(WriteCommandPacket) ||
+                        selected.PacketType == typeof(ReadCommandPacket))
+                    {
+                        txtContents.Text = byteToString(selected.DataBytes);
+                        
+                        lblSourcePathAddress.Content = byteToString(selected.SourceLogicalAddress);
+                        Console.WriteLine(byteToString(selected.SourcePathAddress));
+                        //lblDestinationPathAddress.Content = byteToString(selected.DestinationLogicalAddress);
+                    }
+                    else
+                    {
+                        txtContents.Text = "";
+                    }
+                }
+                else if (selected.PacketType == typeof(ErrorPacket))
+                {
                     
                 }
                 
@@ -342,6 +359,21 @@ namespace STAR.View {
                 PacketsDataGrid.UpdateLayout();
                 PacketsDataGrid.SelectedItem = p;
             }
+        }
+
+        //Method to convert byte array to string
+        private string byteToString(byte[] byteArray)
+        {
+            string returnString = BitConverter.ToString(byteArray);
+            returnString.Replace("-","");
+            return returnString;
+        }
+
+        //Overload for single byte
+        private string byteToString(byte singleByte)
+        {
+            string returnString = Convert.ToString(singleByte);
+            return returnString;
         }
     }
 }

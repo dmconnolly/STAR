@@ -78,6 +78,7 @@
                                     CanUserSortColumns="False"
                                     HeadersVisibility="Column"
                                     HorizontalAlignment="Left"
+                                    IsReadOnly="True"
                                     Grid.Row="0"
                                     Grid.Column="1"
                                     SelectionChanged="PacketsDataGrid_SelectionChanged"
@@ -173,18 +174,18 @@
                                         <RowDefinition Height="Auto" MinHeight="33" />
                                         <RowDefinition Height="31" />
                                         <RowDefinition />
-                                        <RowDefinition Height="Auto" MinHeight="29" />
+                                        <RowDefinition Height="Auto" MinHeight="20" />
                                     </Grid.RowDefinitions>
                                     <Label Grid.Column="0" FontSize="20" Margin="0,0,30,0">
                                         Data Packet
                                     </Label>
                                     <Label Grid.Row="1" Grid.Column="0" Margin="0,0,30,0">Timestamp</Label>
                                     <Label Grid.Row="3" Grid.Column="0" Margin="0,0,30,7">Protocol ID</Label>
-                                    <Label x:Name="lblDestPathAdd" Grid.Row="4" Margin="0,0,30,41" Grid.RowSpan="2" Content="Dest. Path Address"/>
+                                    <Label x:Name="lblDestPathAdd" Grid.Row="4" Margin="0,0,30,2" Content="Dest. Path Address"/>
                                     <Label Grid.Row="2" Margin="0,0,30,8">Port</Label>
                                     <Label Grid.Row="2" Grid.Column="2">Destination</Label>
-                                    <Label Grid.Row="5" Grid.Column="0" Margin="0,0,30,10">Contents</Label>
-                                    <TextBox x:Name="txtContents" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="3" Margin="0,0,0,5" IsReadOnly="True"/>
+                                    <Label Grid.Row="5" Grid.Column="0">Contents</Label>
+                                    <TextBox x:Name="txtContents" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="3" IsReadOnly="True"/>
                                     <Button x:Name="btnPrevious" Grid.Row="6" Grid.Column="0" Width="100" HorizontalAlignment="Left" Click="btnPrevious_Click">
                                         Previous
                                     </Button>
@@ -195,9 +196,9 @@
                                     <Label x:Name="lblProtocolID" Content="--" Grid.Row="3" Grid.Column="1" Margin="0,0,0,7"/>
                                     <Label x:Name="lblPort" Content="2" Grid.Column="1" Grid.Row="2"/>
                                     <Label x:Name="lblDestination" Content="1" Grid.Column="3" Margin="0,0,0,1" Grid.Row="2"/>
-                                    <Label x:Name="lblDestinationPathAddress" Content="--" Grid.Column="1" Grid.Row="4" Margin="0,0,0,41" Grid.RowSpan="2"/>
-                                    <Label x:Name="lblSrcPathAdd" Grid.Row="4" Margin="0,0,0,41" Grid.RowSpan="2" Content="Source Path Address" Grid.Column="2"/>
-                                    <Label x:Name="lblSourcePathAddress" Content="--" Grid.Column="3" Grid.Row="4" Margin="0,0,0,41" Grid.RowSpan="2"/>
+                                    <Label x:Name="lblDestinationPathAddress" Content="--" Grid.Column="1" Grid.Row="4" Margin="0,0,0,2"/>
+                                    <Label x:Name="lblSrcPathAdd" Grid.Row="4" Margin="0,0,0,2" Content="Source Path Address" Grid.Column="2"/>
+                                    <Label x:Name="lblSourcePathAddress" Content="--" Grid.Column="3" Grid.Row="4" Margin="0,0,0,2"/>
                                 </Grid>
 
                                 <Grid Grid.Row="1">
