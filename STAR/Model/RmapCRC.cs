@@ -43,7 +43,7 @@
         // Calculate an 8-bit CRC for the given buffer
         private static byte calcCRC(byte[] buffer) {
             byte crc = 0;
-            for(int i=0; i<buffer.Length; i++) {
+            for(int i = 0; i<buffer.Length; i++) {
                 // The value of the byte from the buffer is XORed with the current CRC value
                 // the result is then used to lookup the new CRC value from the lookup table
                 crc = CRCTable[crc ^ buffer[i]];

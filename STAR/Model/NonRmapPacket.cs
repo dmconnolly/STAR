@@ -6,7 +6,7 @@ namespace STAR.Model {
         public uint SequenceNumber { get; private set; }
         public byte[] Cargo { get; private set; }
 
-        public NonRmapPacket(byte entryPort, byte exitPort, string dateString, List<byte> packetBytes, string endCode, int sequenceIndex) 
+        public NonRmapPacket(byte entryPort, byte exitPort, string dateString, List<byte> packetBytes, string endCode, int sequenceIndex)
             : base(entryPort, exitPort, dateString, packetBytes, endCode) {
 
             sequenceIndex -= m_totalPacketBytes - m_remainingBytes.Count;

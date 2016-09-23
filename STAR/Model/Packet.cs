@@ -32,8 +32,7 @@ namespace STAR.Model {
             }
         }
 
-        public DateTime TimeStampInMinutes
-        {
+        public DateTime TimeStampInMinutes {
             get { return m_timeInMinutes; }
         }
 
@@ -65,7 +64,7 @@ namespace STAR.Model {
                 timestamp = DateTime.ParseExact(dateString, timeFormatInput, CultureInfo.InvariantCulture);
             } catch(FormatException) {
                 Console.WriteLine("{0} is not in the correct format.", dateString);
-            } 
+            }
 
             return timestamp;
         }

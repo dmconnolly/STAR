@@ -1,16 +1,15 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Win32;
-using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using STAR.ViewModel;
 using STAR.Model;
 using OxyPlot;
+using System.Linq;
 
 namespace STAR.View {
     public partial class Main : Window {
@@ -24,7 +23,6 @@ namespace STAR.View {
         // when changes are made to the collection. This means that
         // when we add packets to the collection, the UI is updated.
         private RangeObservableCollection<PacketView> packetView;
-
         private RangeObservableCollection<StringPair> packetProperties;
 
         // Interface to the packet collection which is bound to the
@@ -69,7 +67,6 @@ namespace STAR.View {
             //For individual packets
             IndividualPacketGrid.DataContext = this;
 
-
             // Packet capture
             capture = new Capture();
 
@@ -82,9 +79,8 @@ namespace STAR.View {
 
             // Packet collection view
             packetCollectionView = CollectionViewSource.GetDefaultView(packetView);
-            
-            errorCollectionView = new CollectionViewSource
-            {
+
+            errorCollectionView = new CollectionViewSource {
                 Source = packetView
             }.View;
 
@@ -97,8 +93,7 @@ namespace STAR.View {
             // Filter predicate for packet collection view
             packetCollectionViewFilter = item => {
                 PacketView pktView = item as PacketView;
-                if (packetView == null)
-                {
+                if(packetView == null) {
                     return false;
                 }
                 // If the checkbox for the errors is checked
@@ -121,16 +116,13 @@ namespace STAR.View {
                 return portFilterCheckbox[pktView.EntryPort - 1].IsChecked == true ? true : false;
             };
 
-            errorPacketCollectionViewFilter = item =>
-            {
+            errorPacketCollectionViewFilter = item => {
                 PacketView pktView = item as PacketView;
-                if (packetView == null)
-                {
+                if(packetView == null) {
                     return false;
                 }
                 // If the checkbox for the errors is checked
-                if (!pktView.PacketTypeString.Equals("Error"))
-                {
+                if(!pktView.PacketTypeString.Equals("Error")) {
                     return false;
                 }
 
@@ -164,8 +156,7 @@ namespace STAR.View {
         }
 
         // Allow user to select files to parse using file dialog
-        private void OpenFilesButton_Click(object sender, RoutedEventArgs e)
-        {
+        private void OpenFilesButton_Click(object sender, RoutedEventArgs e) {
             loadTester = false;
             if(openFileDialog.ShowDialog() == true) {
                 capture.Clear();
@@ -239,7 +230,7 @@ namespace STAR.View {
         // port filter checkboxes will only be enabled
         // if a file has been parsed for the port
         private void UpdatePortFilterCheckboxes() {
-            foreach (byte port in capture.PortsLoaded) {
+            foreach(byte port in capture.PortsLoaded) {
                 portFilterCheckbox[port - 1].IsEnabled = true;
                 portFilterCheckbox[port - 1].IsChecked = true;
             }
@@ -251,26 +242,21 @@ namespace STAR.View {
         }
 
         //Navigating to next packet
-        private void btnNext_Click(object sender, RoutedEventArgs e)
-        {
+        private void btnNext_Click(object sender, RoutedEventArgs e) {
             PacketsDataGrid.SelectedIndex++;
             PacketView p = (PacketView)PacketsDataGrid.SelectedItem;
-            if (p != null)
-            {
+            if(p != null) {
                 PacketsDataGrid.ScrollIntoView(p);
                 PacketsDataGrid.UpdateLayout();
             }
         }
 
         //Navigating to previous packet
-        private void btnPrevious_Click(object sender, RoutedEventArgs e)
-        {
-            if (PacketsDataGrid.SelectedIndex >= 1)
-            {
+        private void btnPrevious_Click(object sender, RoutedEventArgs e) {
+            if(PacketsDataGrid.SelectedIndex >= 1) {
                 PacketsDataGrid.SelectedIndex--;
                 PacketView p = (PacketView)PacketsDataGrid.SelectedItem;
-                if (p != null)
-                {
+                if(p != null) {
                     PacketsDataGrid.ScrollIntoView(p);
                     PacketsDataGrid.UpdateLayout();
                 }
@@ -278,8 +264,7 @@ namespace STAR.View {
         }
 
         //When Filter button is pressed (used for filtering different errors
-        private void Button_OnClick(object sender, RoutedEventArgs e)
-        {
+        private void Button_OnClick(object sender, RoutedEventArgs e) {
             RefreshPacketDataGridFilter();
         }
 
@@ -292,13 +277,12 @@ namespace STAR.View {
             lblTotalPackets.Content = stats.PacketCount;
             lblTotalErrors.Content = stats.ErrorMessageCount;
             lblTotalDataCharacters.Content = stats.TotalByteCount;
-            lblStartTime.Content = capture.GetStartTime.ToString("hh:mm:ss:fff"); 
-            lblEndTime.Content = capture.GetEndTime.ToString("hh:mm:ss:fff"); 
+            lblStartTime.Content = capture.GetStartTime.ToString("hh:mm:ss:fff");
+            lblEndTime.Content = capture.GetEndTime.ToString("hh:mm:ss:fff");
         }
 
         //Method for displaying packet data when clicked on datagrid
-        private void PacketsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
+        private void PacketsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e) {
             packetProperties.Clear();
 
             //Get current packet
@@ -310,27 +294,27 @@ namespace STAR.View {
 
             //Add packet properties to collection
             packetProperties.Add(new StringPair("Timestamp", selected.TimeString));
-            packetProperties.Add(new StringPair("Entry Port",byteToString(selected.EntryPort)));
+            packetProperties.Add(new StringPair("Entry Port", byteToString(selected.EntryPort)));
             packetProperties.Add(new StringPair("Exit Port", byteToString(selected.ExitPort)));
-            packetProperties.Add(new StringPair("Destination Logical Address", byteToString(selected.DestinationLogicalAddress)));
-            packetProperties.Add(new StringPair("Protocol ID", selected.ProtocolId.ToString()));
             packetProperties.Add(new StringPair("Packet Type", selected.PacketTypeString));
-            packetProperties.Add(new StringPair("Destination key", byteToString(selected.DestinationKey)));
             packetProperties.Add(new StringPair("Source Path Address", byteToString(selected.SourcePathAddress)));
             packetProperties.Add(new StringPair("Source Logical Address", byteToString(selected.SourceLogicalAddress)));
+            packetProperties.Add(new StringPair("Destination key", byteToString(selected.DestinationKey)));
+            packetProperties.Add(new StringPair("Destination Logical Address", byteToString(selected.DestinationLogicalAddress)));
+            packetProperties.Add(new StringPair("Protocol ID", selected.ProtocolId.ToString()));
+            packetProperties.Add(new StringPair("Transaction ID", selected.TransactionId.ToString()));
+            packetProperties.Add(new StringPair("Read Address", selected.ReadAddress.ToString()));
             packetProperties.Add(new StringPair("Write Address", selected.WriteAddress.ToString()));
+            packetProperties.Add(new StringPair("Extended Write Address", byteToString(selected.ExtendedWriteAddress)));
             packetProperties.Add(new StringPair("Data Length", selected.DataLength.ToString()));
-            packetProperties.Add(new StringPair("Header CRC", byteToString(selected.HeaderCRC))); 
+            packetProperties.Add(new StringPair("Header CRC", byteToString(selected.HeaderCRC)));
             packetProperties.Add(new StringPair("Data", byteToString(selected.DataBytes)));
             packetProperties.Add(new StringPair("Data CRC", byteToString(selected.DataCRC)));
-            packetProperties.Add(new StringPair("End of Packet Marker", selected.EndCode));
-            packetProperties.Add(new StringPair("Message", selected.Message.ToString()));
-            packetProperties.Add(new StringPair("Transaction ID", selected.TransactionId.ToString()));
-            packetProperties.Add(new StringPair("Extended Write Address", byteToString(selected.ExtendedWriteAddress)));
-            packetProperties.Add(new StringPair("Read Address", selected.ReadAddress.ToString()));
             packetProperties.Add(new StringPair("Sequence Number", selected.SequenceId.ToString()));
             packetProperties.Add(new StringPair("Cargo", byteToString(selected.Cargo)));
             packetProperties.Add(new StringPair("Status", byteToString(selected.Status)));
+            packetProperties.Add(new StringPair("End of Packet Marker", selected.EndCode));
+            packetProperties.Add(new StringPair("Message", selected.Message));
         }
 
         private void drawGraphs() {
@@ -340,42 +324,50 @@ namespace STAR.View {
                 new BackgroundWorker(),
                 new BackgroundWorker()
             };
+            
+            Packet[] packets = capture.Packets.OrderBy(pkt => pkt.TimeStamp.Ticks).ToArray();
 
             workers[0].DoWork += delegate {
                 packetRatePoints.Clear();
-                foreach(DataPoint point in Graphing.getGraphPoints(capture, Graphing.GraphType.PacketRate)) {
+                foreach(DataPoint point in Graphing.getGraphPoints(packets, Graphing.GraphType.PacketRate)) {
                     packetRatePoints.Add(point);
                 }
+                Dispatcher.InvokeAsync(() => {
+                    packetRateGraph.InvalidatePlot(true);
+                });
             };
             workers[0].RunWorkerAsync();
 
             workers[1].DoWork += delegate {
                 dataRatePoints.Clear();
-                foreach(DataPoint point in Graphing.getGraphPoints(capture, Graphing.GraphType.DataRate)) {
+                foreach(DataPoint point in Graphing.getGraphPoints(packets, Graphing.GraphType.DataRate)) {
                     dataRatePoints.Add(point);
                 }
+                Dispatcher.InvokeAsync(() => {
+                    dataRateGraph.InvalidatePlot(true);
+                });
             };
             workers[1].RunWorkerAsync();
 
             workers[2].DoWork += delegate {
                 errorRatePoints.Clear();
-                foreach(DataPoint point in Graphing.getGraphPoints(capture, Graphing.GraphType.ErrorRate)) {
+                foreach(DataPoint point in Graphing.getGraphPoints(packets, Graphing.GraphType.ErrorRate)) {
                     errorRatePoints.Add(point);
                 }
+                Dispatcher.InvokeAsync(() => {
+                    errorRateGraph.InvalidatePlot(true);
+                });
             };
             workers[2].RunWorkerAsync();
         }
 
-        private void ErrorPacketsListView_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
+        private void ErrorPacketsListView_OnSelectionChanged(object sender, SelectionChangedEventArgs e) {
             packetNavigation();
         }
 
-        private void packetNavigation()
-        {
+        private void packetNavigation() {
             PacketView p = (PacketView)ErrorPacketsListView.SelectedItem;
-            if (p != null)
-            {
+            if(p != null) {
                 PacketsDataGrid.ScrollIntoView(p);
                 PacketsDataGrid.UpdateLayout();
                 PacketsDataGrid.SelectedItem = p;
@@ -383,78 +375,67 @@ namespace STAR.View {
         }
 
         //Method to convert byte array to string
-        private string byteToString(byte[] byteArray)
-        {
+        private string byteToString(byte[] byteArray) {
             if(byteArray == null) {
                 return "";
             }
             string returnString = BitConverter.ToString(byteArray);
-            returnString.Replace("-","");
+            returnString.Replace("-", "");
             return returnString;
         }
 
         //Overload for single byte
-        private string byteToString(byte singleByte)
-        {
+        private string byteToString(byte singleByte) {
             string returnString = Convert.ToString(singleByte);
             return returnString;
         }
 
         [TestClass]
-        public class MainTester
-        {
+        public class MainTester {
             [TestMethod]
-            public void testFileLoading()
-            {
+            public void testFileLoading() {
                 bool loadTester = false;
                 Assert.IsTrue(loadTester);
             }
 
             [TestMethod]
-            public void testClearing()
-            {
+            public void testClearing() {
                 bool clearTester = false;
                 Assert.IsFalse(clearTester);
             }
 
             [TestMethod]
-            public void testHelp()
-            {
+            public void testHelp() {
                 bool helpTester = true;
                 Assert.IsTrue(helpTester);
             }
 
             [TestMethod]
-            public void testGraph()
-            {
+            public void testGraph() {
                 bool graphTester = true;
                 Assert.IsFalse(graphTester);
             }
 
             [TestMethod]
-            public void testRefresh()
-            {
+            public void testRefresh() {
                 bool refreshTester = true;
                 Assert.IsTrue(refreshTester);
             }
 
             [TestMethod]
-            public void testNavigation()
-            {
+            public void testNavigation() {
                 bool navigationTester = true;
                 Assert.IsFalse(navigationTester);
             }
 
             [TestMethod]
-            public void testFilter()
-            {
+            public void testFilter() {
                 bool filterTester = false;
                 Assert.IsFalse(filterTester);
             }
 
             [TestMethod]
-            public void testConverter()
-            {
+            public void testConverter() {
                 bool converterTester = false;
                 Assert.IsTrue(converterTester);
             }
