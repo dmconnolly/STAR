@@ -157,8 +157,8 @@
                                 </Label>
                                 <DataGrid x:Name="IndividualPacketGrid" HorizontalAlignment="Left" Margin="0,75,0,0" VerticalAlignment="Top" Height="359" Width="415" MinColumnWidth="247" GridLinesVisibility="None" IsReadOnly="True">
                                     <DataGrid.Columns>
-                                        <DataGridCheckBoxColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Property"/>
-                                        <DataGridCheckBoxColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Value"/>
+                                        <DataGridTextColumn Binding="{Binding Path=Property}"  Header="Property"/>
+                                        <DataGridTextColumn Binding="{Binding Path =Value}" Header="Value"/>
                                     </DataGrid.Columns>
                                 </DataGrid>
                                 <!--Lewis Davie's Stuff-->

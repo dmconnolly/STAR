@@ -25,7 +25,7 @@ namespace STAR.View {
         // when we add packets to the collection, the UI is updated.
         private RangeObservableCollection<PacketView> packetView;
 
-        private RangeObservableCollection<KeyValuePair<string, string>> packetProperties;
+        private RangeObservableCollection<StringPair> packetProperties;
 
         // Interface to the packet collection which is bound to the
         // UI and supports filtering, sorting and grouping. For this
@@ -64,10 +64,11 @@ namespace STAR.View {
             packetView = new RangeObservableCollection<PacketView>();
 
             //Individual packet properties
-            packetProperties = new RangeObservableCollection<KeyValuePair<string, string>>();
+            packetProperties = new RangeObservableCollection<StringPair>();
 
             //For individual packets
             IndividualPacketGrid.DataContext = this;
+
 
             // Packet capture
             capture = new Capture();
@@ -308,32 +309,9 @@ namespace STAR.View {
             }
 
             //Add packet properties to collection
-            packetProperties.Add(new KeyValuePair<string, string>("Timestamp", selected.TimeString));
-            packetProperties.Add(new KeyValuePair<string, string>("Entry Port",byteToString(selected.EntryPort)));
-            packetProperties.Add(new KeyValuePair<string, string>("Exit Port", byteToString(selected.ExitPort)));
-
-
-            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
-            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
-            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
-            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
-            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
-            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
-            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
-            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
-            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
-            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
-            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
-            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
-            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
-            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
-            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
-            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
-            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
-            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
-            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
-            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
-            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
+            packetProperties.Add(new StringPair("Timestamp", selected.TimeString));
+            packetProperties.Add(new StringPair("Entry Port",byteToString(selected.EntryPort)));
+            packetProperties.Add(new StringPair("Exit Port", byteToString(selected.ExitPort)));
 
         }
 
