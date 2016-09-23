@@ -312,9 +312,8 @@ namespace STAR.View {
             packetProperties.Add(new StringPair("Timestamp", selected.TimeString));
             packetProperties.Add(new StringPair("Entry Port",byteToString(selected.EntryPort)));
             packetProperties.Add(new StringPair("Exit Port", byteToString(selected.ExitPort)));
-            //packetProperties.Add(new StringPair("Destination Path Address", byteToString(selected.Des)));
             packetProperties.Add(new StringPair("Destination Logical Address", byteToString(selected.DestinationLogicalAddress)));
-            //packetProperties.Add(new StringPair("Protocol ID", byteToString(selected.ProtocolID)));
+            packetProperties.Add(new StringPair("Protocol ID", selected.ProtocolId.ToString()));
             packetProperties.Add(new StringPair("Packet Type", selected.PacketTypeString));
             packetProperties.Add(new StringPair("Destination key", byteToString(selected.DestinationKey)));
             packetProperties.Add(new StringPair("Source Path Address", byteToString(selected.SourcePathAddress)));
@@ -329,14 +328,13 @@ namespace STAR.View {
             packetProperties.Add(new StringPair("Transaction ID", selected.TransactionId.ToString()));
             packetProperties.Add(new StringPair("Extended Write Address", byteToString(selected.ExtendedWriteAddress)));
             packetProperties.Add(new StringPair("Read Address", selected.ReadAddress.ToString()));
-            //packetProperties.Add(new StringPair("Sequence Number", byteToString(selected.S)));
-            //packetProperties.Add(new StringPair("Cargo", byteToString(selected.Cargo)));
+            packetProperties.Add(new StringPair("Sequence Number", selected.SequenceId.ToString()));
+            packetProperties.Add(new StringPair("Cargo", byteToString(selected.Cargo)));
             packetProperties.Add(new StringPair("Status", byteToString(selected.Status)));
         }
 
         private void drawGraphs() {
             packetRatePoints.Clear();
-            Console.WriteLine("Here");
             BackgroundWorker[] workers = {
                 new BackgroundWorker(),
                 new BackgroundWorker(),
@@ -460,6 +458,6 @@ namespace STAR.View {
                 bool converterTester = false;
                 Assert.IsTrue(converterTester);
             }
-    }
+        }
     }
 }
