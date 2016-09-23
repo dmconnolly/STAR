@@ -24,6 +24,7 @@ namespace STAR.ViewModel {
         public bool   CRCError         { get; private set; }
         public bool   SequenceIdError  { get; private set; }
         public bool   DuplicatePacketError { get; private set; }
+        public byte[] Cargo { get; private set; }
 
         public byte   DestinationKey       { get; private set; }
         public byte[] SourcePathAddress    { get; private set; }
@@ -95,6 +96,7 @@ namespace STAR.ViewModel {
             } else if(PacketType == typeof(WriteCommandPacket)) {
                 WriteCommandPacket pkt = packet as WriteCommandPacket;
                 PacketTypeString = "Write command";
+                //Cargo = pkt.Cargo;
                 DestinationKey = pkt.DestinationKey;
                 SourcePathAddress = pkt.SourcePathAddress;
                 SourceLogicalAddress = pkt.SourceLogicalAddress;
