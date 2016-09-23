@@ -49,9 +49,6 @@ namespace STAR
                 case "Opening Files":
                     txtHelp.Rtf = Properties.Resources.Opening_Files;
                     break;
-                case "Quitting the Program":
-                    txtHelp.Rtf = Properties.Resources.Quitting_the_Program;
-                    break;
                 case "Searching and Filtering":
                     txtHelp.Rtf = Properties.Resources.Searching_and_Filtering;
                     break;
