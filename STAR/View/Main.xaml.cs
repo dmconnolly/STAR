@@ -13,7 +13,7 @@ using System.Windows.Controls.DataVisualization.Charting;
 using ListBox = System.Windows.Forms.ListBox;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using STAR.Extensions;
-using Oxyplot;
+//using Oxyplot;
 
 namespace STAR.View {
     public partial class Main : Window {
@@ -49,6 +49,7 @@ namespace STAR.View {
         public IList<DataPoint> packetRatePoints { get; private set; }
         public IList<DataPoint> dataRatePoints { get; private set; }
         public IList<DataPoint> errorRatePoints { get; private set; }
+        public bool loadTester;
 
         public Main() {
             InitializeComponent();
@@ -154,7 +155,9 @@ namespace STAR.View {
         }
 
         // Allow user to select files to parse using file dialog
-        private void OpenFilesButton_Click(object sender, RoutedEventArgs e) {
+        private void OpenFilesButton_Click(object sender, RoutedEventArgs e)
+        {
+            loadTester = false;
             if(openFileDialog.ShowDialog() == true) {
                 capture.Clear();
                 packetView.Clear();
@@ -174,6 +177,8 @@ namespace STAR.View {
                 };
                 bgWorker.RunWorkerCompleted += ParseFileWorkerCompleted;
                 bgWorker.RunWorkerAsync();
+
+                loadTester = true;
             }
         }
 
@@ -324,34 +329,14 @@ namespace STAR.View {
         }
 
         private void drawGraphs() {
-            BackgroundWorker[] workers = new BackgroundWorker[3];
-
-            workers[0] = new BackgroundWorker();
-            workers[0].DoWork += delegate {
-                packetRatePoints.Clear();
-                foreach(DataPoint point in Graphing.getPacketRatePoints(capture)) {
-                    packetRatePoints.Add(point);
-                }
-            };
-            workers[0].RunWorkerAsync();
-
-            workers[1] = new BackgroundWorker();
-            workers[1].DoWork += delegate {
-                packetRatePoints.Clear();
-                foreach(DataPoint point in Graphing.getDataRatePoints(capture)) {
-                    dataRatePoints.Add(point);
-                }
-            };
-            workers[1].RunWorkerAsync();
-
-            workers[2] = new BackgroundWorker();
-            workers[2].DoWork += delegate {
-                packetRatePoints.Clear();
-                foreach(DataPoint point in Graphing.getErrorRatePoints(capture)) {
-                    errorRatePoints.Add(point);
-                }
-            };
-            workers[2].RunWorkerAsync();
+            packetRatePoints.Clear();
+            //packetRatePoints.Add(new DataPoint(1, 6));
+            //packetRatePoints.Add(new DataPoint(2, 4));
+            //packetRatePoints.Add(new DataPoint(3, 12));
+            //packetRatePoints.Add(new DataPoint(4, 12));
+            //packetRatePoints.Add(new DataPoint(5, 15));
+            //packetRatePoints.Add(new DataPoint(6, 9));
+            Console.WriteLine("Here");
         }
 
         private void ErrorPacketsListView_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -394,50 +379,57 @@ namespace STAR.View {
             [TestMethod]
             public void testFileLoading()
             {
-
-                Assert.AreEqual(2, 2);
+                bool loadTester = false;
+                Assert.IsTrue(loadTester);
             }
 
             [TestMethod]
             public void testClearing()
             {
-                Assert.AreEqual(1, 1);
+                bool clearTester = false;
+                Assert.IsFalse(clearTester);
             }
 
             [TestMethod]
             public void testHelp()
             {
-                Assert.AreEqual(3, 3);
+                bool helpTester = true;
+                Assert.IsTrue(helpTester);
             }
 
             [TestMethod]
             public void testGraph()
             {
-                Assert.AreEqual(4, 4);
+                bool graphTester = true;
+                Assert.IsFalse(graphTester);
             }
 
             [TestMethod]
             public void testRefresh()
             {
-                Assert.AreEqual(5, 5);
+                bool refreshTester = true;
+                Assert.IsTrue(refreshTester);
             }
 
             [TestMethod]
             public void testNavigation()
             {
-                Assert.AreEqual(6, 6);
+                bool navigationTester = true;
+                Assert.IsFalse(navigationTester);
             }
 
             [TestMethod]
             public void testFilter()
             {
-                Assert.AreEqual(7,7);
+                bool filterTester = false;
+                Assert.IsFalse(filterTester);
             }
 
             [TestMethod]
             public void testConverter()
             {
-                Assert.AreEqual(8,8);
+                bool converterTester = false;
+                Assert.IsTrue(converterTester);
             }
     }
     }
