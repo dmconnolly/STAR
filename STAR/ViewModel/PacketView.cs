@@ -20,6 +20,7 @@ namespace STAR.ViewModel {
         public string EndCode          { get; private set; }
         public bool   Valid            { get; private set; }
         public bool   CRCError         { get; private set; }
+        public bool   SequenceIdError  { get; private set; }
         public bool   DuplicatePacketError { get; private set; }
 
         public byte   DestinationKey       { get; private set; }
@@ -62,6 +63,12 @@ namespace STAR.ViewModel {
             EndCode = (packet as DataPacket).EndCode;
             Valid = (packet as DataPacket).Valid;
             Message = Valid ? "" : "No EOP";
+
+            SequenceIdError = (packet as DataPacket).SequenceIdError;
+            if(SequenceIdError) {
+                Message = "Out of sequence";
+                Valid = false;
+            }
 
             DuplicatePacketError = (packet as DataPacket).DuplicatePacketError;
             if(DuplicatePacketError) {

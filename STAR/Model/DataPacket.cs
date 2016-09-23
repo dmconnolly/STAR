@@ -20,6 +20,7 @@ namespace STAR.Model {
         protected int m_totalPacketBytes;
         protected bool m_CRCError = false;
         protected bool m_duplicatePacketError = false;
+        protected bool m_sequenceIdError = false;
         protected List<byte> m_remainingBytes;
 
         // Accessors for class member variables
@@ -33,6 +34,10 @@ namespace STAR.Model {
         public bool DuplicatePacketError {
             set { m_duplicatePacketError = value; }
             get { return m_duplicatePacketError; }
+        }
+        public bool SequenceIdError {
+            set { m_sequenceIdError = value; }
+            get { return m_sequenceIdError; }
         }
 
         // Takes a list of bytes representing the packet

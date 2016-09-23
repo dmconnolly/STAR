@@ -9,7 +9,6 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using STAR.ViewModel;
 using STAR.Model;
-using STAR.Extensions;
 using OxyPlot;
 
 namespace STAR.View {

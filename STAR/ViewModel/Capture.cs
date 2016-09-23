@@ -157,12 +157,21 @@ namespace STAR.ViewModel {
                 }
 
                 int sequenceIdIndex = -1;
+                int lastSequenceId = -1;
                 for(int i=0; i<allPacketBytes.Count; i++) {
+                    bool sequenceIdError = false;
                     Type packetType = DataPacket.GetPacketType(allPacketBytes[i]);
                     object[] args;
                     if(packetType == typeof(NonRmapPacket)) {
                         if(sequenceIdIndex == -1) {
                             sequenceIdIndex = getSequenceIdIndex(allPacketBytes);
+                        }
+                        int sequenceId = allPacketBytes[i][sequenceIdIndex];
+                        if(lastSequenceId == -1) {
+                            lastSequenceId = sequenceId;
+                        } else {
+                            sequenceIdError = !((sequenceId == 0 && lastSequenceId == 255) || sequenceId == lastSequenceId+1);
+                            lastSequenceId = sequenceId;
                         }
                         args = new object[] {
                             entryPort,
@@ -182,6 +191,7 @@ namespace STAR.ViewModel {
                         };
                     }
                     dynamic packet = Activator.CreateInstance(packetType, args);
+                    packet.SequenceIdError = sequenceIdError;
                     packet.DuplicatePacketError = duplicatePacket[i];
                     m_packets.Add(packet);
                 }
