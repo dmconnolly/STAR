@@ -244,7 +244,7 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <Label FontSize="20">Statistics</Label>
-                        <Label Grid.Column="0" Grid.Row="1" Margin="0,0,0,10">Total Data Characters</Label>
+                        <Label Grid.Column="0" Grid.Row="1">Total Data Characters</Label>
                         <Label Grid.Column="1" Grid.Row="1" x:Name="lblTotalDataCharacters" Content="---" />
                         <Label Grid.Column="3" Grid.Row="1" >Total Packets</Label>
                         <Label Grid.Column="4" Grid.Row="1" x:Name="lblTotalPackets" Content="---" />
