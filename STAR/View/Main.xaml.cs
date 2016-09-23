@@ -343,6 +343,9 @@ namespace STAR.View {
         //Method to convert byte array to string
         private string byteToString(byte[] byteArray)
         {
+            if(byteArray == null) {
+                return "";
+            }
             string returnString = BitConverter.ToString(byteArray);
             returnString.Replace("-","");
             return returnString;
