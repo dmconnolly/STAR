@@ -9,17 +9,11 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using STAR.ViewModel;
 using STAR.Model;
-<<<<<<< HEAD
-<<<<<<< HEAD
 using System.Windows.Controls.DataVisualization.Charting;
 using ListBox = System.Windows.Forms.ListBox;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-=======
-=======
 using STAR.Extensions;
->>>>>>> bfe6dcbe80000bb811faea7f362ee875e03de28c
-using OxyPlot;
->>>>>>> fcee7e7372a819e6834b074be778271a7db07df9
+using Oxyplot;
 
 namespace STAR.View {
     public partial class Main : Window {
