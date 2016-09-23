@@ -66,11 +66,10 @@
                             </StackPanel>
 
                             <DataGrid
-                                    DataContext="{DynamicResource PacketCollectionViewSource}"
-                                    ItemsSource="{Binding}"
                                     AutoGenerateColumns="False"
                                     Name="PacketsDataGrid"
                                     FontSize="15"
+                                    IsReadOnly="True"
                                     CanUserAddRows="False"
                                     CanUserDeleteRows="False" 
                                     CanUserResizeColumns="False"
@@ -78,7 +77,6 @@
                                     CanUserSortColumns="False"
                                     HeadersVisibility="Column"
                                     HorizontalAlignment="Left"
-                                    IsReadOnly="True"
                                     Grid.Row="0"
                                     Grid.Column="1"
                                     SelectionChanged="PacketsDataGrid_SelectionChanged"
