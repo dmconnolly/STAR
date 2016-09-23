@@ -153,6 +153,9 @@ namespace STAR.View {
             // Same for status view
             ErrorPacketsListView.ItemsSource = errorCollectionView;
 
+            //For individual packets
+            IndividualPacketGrid.ItemsSource = packetProperties;
+
             // Set up array of port filter checkboxes
             portFilterCheckbox = new CheckBox[8] {
                 ChkPort1, ChkPort2,
@@ -297,7 +300,9 @@ namespace STAR.View {
 
         //Method for displaying packet data when clicked on datagrid
         private void PacketsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {   
+        {
+            packetProperties.Clear();
+
             //Get current packet
             PacketView selected = (PacketView)PacketsDataGrid.SelectedItem;
 
@@ -305,7 +310,8 @@ namespace STAR.View {
             packetProperties.Add(new KeyValuePair<string, string>("Timestamp", selected.TimeString));
             packetProperties.Add(new KeyValuePair<string, string>("Entry Port",byteToString(selected.EntryPort)));
             packetProperties.Add(new KeyValuePair<string, string>("Exit Port", byteToString(selected.ExitPort)));
-            
+
+
             //packetProperties.Add(new KeyValuePair<string, string>("", ""));
             //packetProperties.Add(new KeyValuePair<string, string>("", ""));
             //packetProperties.Add(new KeyValuePair<string, string>("", ""));
