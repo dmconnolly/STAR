@@ -291,12 +291,12 @@ namespace STAR.View {
                     //Write and read commands have data in bytes
                     if (selected.PacketType == typeof(WriteCommandPacket) ||
                         selected.PacketType == typeof(ReadCommandPacket))
-                    //if (selected.PacketType == typeof(NonRmapPacket))
                     {
-                        //txtContents.Text = selected.DataBytes.ToString();
-
-                        lblSourcePathAddress.Content = selected.SourcePathAddress.ToString();
-                        lblDestinationPathAddress.Content = selected.DestinationLogicalAddress.ToString();
+                        txtContents.Text = byteToString(selected.DataBytes);
+                        
+                        lblSourcePathAddress.Content = byteToString(selected.SourceLogicalAddress);
+                        Console.WriteLine(byteToString(selected.SourcePathAddress));
+                        //lblDestinationPathAddress.Content = byteToString(selected.DestinationLogicalAddress);
                     }
                     else
                     {
@@ -338,6 +338,21 @@ namespace STAR.View {
                 PacketsDataGrid.UpdateLayout();
                 PacketsDataGrid.SelectedItem = p;
             }
+        }
+
+        //Method to convert byte array to string
+        private string byteToString(byte[] byteArray)
+        {
+            string returnString = BitConverter.ToString(byteArray);
+            returnString.Replace("-","");
+            return returnString;
+        }
+
+        //Overload for single byte
+        private string byteToString(byte singleByte)
+        {
+            string returnString = Convert.ToString(singleByte);
+            return returnString;
         }
     }
 }

@@ -79,6 +79,7 @@
                                     CanUserSortColumns="False"
                                     HeadersVisibility="Column"
                                     HorizontalAlignment="Left"
+                                    IsReadOnly="True"
                                     Grid.Row="0"
                                     Grid.Column="1"
                                     SelectionChanged="PacketsDataGrid_SelectionChanged"
