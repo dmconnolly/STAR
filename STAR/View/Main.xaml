@@ -163,7 +163,23 @@
                                 <Label FontSize="20" Margin="0,0,0,7">
                                     Packet Details
                                 </Label>
-                                <DataGrid x:Name="IndividualPacketGrid" HorizontalAlignment="Left" Margin="0,75,0,0" VerticalAlignment="Top" Height="359" Width="415" MinColumnWidth="247" GridLinesVisibility="None" IsReadOnly="True">
+                                <DataGrid 
+                                    CanUserAddRows="False"
+                                    CanUserDeleteRows="False" 
+                                    CanUserResizeColumns="False"
+                                    CanUserReorderColumns="False"
+                                    CanUserSortColumns="False"
+                                    HeadersVisibility="Column"
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    x:Name="IndividualPacketGrid" 
+                                    HorizontalAlignment="Left" 
+                                    Margin="0,75,0,0" 
+                                    VerticalAlignment="Top" 
+                                    Height="359" Width="415" 
+                                    MinColumnWidth="247" 
+                                    GridLinesVisibility="None"
+                                    IsReadOnly="True">
                                     <DataGrid.Columns>
                                         <DataGridCheckBoxColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Property"/>
                                         <DataGridCheckBoxColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Value"/>
