@@ -21,28 +21,7 @@ namespace STAR.ViewModel
         public Type PacketType { get; private set; }
         public bool DataPacket { get; private set; }
         public string PacketTypeString { get; private set; }
-<<<<<<< HEAD
-        public string Message { get; private set; }
-        public string EndCode { get; private set; }
-        public bool Valid { get; private set; }
-        public bool CRCError { get; private set; }
-        public bool DuplicatePacketError { get; private set; }
 
-        public byte DestinationKey { get; private set; }
-        public byte[] SourcePathAddress { get; private set; }
-        public byte SourceLogicalAddress { get; private set; }
-        public ushort TransactionId { get; private set; }
-        public byte ExtendedWriteAddress { get; private set; }
-        public uint WriteAddress { get; private set; }
-        public uint ReadAddress { get; private set; }
-        public uint DataLength { get; private set; }
-        public byte HeaderCRC { get; private set; }
-        public byte[] DataBytes { get; private set; }
-        public byte DataCRC { get; private set; }
-        public byte Status { get; private set; }
-        public byte ReplyCRC { get; private set; }
-        public byte DestinationLogicalAddress { get; private set; }
-=======
         public string Message          { get; private set; }
         public string EndCode          { get; private set; }
         public bool   Valid            { get; private set; }
@@ -64,7 +43,6 @@ namespace STAR.ViewModel
         public byte   Status               { get; private set; }
         public byte   ReplyCRC             { get; private set; }
         public byte   DestinationLogicalAddress { get; private set; }
->>>>>>> 36a1af2fb8f1b9ec86d1f2331d699108bfe3c261
 
         public PacketView()
         {
