@@ -70,7 +70,7 @@ namespace STAR.View {
             packetProperties = new RangeObservableCollection<KeyValuePair<string, string>>();
 
             //For individual packets
-            IndividualPacketView.DataContext = this;
+            IndividualPacketGrid.DataContext = this;
 
             // Packet capture
             capture = new Capture();
@@ -305,7 +305,7 @@ namespace STAR.View {
             packetProperties.Add(new KeyValuePair<string, string>("Timestamp", selected.TimeString));
             packetProperties.Add(new KeyValuePair<string, string>("Entry Port",byteToString(selected.EntryPort)));
             packetProperties.Add(new KeyValuePair<string, string>("Exit Port", byteToString(selected.ExitPort)));
-            Console.WriteLine();
+            
             //packetProperties.Add(new KeyValuePair<string, string>("", ""));
             //packetProperties.Add(new KeyValuePair<string, string>("", ""));
             //packetProperties.Add(new KeyValuePair<string, string>("", ""));

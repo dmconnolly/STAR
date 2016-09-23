@@ -163,13 +163,12 @@
                                 <Label FontSize="20" Margin="0,0,0,406">
                                     Packet Details
                                 </Label>
-                                <ListView x:Name="IndividualPacketView" HorizontalAlignment="Left" Height="154" Margin="0,38,0,0" VerticalAlignment="Top" Width="415">
-                                    <ListView.View>
-                                        <GridView>
-                                            <GridViewColumn/>
-                                        </GridView>
-                                    </ListView.View>
-                                </ListView>
+                                <DataGrid x:Name="IndividualPacketGrid" HorizontalAlignment="Left" Margin="0,75,0,0" VerticalAlignment="Top" Height="359" Width="415" MinColumnWidth="247" GridLinesVisibility="None" IsReadOnly="True">
+                                    <DataGrid.Columns>
+                                        <DataGridCheckBoxColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Property"/>
+                                        <DataGridCheckBoxColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Value"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
                                 <!--Lewis Davie's Stuff-->
                             </Grid>
                             <Button Grid.Row="1" x:Name="btnPrevious" Grid.Column="0" Width="100" HorizontalAlignment="Left" Click="btnPrevious_Click">
