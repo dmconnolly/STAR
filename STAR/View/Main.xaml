@@ -21,7 +21,16 @@
                 <MenuItem Header="_Open Files" Click="OpenFilesButton_Click"/>
                 <MenuItem Header="_Exit"/>
             </MenuItem>
+            <MenuItem Header="_Options">
+                <!-- Empty -->
+            </MenuItem>
+            <MenuItem Header="_Tools">
+                <MenuItem Header="_Manage users"/>
+                <MenuItem Header="_Display Error Causes" />
+                <MenuItem Header="_Show groups" IsCheckable="True" IsChecked="True" />
+            </MenuItem>
             <MenuItem Header="_Help" Click="Help_Click">
+                <!-- Empty -->
             </MenuItem>
         </Menu>
         <TabControl Grid.Row="1" Margin="0,10,0,0">
@@ -57,10 +66,11 @@
                             </StackPanel>
 
                             <DataGrid
+                                    DataContext="{DynamicResource PacketCollectionViewSource}"
+                                    ItemsSource="{Binding}"
                                     AutoGenerateColumns="False"
                                     Name="PacketsDataGrid"
                                     FontSize="15"
-                                    IsReadOnly="True"
                                     CanUserAddRows="False"
                                     CanUserDeleteRows="False" 
                                     CanUserResizeColumns="False"
@@ -68,6 +78,7 @@
                                     CanUserSortColumns="False"
                                     HeadersVisibility="Column"
                                     HorizontalAlignment="Left"
+                                    IsReadOnly="True"
                                     Grid.Row="0"
                                     Grid.Column="1"
                                     SelectionChanged="PacketsDataGrid_SelectionChanged"
@@ -149,31 +160,16 @@
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="0">
-                                <Label FontSize="20" Margin="0,0,0,7">
+                                <Label FontSize="20" Margin="0,0,0,406">
                                     Packet Details
                                 </Label>
-                                <DataGrid 
-                                    CanUserAddRows="False"
-                                    CanUserDeleteRows="False" 
-                                    CanUserResizeColumns="False"
-                                    CanUserReorderColumns="False"
-                                    CanUserSortColumns="False"
-                                    HeadersVisibility="Column"
-                                    Grid.Row="0"
-                                    Grid.Column="1"
-                                    x:Name="IndividualPacketGrid" 
-                                    HorizontalAlignment="Left" 
-                                    Margin="0,75,0,0" 
-                                    VerticalAlignment="Top" 
-                                    Height="359" Width="415" 
-                                    MinColumnWidth="247" 
-                                    GridLinesVisibility="None"
-                                    IsReadOnly="True">
-                                    <DataGrid.Columns>
-                                        <DataGridCheckBoxColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Property"/>
-                                        <DataGridCheckBoxColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Value"/>
-                                    </DataGrid.Columns>
-                                </DataGrid>
+                                <ListView x:Name="IndividualPacketView" HorizontalAlignment="Left" Height="154" Margin="0,38,0,0" VerticalAlignment="Top" Width="415">
+                                    <ListView.View>
+                                        <GridView>
+                                            <GridViewColumn/>
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
                                 <!--Lewis Davie's Stuff-->
                             </Grid>
                             <Button Grid.Row="1" x:Name="btnPrevious" Grid.Column="0" Width="100" HorizontalAlignment="Left" Click="btnPrevious_Click">
@@ -249,25 +245,26 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <Label FontSize="20">Statistics</Label>
-                        <Label Grid.Column="0" Grid.Row="1">Total Data Characters</Label>
+                        <Label Grid.Column="0" Grid.Row="1" Margin="0,0,0,10">Total Data Characters</Label>
                         <Label Grid.Column="1" Grid.Row="1" x:Name="lblTotalDataCharacters" Content="---" />
-                        <Label Grid.Column="3" Grid.Row="1" >Total Packets</Label>
-                        <Label Grid.Column="4" Grid.Row="1" x:Name="lblTotalPackets" Content="---" />
-                        <Label Grid.Column="0" Grid.Row="2" >Total Errors</Label>
-                        <Label Grid.Column="1" Grid.Row="2" x:Name="lblTotalErrors" Content="---" />
-                        <Label Grid.Column="3" Grid.Row="2" >Data Rate</Label>
-                        <Label Grid.Column="4" Grid.Row="2" x:Name="lblDataRate" Content="---" />
-                        <Label Grid.Column="5" Grid.Row="2" Content="bytes/s" />
-                        <Label Grid.Column="0" Grid.Row="3" >Packet Rate</Label>
-                        <Label Grid.Column="1" Grid.Row="3" x:Name="lblPacketRate" Content="---" />
-                        <Label Grid.Column="2" Grid.Row="3" Content="p/s" />
-                        <Label Grid.Column="3" Grid.Row="3" >Error Rate</Label>
-                        <Label Grid.Column="4" Grid.Row="3" x:Name="lblErrorRate" Content="---" />
-                        <Label Grid.Column="5" Grid.Row="3" Content="e/s" />
-                        <Label Grid.Column="0" Grid.Row="5" Content="Start Time"/>
-                        <Label Grid.Column="1" Grid.Row="5" x:Name="lblStartTime" Content="---"/>
-                        <Label Grid.Column="3" Grid.Row="5" Content="End Time"/>
-                        <Label Grid.Column="4" Grid.Row="5" x:Name="lblEndTime" Content="---"/>
+                        <Label Grid.Column="3" Grid.Row="1" Margin="0,0,0,10">Total Packets</Label>
+                        <Label Grid.Column="0" Grid.Row="2" Margin="0,0,0,10">Total Errors</Label>
+                        <Label Grid.Column="3" Grid.Row="2" Margin="0,0,0,10">Data Rate</Label>
+                        <Label Grid.Column="0" Grid.Row="3" Margin="0,0,0,10">Packet Rate</Label>
+                        <Label Grid.Column="3" Grid.Row="3" Margin="0,0,0,10">Error Rate</Label>
+
+                        <Label x:Name="lblTotalPackets" Content="---" Grid.Column="4" Margin="2,0,0,0" Grid.Row="1"/>
+                        <Label x:Name="lblTotalErrors" Content="---" Grid.Column="1" Margin="1,1,0,0" Grid.Row="2"/>
+                        <Label x:Name="lblDataRate" Content="---" Grid.Column="4" Grid.Row="2" Margin="0,0,40,0"/>
+                        <Label x:Name="lblPacketRate" Content="---" Grid.Column="1" Margin="0,1,37,0" Grid.Row="3"/>
+                        <Label Content="p/s" Grid.Column="1" Margin="40,1,0,0" Grid.Row="3"/>
+                        <Label x:Name="lblErrorRate" Content="---" Grid.Column="4" Margin="0,0,45,1" Grid.Row="3"/>
+                        <Label Content="e/s" Grid.Column="3" Margin="43,0,0,1" Grid.Row="3"/>
+                        <Label Content="bytes/s" Grid.Column="3" Margin="32,0,0,1" Grid.Row="2"/>
+                        <Label Content="Start Time" HorizontalAlignment="Left" Grid.Row="5" VerticalAlignment="Top"/>
+                        <Label Content="End Time" Grid.Column="2" HorizontalAlignment="Left" Grid.Row="5" VerticalAlignment="Top"/>
+                        <Label x:Name="lblStartTime" Content="---" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="5" VerticalAlignment="Top" RenderTransformOrigin="-0.105,0" Height="28" Width="84"/>
+                        <Label x:Name="lblEndTime" Content="---" Grid.Column="3" HorizontalAlignment="Left" Grid.Row="5" VerticalAlignment="Top" Width="83"/>
                     </Grid>
                 </Grid>
             </TabItem>

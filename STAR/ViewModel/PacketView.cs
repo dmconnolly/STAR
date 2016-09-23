@@ -39,6 +39,11 @@ namespace STAR.ViewModel {
         public byte   ReplyCRC             { get; private set; }
         public byte   DestinationLogicalAddress { get; private set; }
 
+        public PacketView()
+        {
+            
+        }
+
         // Constructor for PacketView
         // Takes a Packet of any time as a parameter
         // initialises the elements which will be displayed

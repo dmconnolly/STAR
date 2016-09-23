@@ -302,7 +302,31 @@ namespace STAR.View {
             PacketView selected = (PacketView)PacketsDataGrid.SelectedItem;
 
             //Add packet properties to collection
-
+            packetProperties.Add(new KeyValuePair<string, string>("Timestamp", selected.TimeString));
+            packetProperties.Add(new KeyValuePair<string, string>("Entry Port",byteToString(selected.EntryPort)));
+            packetProperties.Add(new KeyValuePair<string, string>("Exit Port", byteToString(selected.ExitPort)));
+            Console.WriteLine();
+            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
+            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
+            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
+            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
+            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
+            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
+            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
+            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
+            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
+            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
+            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
+            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
+            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
+            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
+            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
+            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
+            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
+            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
+            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
+            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
+            //packetProperties.Add(new KeyValuePair<string, string>("", ""));
 
         }
 
