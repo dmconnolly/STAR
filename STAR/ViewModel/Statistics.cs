@@ -43,6 +43,7 @@ namespace STAR.ViewModel {
             m_numErrorsInMinute = new int[1];
             m_numDataCharactersInMinute = new long[1];
             m_minutesForStatistics = new DateTime[2];
+            runsCorrectly = true;
             Clear();
         }
 

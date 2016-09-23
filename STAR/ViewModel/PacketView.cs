@@ -135,7 +135,8 @@ namespace STAR.ViewModel {
         [TestMethod]
         public void testVariableGetters()
         {
-            PacketView testPacketView = new PacketView();
+            Packet testPacket = new Packet(1,2, "09-09-2016 00:35:07.223");
+            PacketView testPacketView = new PacketView(testPacket);
 
             bool isAccurate = false;
 
