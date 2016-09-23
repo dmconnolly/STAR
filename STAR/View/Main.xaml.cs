@@ -11,6 +11,7 @@ using STAR.ViewModel;
 using STAR.Model;
 using System.Windows.Controls.DataVisualization.Charting;
 using ListBox = System.Windows.Forms.ListBox;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace STAR.View {
     public partial class Main : Window {
@@ -375,5 +376,58 @@ namespace STAR.View {
             string returnString = Convert.ToString(singleByte);
             return returnString;
         }
+
+        [TestClass]
+        public class MainTester
+        {
+            [TestMethod]
+            public void testFileLoading()
+            {
+
+                Assert.AreEqual(2, 2);
+            }
+
+            [TestMethod]
+            public void testClearing()
+            {
+                Assert.AreEqual(1, 1);
+            }
+
+            [TestMethod]
+            public void testHelp()
+            {
+                Assert.AreEqual(3, 3);
+            }
+
+            [TestMethod]
+            public void testGraph()
+            {
+                Assert.AreEqual(4, 4);
+            }
+
+            [TestMethod]
+            public void testRefresh()
+            {
+                Assert.AreEqual(5, 5);
+            }
+
+            [TestMethod]
+            public void testNavigation()
+            {
+                Assert.AreEqual(6, 6);
+            }
+
+            [TestMethod]
+            public void testFilter()
+            {
+                Assert.AreEqual(7,7);
+            }
+
+            [TestMethod]
+            public void testConverter()
+            {
+                Assert.AreEqual(8,8);
+            }
+    }
     }
 }

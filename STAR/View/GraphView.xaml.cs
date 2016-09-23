@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Controls.DataVisualization.Charting;
 using STAR.ViewModel;
-
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace STAR.View
 {
@@ -33,6 +33,14 @@ namespace STAR.View
             //graph.Series[""].Yvalues = "value";
 
 
+        }
+    }
+    [TestClass]
+    public class GraphViewTester
+    {
+        [TestMethod]
+        public void TestMethod1()
+        {
         }
     }
 }

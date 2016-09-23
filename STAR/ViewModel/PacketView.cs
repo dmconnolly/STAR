@@ -1,4 +1,5 @@
-﻿using STAR.Model;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using STAR.Model;
 using System;
 
 namespace STAR.ViewModel {
@@ -120,6 +121,14 @@ namespace STAR.ViewModel {
                 DataBytes = pkt.DataBytes;
                 DataCRC = pkt.DataCRC;
             }
+        }
+    }
+    [TestClass]
+    public class PacketViewTester
+    {
+        [TestMethod]
+        public void TestMethod1()
+        {
         }
     }
 }

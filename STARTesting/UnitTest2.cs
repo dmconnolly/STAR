@@ -6,9 +6,11 @@ namespace STARTesting
     [TestClass]
     public class StatisticTester
     {
+        
         [TestMethod]
         public void testErrorStatisticTotal()
         {
+            
         }
 
         [TestMethod]

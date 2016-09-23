@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using STAR.Model;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace STAR.ViewModel {
     /*
@@ -233,6 +234,15 @@ namespace STAR.ViewModel {
                 }
             }
             return -1;
+        }
+    }
+
+    [TestClass]
+    public class CaptureTester
+    {
+        [TestMethod]
+        public void TestMethod1()
+        {
         }
     }
 }

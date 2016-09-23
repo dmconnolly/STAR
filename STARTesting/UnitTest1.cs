@@ -46,8 +46,5 @@ namespace STARTesting
         {
             Assert.AreEqual(6,6);
         }
-
-        [TestMethod]
-        public void testFilter()
     }
 }
