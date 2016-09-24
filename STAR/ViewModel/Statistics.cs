@@ -24,7 +24,6 @@ namespace STAR.ViewModel
         private DateTime[] m_minutesForStatistics;
 
         // Accessors for class member variables
-<<<<<<< HEAD
         public long PacketCount
         {
             get { return m_packetCount; }
@@ -89,22 +88,8 @@ namespace STAR.ViewModel
         {
             get { return m_minutesForStatistics; }
         }
+      
 
-=======
-        public long PacketCount { get { return m_packetCount; } }
-        public long ValidPacketCount { get { return ValidPacketCount; } }
-        public long InvalidPacketCount { get { return m_invalidPacketCount; } }
-        public long ErrorMessageCount { get { return m_errorMessageCount; } }
-        public long TotalByteCount { get { return m_totalByteCount; } }
-        public double MeasurementTimeSeconds { get { return m_measurementTimeSeconds; } }
-        public double TotalPacketsPerSecond { get { return m_totalPacketsPerSecond; } }
-        public double TotalErrorsPerSecond { get { return m_totalErrorsPerSecond; } }
-        public double TotalBytesPerSecond { get { return m_totalBytesPerSecond; } }
-        public long[] NumDataCharactersInMinute { get { return m_numDataCharactersInMinute; } }
-        public int[] NumErrorsInMinute { get { return m_numErrorsInMinute; } }
-        public int[] NumPacketsInMinute { get { return m_numPacketsInMinute; } }
-        public DateTime[] MinutesForStatistics { get { return m_minutesForStatistics; } }
->>>>>>> 36331d05cf4ed236f380936464f713e88ce4e71a
         public bool runsCorrectly;
 
         public Statistics()
@@ -145,17 +130,9 @@ namespace STAR.ViewModel
                         m_validPacketCount++;
                         pointer = 0;
                         matchedSecond = false;
-<<<<<<< HEAD
-                        do
-                        {
-
-                            if (packet.TimeStampInMinutes == m_minutesForStatistics[pointer])
-                            {
-=======
                         do {
 
                             if(packet.TimeStampInMinutes== m_minutesForStatistics[pointer]) {
->>>>>>> 36331d05cf4ed236f380936464f713e88ce4e71a
                                 m_numPacketsInMinute[pointer]++;
                                 m_numDataCharactersInMinute[pointer] = m_numDataCharactersInMinute[pointer] +
                                                                        (packet as DataPacket).CargoByteCount;
@@ -175,16 +152,11 @@ namespace STAR.ViewModel
                         pointer = 0;
                         matchedSecond = false;
                         do {
-
-<<<<<<< HEAD
                             if (packet.TimeStampInMinutes == m_minutesForStatistics[pointer])
                             {
                                 m_numDataCharactersInMinute[pointer] = m_numDataCharactersInMinute[pointer] +
                                                                        (packet as DataPacket).CargoByteCount;
-=======
-                            if(packet.TimeStampInMinutes == m_minutesForStatistics[pointer]) {
-                                m_numDataCharactersInMinute[pointer] = m_numDataCharactersInMinute[pointer] + (packet as DataPacket).CargoByteCount;
->>>>>>> 36331d05cf4ed236f380936464f713e88ce4e71a
+
                                 matchedSecond = true;
                             }
                             pointer++;
@@ -316,16 +288,14 @@ namespace STAR.ViewModel
             Statistics testStatistics = new Statistics();
             bool isEmpty = false;
 
-<<<<<<< HEAD
             //if (testStatistics.ValidPacketCount == 0)
             //{
                 //isEmpty = true;
             //}
-=======
+
             if(testStatistics.ValidPacketCount == 0) {
                 isEmpty = true;
             }
->>>>>>> 36331d05cf4ed236f380936464f713e88ce4e71a
 
             Assert.IsTrue(isEmpty);
         }
