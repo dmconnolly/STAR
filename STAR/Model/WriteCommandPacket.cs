@@ -15,17 +15,17 @@ namespace STAR.Model {
         private byte[] m_dataBytes;
         private byte   m_dataCRC;
 
-        public byte   PacketTypeByte { get { return m_packetTypeByte; }}
-        public byte   DestinationKey { get { return m_destinationKey; }}
-        public byte[] SourcePathAddress { get { return m_sourcePathAddress; }}
-        public byte   SourceLogicalAddress { get { return m_sourceLogicalAddress; }}
-        public ushort TransactionId { get { return m_transactionId; }}
-        public byte   ExtendedWriteAddress { get { return m_extendedWriteAddress; }}
-        public uint   WriteAddress { get { return m_writeAddress; }}
-        public uint   DataLength { get { return m_dataLength; }}
-        public byte   HeaderCRC { get { return m_headerCRC; }}
-        public byte[] DataBytes { get { return m_dataBytes; }}
-        public byte   DataCRC { get { return m_dataCRC; }}
+        public byte PacketTypeByte { get { return m_packetTypeByte; } }
+        public byte DestinationKey { get { return m_destinationKey; } }
+        public byte[] SourcePathAddress { get { return m_sourcePathAddress; } }
+        public byte SourceLogicalAddress { get { return m_sourceLogicalAddress; } }
+        public ushort TransactionId { get { return m_transactionId; } }
+        public byte ExtendedWriteAddress { get { return m_extendedWriteAddress; } }
+        public uint WriteAddress { get { return m_writeAddress; } }
+        public uint DataLength { get { return m_dataLength; } }
+        public byte HeaderCRC { get { return m_headerCRC; } }
+        public byte[] DataBytes { get { return m_dataBytes; } }
+        public byte DataCRC { get { return m_dataCRC; } }
 
         public WriteCommandPacket(byte entryPort, byte exitPort, string dateString, List<byte> packetBytes, string endCode)
                 : base(entryPort, exitPort, dateString, packetBytes, endCode) {

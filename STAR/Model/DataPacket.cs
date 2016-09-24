@@ -24,12 +24,12 @@ namespace STAR.Model {
         protected List<byte> m_remainingBytes;
 
         // Accessors for class member variables
-        public ushort Protocol { get { return m_protocolId; }}
+        public ushort Protocol { get { return m_protocolId; } }
         public byte[] PathAddress { get { return m_pathAddress; } }
         public byte LogicalAddress { get { return m_logicalAddress; } }
-        public bool Valid { get { return m_valid; }}
-        public string EndCode { get { return m_endCode; }}
-        public long CargoByteCount { get { return m_cargoByteCount; }}
+        public bool Valid { get { return m_valid; } }
+        public string EndCode { get { return m_endCode; } }
+        public long CargoByteCount { get { return m_cargoByteCount; } }
         public bool CRCError { get { return m_CRCError; } }
         public bool DuplicatePacketError {
             set { m_duplicatePacketError = value; }
@@ -39,12 +39,17 @@ namespace STAR.Model {
             set { m_sequenceIdError = value; }
             get { return m_sequenceIdError; }
         }
+        public bool Error {
+            get {
+                return SequenceIdError || DuplicatePacketError || (!Valid);
+            }
+        }
 
         // Takes a list of bytes representing the packet
         // returns the Type that the packet should be
         // used when parsing a file and storing packet data
         public static Type GetPacketType(List<byte> packetBytes) {
-            int i=0;
+            int i = 0;
             for(; i<packetBytes.Count(); ++i) {
                 if(packetBytes[i] >= 32) {
                     break;

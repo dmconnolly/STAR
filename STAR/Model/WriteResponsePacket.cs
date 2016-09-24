@@ -9,11 +9,11 @@ namespace STAR.Model {
         private ushort m_transactionId;
         private byte   m_replyCRC;
 
-        public byte PacketTypeByte { get { return m_packetTypeByte; }}
-        public byte Status { get { return m_status; }}
-        public byte DestinationLogicalAddress { get { return m_destinationLogicalAddress; }}
-        public ushort TransactionId { get { return m_transactionId; }}
-        public byte ReplyCRC { get { return m_replyCRC; }}
+        public byte PacketTypeByte { get { return m_packetTypeByte; } }
+        public byte Status { get { return m_status; } }
+        public byte DestinationLogicalAddress { get { return m_destinationLogicalAddress; } }
+        public ushort TransactionId { get { return m_transactionId; } }
+        public byte ReplyCRC { get { return m_replyCRC; } }
 
         public WriteResponsePacket(byte entryPort, byte exitPort, string dateString, List<byte> packetBytes, string endCode)
                 : base(entryPort, exitPort, dateString, packetBytes, endCode) {
@@ -24,7 +24,7 @@ namespace STAR.Model {
             if(byteIndex >= byteCount) {
                 return;
             }
-            
+
             // Packet type
             m_packetTypeByte = m_remainingBytes[byteIndex];
 

@@ -225,17 +225,23 @@
                     </Grid.ColumnDefinitions>
                     <oxy:Plot Grid.Row="0" Grid.Column="0" Name="packetRateGraph" Title="Packet Rate">
                         <oxy:Plot.Series>
-                            <oxy:LineSeries ItemsSource="{Binding packetRatePoints}" />
+                            <oxy:LineSeries ItemsSource="{Binding packetRatePoints}" >
+                                <oxy:LineSeries.Color>Blue</oxy:LineSeries.Color>
+                            </oxy:LineSeries>
                         </oxy:Plot.Series>
                     </oxy:Plot>
                     <oxy:Plot Grid.Row="0" Grid.Column="1" Name="dataRateGraph" Title="Data Rate">
                         <oxy:Plot.Series>
-                            <oxy:LineSeries ItemsSource="{Binding dataRatePoints}" />
+                            <oxy:LineSeries ItemsSource="{Binding dataRatePoints}">
+                                <oxy:LineSeries.Color>Green</oxy:LineSeries.Color>
+                            </oxy:LineSeries>
                         </oxy:Plot.Series>
                     </oxy:Plot>
                     <oxy:Plot Grid.Row="1" Grid.Column="0" Name="errorRateGraph" Title="Error Rate">
                         <oxy:Plot.Series>
-                            <oxy:LineSeries ItemsSource="{Binding errorRatePoints}"/>
+                            <oxy:LineSeries ItemsSource="{Binding errorRatePoints}">
+                                <oxy:LineSeries.Color>Red</oxy:LineSeries.Color>
+                            </oxy:LineSeries>
                         </oxy:Plot.Series>
                     </oxy:Plot>
                     <Grid Margin="30,75,0,0" Grid.Column="2" Grid.Row="1">

@@ -17,7 +17,7 @@
         //Note: The errorMessage variable here contains the error message used in the table.
         public ErrorPacket(byte entryPort, byte exitPort, string dateString, string errorMessage)
                 : base(entryPort, exitPort, dateString) {
-            this.m_message = errorMessage;
+            m_message = errorMessage;
         }
     }
 }

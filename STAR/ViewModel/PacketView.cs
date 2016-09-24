@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using STAR.Model;
 using System;
-using System.Windows;
 
 namespace STAR.ViewModel {
     /*
@@ -11,41 +10,40 @@ namespace STAR.ViewModel {
     class PacketView {
         private const string timeFormatUI = "HH:mm:ss.fff";
 
-        public long   TimeTicks        { get; private set; }
-        public string TimeString       { get; private set; }
-        public byte   EntryPort        { get; private set; }
-        public byte   ExitPort         { get; private set; }
-        public Type   PacketType       { get; private set; }
-        public bool   DataPacket       { get; private set; }
+        public long TimeTicks { get; private set; }
+        public string TimeString { get; private set; }
+        public byte EntryPort { get; private set; }
+        public byte ExitPort { get; private set; }
+        public Type PacketType { get; private set; }
+        public bool DataPacket { get; private set; }
         public string PacketTypeString { get; private set; }
-        public string Message          { get; private set; }
-        public string EndCode          { get; private set; }
-        public bool   Valid            { get; private set; }
-        public bool   CRCError         { get; private set; }
-        public bool   SequenceIdError  { get; private set; }
-        public bool   DuplicatePacketError { get; private set; }
+        public string Message { get; private set; }
+        public string EndCode { get; private set; }
+        public bool Valid { get; private set; }
+        public bool CRCError { get; private set; }
+        public bool SequenceIdError { get; private set; }
+        public bool DuplicatePacketError { get; private set; }
         public byte[] Cargo { get; private set; }
 
-        public ushort ProtocolId           { get; private set; }
-        public byte   DestinationKey       { get; private set; }
-        public uint   SequenceId           { get; private set; }
-        public byte[] SourcePathAddress    { get; private set; }
-        public byte   SourceLogicalAddress { get; private set; }
-        public ushort TransactionId        { get; private set; }
-        public byte   ExtendedWriteAddress { get; private set; }
-        public uint   WriteAddress         { get; private set; }
-        public uint   ReadAddress          { get; private set; }
-        public uint   DataLength           { get; private set; }
-        public byte   HeaderCRC            { get; private set; }
-        public byte[] DataBytes            { get; private set; }
-        public byte   DataCRC              { get; private set; }
-        public byte   Status               { get; private set; }
-        public byte   ReplyCRC             { get; private set; }
-        public byte   DestinationLogicalAddress { get; private set; }
+        public ushort ProtocolId { get; private set; }
+        public byte DestinationKey { get; private set; }
+        public uint SequenceId { get; private set; }
+        public byte[] SourcePathAddress { get; private set; }
+        public byte SourceLogicalAddress { get; private set; }
+        public ushort TransactionId { get; private set; }
+        public byte ExtendedWriteAddress { get; private set; }
+        public uint WriteAddress { get; private set; }
+        public uint ReadAddress { get; private set; }
+        public uint DataLength { get; private set; }
+        public byte HeaderCRC { get; private set; }
+        public byte[] DataBytes { get; private set; }
+        public byte DataCRC { get; private set; }
+        public byte Status { get; private set; }
+        public byte ReplyCRC { get; private set; }
+        public byte DestinationLogicalAddress { get; private set; }
 
-        public PacketView()
-        {
-            
+        public PacketView() {
+
         }
 
         // Constructor for PacketView
@@ -143,18 +141,15 @@ namespace STAR.ViewModel {
         }
     }
     [TestClass]
-    public class PacketViewTester
-    {
+    public class PacketViewTester {
         [TestMethod]
-        public void testVariableGetters()
-        {
-            Packet testPacket = new Packet(1,2, "09-09-2016 00:35:07.223");
+        public void testVariableGetters() {
+            Packet testPacket = new Packet(1, 2, "09-09-2016 00:35:07.223");
             PacketView testPacketView = new PacketView(testPacket);
 
             bool isAccurate = false;
 
-            if (testPacketView.CRCError == false && testPacketView.Valid == false && testPacketView.DataPacket == false)
-            {
+            if(testPacketView.CRCError == false && testPacketView.Valid == false && testPacketView.DataPacket == false) {
                 isAccurate = true;
             }
 
