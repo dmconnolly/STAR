@@ -285,37 +285,133 @@ namespace STAR.View {
         private void PacketsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e) {
             packetProperties.Clear();
 
-            //Get current packet
-            PacketView selected = (PacketView)PacketsDataGrid.SelectedItem;
+            // Get current packet
+            PacketView selected = PacketsDataGrid.SelectedItem as PacketView;
 
             if(selected == null) {
                 return;
             }
 
-            //Add packet properties to collection
-            packetProperties.Add(new StringPair("Timestamp", selected.TimeString));
-            packetProperties.Add(new StringPair("Entry Port", byteToString(selected.EntryPort)));
-            packetProperties.Add(new StringPair("Exit Port", byteToString(selected.ExitPort)));
-            packetProperties.Add(new StringPair("Packet Type", selected.PacketTypeString));
-            packetProperties.Add(new StringPair("Source Path Address", byteToString(selected.SourcePathAddress)));
-            packetProperties.Add(new StringPair("Source Logical Address", byteToString(selected.SourceLogicalAddress)));
-            packetProperties.Add(new StringPair("Destination key", byteToString(selected.DestinationKey)));
-            packetProperties.Add(new StringPair("Destination Logical Address", byteToString(selected.DestinationLogicalAddress)));
-            packetProperties.Add(new StringPair("Protocol ID", selected.ProtocolId.ToString()));
-            packetProperties.Add(new StringPair("Transaction ID", selected.TransactionId.ToString()));
-            packetProperties.Add(new StringPair("Read Address", selected.ReadAddress.ToString()));
-            packetProperties.Add(new StringPair("Write Address", selected.WriteAddress.ToString()));
-            packetProperties.Add(new StringPair("Extended Write Address", byteToString(selected.ExtendedWriteAddress)));
-            packetProperties.Add(new StringPair("Data Length", selected.DataLength.ToString()));
-            packetProperties.Add(new StringPair("Header CRC", byteToString(selected.HeaderCRC)));
-            packetProperties.Add(new StringPair("Data", byteToString(selected.DataBytes)));
-            packetProperties.Add(new StringPair("Data CRC", byteToString(selected.DataCRC)));
-            packetProperties.Add(new StringPair("Sequence Number", selected.SequenceId.ToString()));
-            packetProperties.Add(new StringPair("Cargo", byteToString(selected.Cargo)));
-            packetProperties.Add(new StringPair("Status", byteToString(selected.Status)));
-            packetProperties.Add(new StringPair("End of Packet Marker", selected.EndCode));
-            packetProperties.Add(new StringPair("Message", selected.Message));
+            // Add packet properties to collection
+            packetProperties.AddRange(new StringPair[] {
+                new StringPair("Timestamp", selected.TimeString),
+                new StringPair("Entry Port", byteToString(selected.EntryPort)),
+                new StringPair("Exit Port", byteToString(selected.ExitPort)),
+                new StringPair("Packet Type", selected.PacketTypeString),
+                string.IsNullOrEmpty(selected.Message) ? new StringPair("", "") : new StringPair("Info", selected.Message)
+            });
+
+            if(selected.PacketType == typeof(ErrorPacket)) {
+                // Error packets only have a message
+                return;
+            }
+
+            // If statement to determine what details to display
+            if(selected.PacketType == typeof(WriteCommandPacket)) {
+                packetProperties.AddRange(new StringPair[] {
+                    new StringPair("Source Path Address", byteToString(selected.SourcePathAddress)),
+                    new StringPair("Source Logical Address", byteToString(selected.SourceLogicalAddress)),
+                    new StringPair("Destination key", byteToString(selected.DestinationKey)),
+                    new StringPair("Destination Logical Address", byteToString(selected.DestinationLogicalAddress)),
+                    new StringPair("Protocol ID", selected.ProtocolId.ToString()),
+                    new StringPair("Transaction ID", selected.TransactionId.ToString()),
+                    new StringPair("Write Address", selected.WriteAddress.ToString()),
+                    new StringPair("Extended Write Address", byteToString(selected.ExtendedWriteAddress)),
+                    new StringPair("Data Length", selected.DataLength.ToString()),
+                    new StringPair("Header CRC", byteToString(selected.HeaderCRC)),
+                });
+
+                {
+                    // Modified from http://stackoverflow.com/a/14261640
+                    if(selected.DataBytes == null) {
+                        packetProperties.Add(new StringPair("Data", ""));
+                    } else {
+                        byte[][] parts = selected.DataBytes.Select((b, idx) => new { index = idx, value = b })
+                            .GroupBy(a => a.index / 8)
+                            .Select(gr => gr.Select(n => n.value).ToArray())
+                            .ToArray();
+                        for(int i = 0; i<parts.Length; ++i) {
+                            packetProperties.Add(new StringPair(i==0 ? "Data" : "", byteToString(parts[i])));
+                        }
+                    }
+                }
+
+                packetProperties.AddRange(new StringPair[] {
+                    new StringPair("Data CRC", byteToString(selected.DataCRC)),
+                    new StringPair("End of Packet Marker", selected.EndCode)
+                });
+            } else if(selected.PacketType == typeof(WriteResponsePacket)) {
+                packetProperties.AddRange(new StringPair[] {
+                    new StringPair("Destination Logical Address", byteToString(selected.DestinationLogicalAddress)),
+                    new StringPair("Protocol ID", selected.ProtocolId.ToString()),
+                    new StringPair("Transaction ID", selected.TransactionId.ToString()),
+                    new StringPair("End of Packet Marker", selected.EndCode),
+                    new StringPair("Status", byteToString(selected.Status))
+                });
+            } else if(selected.PacketType == typeof(ReadCommandPacket)) {
+                packetProperties.AddRange(new StringPair[] {
+                    new StringPair("Source Path Address", byteToString(selected.SourcePathAddress)),
+                    new StringPair("Source Logical Address", byteToString(selected.SourceLogicalAddress)),
+                    new StringPair("Destination key", byteToString(selected.DestinationKey)),
+                    new StringPair("Destination Logical Address", byteToString(selected.DestinationLogicalAddress)),
+                    new StringPair("Protocol ID", selected.ProtocolId.ToString()),
+                    new StringPair("Transaction ID", selected.TransactionId.ToString()),
+                    new StringPair("Read Address", selected.ReadAddress.ToString()),
+                    new StringPair("Data Length", selected.DataLength.ToString()),
+                    new StringPair("End of Packet Marker", selected.EndCode)
+                });
+            } else if(selected.PacketType == typeof(ReadResponsePacket)) {
+                packetProperties.AddRange(new StringPair[] {
+                    new StringPair("Destination key", byteToString(selected.DestinationKey)),
+                    new StringPair("Destination Logical Address", byteToString(selected.DestinationLogicalAddress)),
+                    new StringPair("Protocol ID", selected.ProtocolId.ToString()),
+                    new StringPair("Transaction ID", selected.TransactionId.ToString()),
+                    new StringPair("Read Address", selected.ReadAddress.ToString()),
+                    new StringPair("Data Length", selected.DataLength.ToString()),
+                });
+
+                {
+                    // Modified from http://stackoverflow.com/a/14261640
+                    if(selected.DataBytes == null) {
+                        packetProperties.Add(new StringPair("Data", ""));
+                    } else {
+                        byte[][] parts = selected.DataBytes.Select((b, idx) => new { index = idx, value = b })
+                            .GroupBy(a => a.index / 8)
+                            .Select(gr => gr.Select(n => n.value).ToArray())
+                            .ToArray();
+                        for(int i = 0; i<parts.Length; ++i) {
+                            packetProperties.Add(new StringPair(i==0 ? "Data" : "", byteToString(parts[i])));
+                        }
+                    }
+                }
+
+                packetProperties.AddRange(new StringPair[] {
+                    new StringPair("Data CRC", byteToString(selected.DataCRC)),
+                    new StringPair("Status", byteToString(selected.Status)),
+                    new StringPair("End of Packet Marker", selected.EndCode)
+                });
+            } else if(selected.PacketType == typeof(NonRmapPacket)) {
+                packetProperties.AddRange(new StringPair[] {
+                    new StringPair("Destination Logical Address", byteToString(selected.DestinationLogicalAddress)),
+                    new StringPair("Sequence Number", selected.SequenceId.ToString()),
+                });
+                {
+                    // Modified from http://stackoverflow.com/a/14261640
+                    if(selected.Cargo == null) {
+                        packetProperties.Add(new StringPair("Cargo", ""));
+                    } else {
+                        byte[][] parts = selected.Cargo.Select((b, idx) => new { index = idx, value = b })
+                            .GroupBy(a => a.index / 8)
+                            .Select(gr => gr.Select(n => n.value).ToArray())
+                            .ToArray();
+                        for(int i = 0; i<parts.Length; ++i) {
+                            packetProperties.Add(new StringPair(i==0 ? "Cargo" : "", byteToString(parts[i])));
+                        }
+                    }
+                }
+            }
         }
+        
 
         private void drawGraphs() {
             packetRatePoints.Clear();
