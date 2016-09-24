@@ -163,7 +163,6 @@
                                         Grid.Row="1"
                                         x:Name="IndividualPacketGrid"
                                         HeadersVisibility="Column"
-                                        MinColumnWidth="247"
                                         GridLinesVisibility="None"
                                         IsReadOnly="True"
                                         AutoGenerateColumns="False"
@@ -174,11 +173,10 @@
                                         CanUserReorderColumns="False"
                                         CanUserSortColumns="False">
                                     <DataGrid.Columns>
-                                        <DataGridTextColumn Binding="{Binding Path=Property}"  Header="Property"/>
-                                        <DataGridTextColumn Binding="{Binding Path =Value}" Header="Value"/>
+                                        <DataGridTextColumn Binding="{Binding Path=Property}" Width="200" Header="Property"/>
+                                        <DataGridTextColumn Binding="{Binding Path=Value}" Header="Value"/>
                                     </DataGrid.Columns>
                                 </DataGrid>
-                                <!--Lewis Davie's Stuff-->
                             </Grid>
                             <Button Grid.Row="1" x:Name="btnPrevious" Grid.Column="0" Width="100" HorizontalAlignment="Left" Click="btnPrevious_Click">
                                 Previous

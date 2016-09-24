@@ -319,7 +319,24 @@ namespace STAR.View {
                     new StringPair("Extended Write Address", byteToString(selected.ExtendedWriteAddress)),
                     new StringPair("Data Length", selected.DataLength.ToString()),
                     new StringPair("Header CRC", byteToString(selected.HeaderCRC)),
-                    new StringPair("Data", byteToString(selected.DataBytes)),
+                });
+
+                {
+                    // Modified from http://stackoverflow.com/a/14261640
+                    if(selected.DataBytes == null) {
+                        packetProperties.Add(new StringPair("Data", ""));
+                    } else {
+                        byte[][] parts = selected.DataBytes.Select((b, idx) => new { index = idx, value = b })
+                            .GroupBy(a => a.index / 8)
+                            .Select(gr => gr.Select(n => n.value).ToArray())
+                            .ToArray();
+                        for(int i = 0; i<parts.Length; ++i) {
+                            packetProperties.Add(new StringPair(i==0 ? "Data" : "", byteToString(parts[i])));
+                        }
+                    }
+                }
+
+                packetProperties.AddRange(new StringPair[] {
                     new StringPair("Data CRC", byteToString(selected.DataCRC)),
                     new StringPair("End of Packet Marker", selected.EndCode)
                 });
@@ -351,7 +368,24 @@ namespace STAR.View {
                     new StringPair("Transaction ID", selected.TransactionId.ToString()),
                     new StringPair("Read Address", selected.ReadAddress.ToString()),
                     new StringPair("Data Length", selected.DataLength.ToString()),
-                    new StringPair("Data", byteToString(selected.DataBytes)),
+                });
+
+                {
+                    // Modified from http://stackoverflow.com/a/14261640
+                    if(selected.DataBytes == null) {
+                        packetProperties.Add(new StringPair("Data", ""));
+                    } else {
+                        byte[][] parts = selected.DataBytes.Select((b, idx) => new { index = idx, value = b })
+                            .GroupBy(a => a.index / 8)
+                            .Select(gr => gr.Select(n => n.value).ToArray())
+                            .ToArray();
+                        for(int i = 0; i<parts.Length; ++i) {
+                            packetProperties.Add(new StringPair(i==0 ? "Data" : "", byteToString(parts[i])));
+                        }
+                    }
+                }
+
+                packetProperties.AddRange(new StringPair[] {
                     new StringPair("Data CRC", byteToString(selected.DataCRC)),
                     new StringPair("Status", byteToString(selected.Status)),
                     new StringPair("End of Packet Marker", selected.EndCode)
@@ -360,8 +394,21 @@ namespace STAR.View {
                 packetProperties.AddRange(new StringPair[] {
                     new StringPair("Destination Logical Address", byteToString(selected.DestinationLogicalAddress)),
                     new StringPair("Sequence Number", selected.SequenceId.ToString()),
-                    new StringPair("Cargo", byteToString(selected.Cargo))
                 });
+                {
+                    // Modified from http://stackoverflow.com/a/14261640
+                    if(selected.Cargo == null) {
+                        packetProperties.Add(new StringPair("Cargo", ""));
+                    } else {
+                        byte[][] parts = selected.Cargo.Select((b, idx) => new { index = idx, value = b })
+                            .GroupBy(a => a.index / 8)
+                            .Select(gr => gr.Select(n => n.value).ToArray())
+                            .ToArray();
+                        for(int i = 0; i<parts.Length; ++i) {
+                            packetProperties.Add(new StringPair(i==0 ? "Cargo" : "", byteToString(parts[i])));
+                        }
+                    }
+                }
             }
         }
         
