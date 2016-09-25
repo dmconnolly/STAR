@@ -311,14 +311,14 @@ namespace STAR.View {
                 packetProperties.AddRange(new StringPair[] {
                     new StringPair("Dest. Path Address", byteToString(selected.DestinationPathAddress)),
                     new StringPair("Dest. Logical Address", byteToString(selected.DestinationLogicalAddress)),
-                    new StringPair("Protocol ID", selected.ProtocolId.ToString()),
+                    new StringPair("Protocol ID", byteToString(selected.ProtocolId)),
                     new StringPair("Dest. key", byteToString(selected.DestinationKey)),
                     new StringPair("Source Path Address", byteToString(selected.SourcePathAddress)),
                     new StringPair("Source Logical Address", byteToString(selected.SourceLogicalAddress)),
-                    new StringPair("Transaction ID", selected.TransactionId.ToString()),
+                    new StringPair("Transaction ID", byteToString(selected.TransactionId)),
                     new StringPair("Extended Write Address", byteToString(selected.ExtendedWriteAddress)),
-                    new StringPair("Write Address", selected.WriteAddress.ToString()),
-                    new StringPair("Data Length", selected.DataLength.ToString()),
+                    new StringPair("Write Address", byteToString(selected.WriteAddress)),
+                    new StringPair("Data Length", byteToString(selected.DataLength)),
                     new StringPair("Header CRC", byteToString(selected.HeaderCRC)),
                 });
 
@@ -331,7 +331,7 @@ namespace STAR.View {
                             .GroupBy(a => a.index / 8)
                             .Select(gr => gr.Select(n => n.value).ToArray())
                             .ToArray();
-                        for(int i=0; i<parts.Length; ++i) {
+                        for(int i = 0; i<parts.Length; ++i) {
                             packetProperties.Add(new StringPair(i==0 ? "Data" : "", byteToString(parts[i])));
                         }
                     }
@@ -345,36 +345,36 @@ namespace STAR.View {
                 packetProperties.AddRange(new StringPair[] {
                     new StringPair("Source Path Address", byteToString(selected.SourcePathAddress)),
                     new StringPair("Source Logical Address", byteToString(selected.SourceLogicalAddress)),
-                    new StringPair("Protocol ID", selected.ProtocolId.ToString()),
+                    new StringPair("Protocol ID", byteToString(selected.ProtocolId)),
                     new StringPair("Status", byteToString(selected.Status)),
                     new StringPair("Dest. Logical Address", byteToString(selected.DestinationLogicalAddress)),
-                    new StringPair("Transaction ID", selected.TransactionId.ToString()),
-                    new StringPair("Reply CRC", selected.ReplyCRC.ToString()),
+                    new StringPair("Transaction ID", byteToString(selected.TransactionId)),
+                    new StringPair("Reply CRC", byteToString(selected.ReplyCRC)),
                     new StringPair("End of Packet Marker", selected.EndCode)
                 });
             } else if(selected.PacketType == typeof(ReadCommandPacket)) {
                 packetProperties.AddRange(new StringPair[] {
                     new StringPair("Dest. Path Address", byteToString(selected.DestinationPathAddress)),
                     new StringPair("Dest. Logical Address", byteToString(selected.DestinationLogicalAddress)),
-                    new StringPair("Protocol ID", selected.ProtocolId.ToString()),
+                    new StringPair("Protocol ID", byteToString(selected.ProtocolId)),
                     new StringPair("Dest. key", byteToString(selected.DestinationKey)),
                     new StringPair("Source Path Address", byteToString(selected.SourcePathAddress)),
                     new StringPair("Source Logical Address", byteToString(selected.SourceLogicalAddress)),
-                    new StringPair("Transaction ID", selected.TransactionId.ToString()),
+                    new StringPair("Transaction ID", byteToString(selected.TransactionId)),
                     new StringPair("Extended Read Address", byteToString(selected.ExtendedReadAddress)),
-                    new StringPair("Read Address", selected.ReadAddress.ToString()),
-                    new StringPair("Data Length", selected.DataLength.ToString()),
-                    new StringPair("Header CRC", selected.HeaderCRC.ToString()),
+                    new StringPair("Read Address", byteToString(selected.ReadAddress)),
+                    new StringPair("Data Length", byteToString(selected.DataLength)),
+                    new StringPair("Header CRC", byteToString(selected.HeaderCRC)),
                     new StringPair("End of Packet Marker", selected.EndCode)
                 });
             } else if(selected.PacketType == typeof(ReadReplyPacket)) {
                 packetProperties.AddRange(new StringPair[] {
                     new StringPair("Source Path Address", byteToString(selected.SourcePathAddress)),
                     new StringPair("Source Logical Address", byteToString(selected.SourceLogicalAddress)),
-                    new StringPair("Protocol ID", selected.ProtocolId.ToString()),
-                    new StringPair("Transaction ID", selected.TransactionId.ToString()),
-                    new StringPair("Data Length", selected.DataLength.ToString()),
-                    new StringPair("Header CRC", selected.HeaderCRC.ToString())
+                    new StringPair("Protocol ID", byteToString(selected.ProtocolId)),
+                    new StringPair("Transaction ID", byteToString(selected.TransactionId)),
+                    new StringPair("Data Length", byteToString(selected.DataLength)),
+                    new StringPair("Header CRC", byteToString(selected.HeaderCRC))
                 });
 
                 {
@@ -398,8 +398,9 @@ namespace STAR.View {
                 });
             } else if(selected.PacketType == typeof(NonRmapPacket)) {
                 packetProperties.AddRange(new StringPair[] {
+                    new StringPair("Dest. Path Address", byteToString(selected.DestinationPathAddress)),
                     new StringPair("Dest. Logical Address", byteToString(selected.DestinationLogicalAddress)),
-                    new StringPair("Sequence ID", selected.SequenceId.ToString()),
+                    new StringPair("Sequence ID", byteToString(selected.SequenceId)),
                 });
                 {
                     // Modified from http://stackoverflow.com/a/14261640
@@ -417,7 +418,7 @@ namespace STAR.View {
                 }
             }
         }
-        
+
 
         private void drawGraphs() {
             packetRatePoints.Clear();
@@ -426,7 +427,7 @@ namespace STAR.View {
                 new BackgroundWorker(),
                 new BackgroundWorker()
             };
-            
+
             Packet[] packets = capture.Packets.OrderBy(pkt => pkt.TimeStamp.Ticks).ToArray();
 
             workers[0].DoWork += delegate {
@@ -476,20 +477,32 @@ namespace STAR.View {
             }
         }
 
-        //Method to convert byte array to string
-        private string byteToString(byte[] byteArray) {
-            if(byteArray == null) {
-                return "";
-            }
-            string returnString = BitConverter.ToString(byteArray);
-            returnString.Replace("-", "");
-            return returnString;
+        // Method to convert byte array to string
+        private string byteToString(byte[] bytes) {
+            return bytes == null ? "" : string.Concat(bytes.Select(b => b.ToString("x2")));
         }
 
-        //Overload for single byte
-        private string byteToString(byte singleByte) {
-            string returnString = Convert.ToString(singleByte);
-            return returnString;
+        // Overload for single byte
+        private string byteToString(byte b) {
+            return b.ToString("x2");
+        }
+
+        // Overload for uint
+        private string byteToString(uint val) {
+            byte[] bytes = BitConverter.GetBytes(val);
+            if(BitConverter.IsLittleEndian) {
+                Array.Reverse(bytes);
+            }
+            return byteToString(bytes);
+        }
+
+        // Overload for ushort
+        private string byteToString(ushort val) {
+            byte[] bytes = BitConverter.GetBytes(val);
+            if(BitConverter.IsLittleEndian) {
+                Array.Reverse(bytes);
+            }
+            return byteToString(bytes);
         }
 
         [TestClass]
