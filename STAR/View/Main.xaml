@@ -148,7 +148,7 @@
                                             </Style>
                                         </DataGridTextColumn.HeaderStyle>
                                     </DataGridTextColumn>
-                                    <DataGridTextColumn Header="Info" Binding="{Binding Path=Message}" Width="130">
+                                    <DataGridTextColumn Header="Info" Binding="{Binding Path=Message}" Width="*">
                                         <DataGridTextColumn.HeaderStyle>
                                             <Style TargetType="DataGridColumnHeader">
                                                 <Setter Property="HorizontalContentAlignment" Value="Center" />
