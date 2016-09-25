@@ -151,10 +151,11 @@ namespace STAR.ViewModel {
         
         // Method to convert byte array to string
         private string byteToString(byte[] bytes) {
-            string tmp = bytes == null ? "" : string.Concat(bytes.Select(b => b.ToString("x2"))).TrimStart('0');
-            if(tmp.Length == 0) {
-                tmp = "00";
-            } else if(tmp.Length % 2 != 0) {
+            string tmp = bytes == null ? "" : string.Concat(bytes.Select(b => b.ToString("x2")));
+            if(tmp.Length > 2) {
+                tmp = tmp.TrimStart('0');
+            }
+            if(tmp.Length % 2 != 0) {
                 tmp = "0" + tmp;
             }
             return tmp;
