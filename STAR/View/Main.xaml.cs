@@ -113,7 +113,7 @@ namespace STAR.View {
                     }
                 }
 
-                return portFilterCheckbox[pktView.EntryPort - 1].IsChecked == true ? true : false;
+                return portFilterCheckbox[byte.Parse(pktView.EntryPort) - 1].IsChecked == true ? true : false;
             };
 
             errorPacketCollectionViewFilter = item => {
@@ -126,7 +126,7 @@ namespace STAR.View {
                     return false;
                 }
 
-                return portFilterCheckbox[pktView.EntryPort - 1].IsChecked == true ? true : false;
+                return portFilterCheckbox[byte.Parse(pktView.EntryPort) - 1].IsChecked == true ? true : false;
             };
 
             // Apply filter to packet collection view
@@ -285,6 +285,8 @@ namespace STAR.View {
         private void PacketsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e) {
             packetProperties.Clear();
 
+            const int maxStringLength = 24;
+
             // Get current packet
             PacketView selected = PacketsDataGrid.SelectedItem as PacketView;
 
@@ -295,8 +297,8 @@ namespace STAR.View {
             // Add packet properties to collection
             packetProperties.AddRange(new StringPair[] {
                 new StringPair("Timestamp", selected.TimeString),
-                new StringPair("Entry Port", byteToString(selected.EntryPort)),
-                new StringPair("Exit Port", byteToString(selected.ExitPort)),
+                new StringPair("Entry Port", selected.EntryPort),
+                new StringPair("Exit Port", selected.ExitPort),
                 new StringPair("Packet Type", selected.PacketTypeString),
                 string.IsNullOrEmpty(selected.Message) ? new StringPair("", "") : new StringPair("Info", selected.Message)
             });
@@ -309,110 +311,108 @@ namespace STAR.View {
             // If statement to determine what details to display
             if(selected.PacketType == typeof(WriteCommandPacket)) {
                 packetProperties.AddRange(new StringPair[] {
-                    new StringPair("Dest. Path Address", byteToString(selected.DestinationPathAddress)),
-                    new StringPair("Dest. Logical Address", byteToString(selected.DestinationLogicalAddress)),
-                    new StringPair("Protocol ID", byteToString(selected.ProtocolId)),
-                    new StringPair("Dest. key", byteToString(selected.DestinationKey)),
-                    new StringPair("Source Path Address", byteToString(selected.SourcePathAddress)),
-                    new StringPair("Source Logical Address", byteToString(selected.SourceLogicalAddress)),
-                    new StringPair("Transaction ID", byteToString(selected.TransactionId)),
-                    new StringPair("Extended Write Address", byteToString(selected.ExtendedWriteAddress)),
-                    new StringPair("Write Address", byteToString(selected.WriteAddress)),
-                    new StringPair("Data Length", byteToString(selected.DataLength)),
-                    new StringPair("Header CRC", byteToString(selected.HeaderCRC)),
+                    new StringPair("Dest. Path Address", selected.DestinationPathAddress),
+                    new StringPair("Dest. Logical Address", selected.DestinationLogicalAddress),
+                    new StringPair("Protocol ID", selected.ProtocolId),
+                    new StringPair("Dest. key", selected.DestinationKey),
+                    new StringPair("Source Path Address", selected.SourcePathAddress),
+                    new StringPair("Source Logical Address", selected.SourceLogicalAddress),
+                    new StringPair("Transaction ID", selected.TransactionId),
+                    new StringPair("Extended Write Address", selected.ExtendedWriteAddress),
+                    new StringPair("Write Address", selected.WriteAddress),
+                    new StringPair("Data Length", selected.DataLength),
+                    new StringPair("Header CRC", selected.HeaderCRC),
                 });
 
-                {
-                    // Modified from http://stackoverflow.com/a/14261640
-                    if(selected.DataBytes == null) {
-                        packetProperties.Add(new StringPair("Data", ""));
-                    } else {
-                        byte[][] parts = selected.DataBytes.Select((b, idx) => new { index = idx, value = b })
-                            .GroupBy(a => a.index / 8)
-                            .Select(gr => gr.Select(n => n.value).ToArray())
-                            .ToArray();
-                        for(int i = 0; i<parts.Length; ++i) {
-                            packetProperties.Add(new StringPair(i==0 ? "Data" : "", byteToString(parts[i])));
+                if(string.IsNullOrEmpty(selected.DataBytes)) {
+                    packetProperties.Add(new StringPair("Data", ""));
+                } else {
+                    bool label = false;
+                    foreach(string part in SplitString(selected.DataBytes, maxStringLength)) {
+                        if(!label) {
+                            label = true;
+                            packetProperties.Add(new StringPair("Data", part));
+                        } else {
+                            packetProperties.Add(new StringPair("", part));
                         }
                     }
                 }
 
                 packetProperties.AddRange(new StringPair[] {
-                    new StringPair("Data CRC", byteToString(selected.DataCRC)),
+                    new StringPair("Data CRC", selected.DataCRC),
                     new StringPair("End of Packet Marker", selected.EndCode)
                 });
             } else if(selected.PacketType == typeof(WriteReplyPacket)) {
                 packetProperties.AddRange(new StringPair[] {
-                    new StringPair("Source Path Address", byteToString(selected.SourcePathAddress)),
-                    new StringPair("Source Logical Address", byteToString(selected.SourceLogicalAddress)),
-                    new StringPair("Protocol ID", byteToString(selected.ProtocolId)),
-                    new StringPair("Status", byteToString(selected.Status)),
-                    new StringPair("Dest. Logical Address", byteToString(selected.DestinationLogicalAddress)),
-                    new StringPair("Transaction ID", byteToString(selected.TransactionId)),
-                    new StringPair("Reply CRC", byteToString(selected.ReplyCRC)),
+                    new StringPair("Source Path Address", selected.SourcePathAddress),
+                    new StringPair("Source Logical Address", selected.SourceLogicalAddress),
+                    new StringPair("Protocol ID", selected.ProtocolId),
+                    new StringPair("Status", selected.Status),
+                    new StringPair("Dest. Logical Address", selected.DestinationLogicalAddress),
+                    new StringPair("Transaction ID", selected.TransactionId),
+                    new StringPair("Reply CRC", selected.ReplyCRC),
                     new StringPair("End of Packet Marker", selected.EndCode)
                 });
             } else if(selected.PacketType == typeof(ReadCommandPacket)) {
                 packetProperties.AddRange(new StringPair[] {
-                    new StringPair("Dest. Path Address", byteToString(selected.DestinationPathAddress)),
-                    new StringPair("Dest. Logical Address", byteToString(selected.DestinationLogicalAddress)),
-                    new StringPair("Protocol ID", byteToString(selected.ProtocolId)),
-                    new StringPair("Dest. key", byteToString(selected.DestinationKey)),
-                    new StringPair("Source Path Address", byteToString(selected.SourcePathAddress)),
-                    new StringPair("Source Logical Address", byteToString(selected.SourceLogicalAddress)),
-                    new StringPair("Transaction ID", byteToString(selected.TransactionId)),
-                    new StringPair("Extended Read Address", byteToString(selected.ExtendedReadAddress)),
-                    new StringPair("Read Address", byteToString(selected.ReadAddress)),
-                    new StringPair("Data Length", byteToString(selected.DataLength)),
-                    new StringPair("Header CRC", byteToString(selected.HeaderCRC)),
+                    new StringPair("Dest. Path Address", selected.DestinationPathAddress),
+                    new StringPair("Dest. Logical Address", selected.DestinationLogicalAddress),
+                    new StringPair("Protocol ID", selected.ProtocolId),
+                    new StringPair("Dest. key", selected.DestinationKey),
+                    new StringPair("Source Path Address", selected.SourcePathAddress),
+                    new StringPair("Source Logical Address", selected.SourceLogicalAddress),
+                    new StringPair("Transaction ID", selected.TransactionId),
+                    new StringPair("Extended Read Address", selected.ExtendedReadAddress),
+                    new StringPair("Read Address", selected.ReadAddress),
+                    new StringPair("Data Length", selected.DataLength),
+                    new StringPair("Header CRC", selected.HeaderCRC),
                     new StringPair("End of Packet Marker", selected.EndCode)
                 });
             } else if(selected.PacketType == typeof(ReadReplyPacket)) {
                 packetProperties.AddRange(new StringPair[] {
-                    new StringPair("Source Path Address", byteToString(selected.SourcePathAddress)),
-                    new StringPair("Source Logical Address", byteToString(selected.SourceLogicalAddress)),
-                    new StringPair("Protocol ID", byteToString(selected.ProtocolId)),
-                    new StringPair("Transaction ID", byteToString(selected.TransactionId)),
-                    new StringPair("Data Length", byteToString(selected.DataLength)),
-                    new StringPair("Header CRC", byteToString(selected.HeaderCRC))
+                    new StringPair("Source Path Address", selected.SourcePathAddress),
+                    new StringPair("Source Logical Address", selected.SourceLogicalAddress),
+                    new StringPair("Protocol ID", selected.ProtocolId),
+                    new StringPair("Transaction ID", selected.TransactionId),
+                    new StringPair("Data Length", selected.DataLength),
+                    new StringPair("Header CRC", selected.HeaderCRC)
                 });
 
-                {
-                    // Modified from http://stackoverflow.com/a/14261640
-                    if(selected.DataBytes == null) {
-                        packetProperties.Add(new StringPair("Data", ""));
-                    } else {
-                        byte[][] parts = selected.DataBytes.Select((b, idx) => new { index = idx, value = b })
-                            .GroupBy(a => a.index / 8)
-                            .Select(gr => gr.Select(n => n.value).ToArray())
-                            .ToArray();
-                        for(int i = 0; i<parts.Length; ++i) {
-                            packetProperties.Add(new StringPair(i==0 ? "Data" : "", byteToString(parts[i])));
+                if(string.IsNullOrEmpty(selected.DataBytes)) {
+                    packetProperties.Add(new StringPair("Data", ""));
+                } else {
+                    bool label = false;
+                    foreach(string part in SplitString(selected.DataBytes, maxStringLength)) {
+                        if(!label) {
+                            label = true;
+                            packetProperties.Add(new StringPair("Data", part));
+                        } else {
+                            packetProperties.Add(new StringPair("", part));
                         }
                     }
                 }
 
                 packetProperties.AddRange(new StringPair[] {
-                    new StringPair("Data CRC", byteToString(selected.DataCRC)),
+                    new StringPair("Data CRC", selected.DataCRC),
                     new StringPair("End of Packet Marker", selected.EndCode)
                 });
             } else if(selected.PacketType == typeof(NonRmapPacket)) {
                 packetProperties.AddRange(new StringPair[] {
-                    new StringPair("Dest. Path Address", byteToString(selected.DestinationPathAddress)),
-                    new StringPair("Dest. Logical Address", byteToString(selected.DestinationLogicalAddress)),
-                    new StringPair("Sequence ID", byteToString(selected.SequenceId)),
+                    new StringPair("Dest. Path Address", selected.DestinationPathAddress),
+                    new StringPair("Dest. Logical Address", selected.DestinationLogicalAddress),
+                    new StringPair("Sequence ID", selected.SequenceId),
                 });
-                {
-                    // Modified from http://stackoverflow.com/a/14261640
-                    if(selected.Cargo == null) {
-                        packetProperties.Add(new StringPair("Cargo", ""));
-                    } else {
-                        byte[][] parts = selected.Cargo.Select((b, idx) => new { index = idx, value = b })
-                            .GroupBy(a => a.index / 8)
-                            .Select(gr => gr.Select(n => n.value).ToArray())
-                            .ToArray();
-                        for(int i = 0; i<parts.Length; ++i) {
-                            packetProperties.Add(new StringPair(i==0 ? "Cargo" : "", byteToString(parts[i])));
+
+                if(string.IsNullOrEmpty(selected.Cargo)) {
+                    packetProperties.Add(new StringPair("Cargo", ""));
+                } else {
+                    bool label = false;
+                    foreach(string part in SplitString(selected.Cargo, maxStringLength)) {
+                        if(!label) {
+                            label = true;
+                            packetProperties.Add(new StringPair("Cargo", part));
+                        } else {
+                            packetProperties.Add(new StringPair("", part));
                         }
                     }
                 }
@@ -477,32 +477,16 @@ namespace STAR.View {
             }
         }
 
-        // Method to convert byte array to string
-        private string byteToString(byte[] bytes) {
-            return bytes == null ? "" : string.Concat(bytes.Select(b => b.ToString("x2")));
-        }
-
-        // Overload for single byte
-        private string byteToString(byte b) {
-            return b.ToString("x2");
-        }
-
-        // Overload for uint
-        private string byteToString(uint val) {
-            byte[] bytes = BitConverter.GetBytes(val);
-            if(BitConverter.IsLittleEndian) {
-                Array.Reverse(bytes);
-            }
-            return byteToString(bytes);
-        }
-
-        // Overload for ushort
-        private string byteToString(ushort val) {
-            byte[] bytes = BitConverter.GetBytes(val);
-            if(BitConverter.IsLittleEndian) {
-                Array.Reverse(bytes);
-            }
-            return byteToString(bytes);
+        // Function used from http://stackoverflow.com/a/4712549
+        private string[] SplitString(string source, int maxLength) {
+            return source
+                .Where((x, i) => i % maxLength == 0)
+                .Select(
+                    (x, i) => new string(source
+                        .Skip(i * maxLength)
+                        .Take(maxLength)
+                        .ToArray()))
+                .ToArray();
         }
 
         [TestClass]
