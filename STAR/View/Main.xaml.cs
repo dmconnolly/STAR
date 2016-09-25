@@ -309,14 +309,15 @@ namespace STAR.View {
             // If statement to determine what details to display
             if(selected.PacketType == typeof(WriteCommandPacket)) {
                 packetProperties.AddRange(new StringPair[] {
+                    new StringPair("Dest. Path Address", byteToString(selected.DestinationPathAddress)),
+                    new StringPair("Dest. Logical Address", byteToString(selected.DestinationLogicalAddress)),
+                    new StringPair("Protocol ID", selected.ProtocolId.ToString()),
+                    new StringPair("Dest. key", byteToString(selected.DestinationKey)),
                     new StringPair("Source Path Address", byteToString(selected.SourcePathAddress)),
                     new StringPair("Source Logical Address", byteToString(selected.SourceLogicalAddress)),
-                    new StringPair("Destination key", byteToString(selected.DestinationKey)),
-                    new StringPair("Destination Logical Address", byteToString(selected.DestinationLogicalAddress)),
-                    new StringPair("Protocol ID", selected.ProtocolId.ToString()),
                     new StringPair("Transaction ID", selected.TransactionId.ToString()),
-                    new StringPair("Write Address", selected.WriteAddress.ToString()),
                     new StringPair("Extended Write Address", byteToString(selected.ExtendedWriteAddress)),
+                    new StringPair("Write Address", selected.WriteAddress.ToString()),
                     new StringPair("Data Length", selected.DataLength.ToString()),
                     new StringPair("Header CRC", byteToString(selected.HeaderCRC)),
                 });
@@ -330,7 +331,7 @@ namespace STAR.View {
                             .GroupBy(a => a.index / 8)
                             .Select(gr => gr.Select(n => n.value).ToArray())
                             .ToArray();
-                        for(int i = 0; i<parts.Length; ++i) {
+                        for(int i=0; i<parts.Length; ++i) {
                             packetProperties.Add(new StringPair(i==0 ? "Data" : "", byteToString(parts[i])));
                         }
                     }
@@ -340,34 +341,40 @@ namespace STAR.View {
                     new StringPair("Data CRC", byteToString(selected.DataCRC)),
                     new StringPair("End of Packet Marker", selected.EndCode)
                 });
-            } else if(selected.PacketType == typeof(WriteResponsePacket)) {
-                packetProperties.AddRange(new StringPair[] {
-                    new StringPair("Destination Logical Address", byteToString(selected.DestinationLogicalAddress)),
-                    new StringPair("Protocol ID", selected.ProtocolId.ToString()),
-                    new StringPair("Transaction ID", selected.TransactionId.ToString()),
-                    new StringPair("End of Packet Marker", selected.EndCode),
-                    new StringPair("Status", byteToString(selected.Status))
-                });
-            } else if(selected.PacketType == typeof(ReadCommandPacket)) {
+            } else if(selected.PacketType == typeof(WriteReplyPacket)) {
                 packetProperties.AddRange(new StringPair[] {
                     new StringPair("Source Path Address", byteToString(selected.SourcePathAddress)),
                     new StringPair("Source Logical Address", byteToString(selected.SourceLogicalAddress)),
-                    new StringPair("Destination key", byteToString(selected.DestinationKey)),
-                    new StringPair("Destination Logical Address", byteToString(selected.DestinationLogicalAddress)),
                     new StringPair("Protocol ID", selected.ProtocolId.ToString()),
+                    new StringPair("Status", byteToString(selected.Status)),
+                    new StringPair("Dest. Logical Address", byteToString(selected.DestinationLogicalAddress)),
                     new StringPair("Transaction ID", selected.TransactionId.ToString()),
-                    new StringPair("Read Address", selected.ReadAddress.ToString()),
-                    new StringPair("Data Length", selected.DataLength.ToString()),
+                    new StringPair("Reply CRC", selected.ReplyCRC.ToString()),
                     new StringPair("End of Packet Marker", selected.EndCode)
                 });
-            } else if(selected.PacketType == typeof(ReadResponsePacket)) {
+            } else if(selected.PacketType == typeof(ReadCommandPacket)) {
                 packetProperties.AddRange(new StringPair[] {
-                    new StringPair("Destination key", byteToString(selected.DestinationKey)),
-                    new StringPair("Destination Logical Address", byteToString(selected.DestinationLogicalAddress)),
+                    new StringPair("Dest. Path Address", byteToString(selected.DestinationPathAddress)),
+                    new StringPair("Dest. Logical Address", byteToString(selected.DestinationLogicalAddress)),
                     new StringPair("Protocol ID", selected.ProtocolId.ToString()),
+                    new StringPair("Dest. key", byteToString(selected.DestinationKey)),
+                    new StringPair("Source Path Address", byteToString(selected.SourcePathAddress)),
+                    new StringPair("Source Logical Address", byteToString(selected.SourceLogicalAddress)),
                     new StringPair("Transaction ID", selected.TransactionId.ToString()),
+                    new StringPair("Extended Read Address", byteToString(selected.ExtendedReadAddress)),
                     new StringPair("Read Address", selected.ReadAddress.ToString()),
                     new StringPair("Data Length", selected.DataLength.ToString()),
+                    new StringPair("Header CRC", selected.HeaderCRC.ToString()),
+                    new StringPair("End of Packet Marker", selected.EndCode)
+                });
+            } else if(selected.PacketType == typeof(ReadReplyPacket)) {
+                packetProperties.AddRange(new StringPair[] {
+                    new StringPair("Source Path Address", byteToString(selected.SourcePathAddress)),
+                    new StringPair("Source Logical Address", byteToString(selected.SourceLogicalAddress)),
+                    new StringPair("Protocol ID", selected.ProtocolId.ToString()),
+                    new StringPair("Transaction ID", selected.TransactionId.ToString()),
+                    new StringPair("Data Length", selected.DataLength.ToString()),
+                    new StringPair("Header CRC", selected.HeaderCRC.ToString())
                 });
 
                 {
@@ -387,13 +394,12 @@ namespace STAR.View {
 
                 packetProperties.AddRange(new StringPair[] {
                     new StringPair("Data CRC", byteToString(selected.DataCRC)),
-                    new StringPair("Status", byteToString(selected.Status)),
                     new StringPair("End of Packet Marker", selected.EndCode)
                 });
             } else if(selected.PacketType == typeof(NonRmapPacket)) {
                 packetProperties.AddRange(new StringPair[] {
-                    new StringPair("Destination Logical Address", byteToString(selected.DestinationLogicalAddress)),
-                    new StringPair("Sequence Number", selected.SequenceId.ToString()),
+                    new StringPair("Dest. Logical Address", byteToString(selected.DestinationLogicalAddress)),
+                    new StringPair("Sequence ID", selected.SequenceId.ToString()),
                 });
                 {
                     // Modified from http://stackoverflow.com/a/14261640

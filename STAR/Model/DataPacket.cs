@@ -98,8 +98,8 @@ namespace STAR.Model {
             return command ?
                 write ? typeof(WriteCommandPacket) :
                 typeof(ReadCommandPacket) :
-                write ? typeof(WriteResponsePacket) :
-                typeof(ReadResponsePacket);
+                write ? typeof(WriteReplyPacket) :
+                typeof(ReadReplyPacket);
         }
 
         // Takes date string in the form dd-MM-yyyy HH:mm:ss.fff

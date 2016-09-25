@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:STAR.View"
         xmlns:GraphTools="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
         mc:Ignorable="d"
-        Title="Main" Height="830" Width="1280"
+        Title="Main" Height="836" MinHeight="500" Width="1152" MinWidth="1152"
         xmlns:oxy="http://oxyplot.org/wpf">
     <Window.Resources>
         <CollectionViewSource x:Key="PacketCollectionViewSource" CollectionViewType="ListCollectionView" />
@@ -30,8 +30,8 @@
                 <Grid Margin="10">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="10*"/>
-                            <ColumnDefinition Width="5*" />
+                            <ColumnDefinition Width="650"/>
+                            <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="15*" />
@@ -39,11 +39,24 @@
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0" Grid.RowSpan="2" >
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1.6*" />
-                                <ColumnDefinition Width="8.4*" />
+                                <ColumnDefinition Width="135" />
+                                <ColumnDefinition Width="460" />
                             </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="10" /> <!-- Spacer -->
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
 
-                            <StackPanel Grid.Row="0" Margin="0,0,10,0" >
+                            <Label Grid.Row="0" Grid.Column="0" FontSize="20">
+                                Filters
+                            </Label>
+
+                            <Label Grid.Row="0" Grid.Column="1" FontSize="20">
+                                Packets
+                            </Label>
+
+                            <StackPanel Grid.Row="2" Grid.Column="0"  Margin="0,0,10,0" >
                                 <CheckBox x:Name="ChkShowValidPackets" Click="PacketFilterCheckbox_Click" Content="Valid Packets" FontSize="15" Margin="0,0,0,10" VerticalAlignment="Top" VerticalContentAlignment="Center" IsEnabled="False" IsChecked="True" />
                                 <CheckBox x:Name="ChkShowInvalidPackets" Click="PacketFilterCheckbox_Click" Content="Invalid Packets" FontSize="15" Margin="0,0,0,10" VerticalAlignment="Top" VerticalContentAlignment="Center" IsEnabled="False" IsChecked="True" />
                                 <CheckBox x:Name="ChkShowErrors" Click="PacketFilterCheckbox_Click" Content="Errors" FontSize="15" Margin="0,0,0,25" VerticalAlignment="Top" VerticalContentAlignment="Center" IsEnabled="False" IsChecked="True" />
@@ -71,7 +84,7 @@
                                     HeadersVisibility="Column"
                                     HorizontalAlignment="Left"
                                     IsReadOnly="True"
-                                    Grid.Row="0"
+                                    Grid.Row="2"
                                     Grid.Column="1"
                                     SelectionChanged="PacketsDataGrid_SelectionChanged"
                                     SelectionMode="Single"
@@ -128,14 +141,14 @@
                                             </Style>
                                         </DataGridTextColumn.HeaderStyle>
                                     </DataGridTextColumn>
-                                    <DataGridTextColumn Header="Type" Binding="{Binding Path=PacketTypeString}" Width="115">
+                                    <DataGridTextColumn Header="Type" Binding="{Binding Path=PacketTypeString}" Width="120">
                                         <DataGridTextColumn.HeaderStyle>
                                             <Style TargetType="DataGridColumnHeader">
                                                 <Setter Property="HorizontalContentAlignment" Value="Center" />
                                             </Style>
                                         </DataGridTextColumn.HeaderStyle>
                                     </DataGridTextColumn>
-                                    <DataGridTextColumn Header="Info" Binding="{Binding Path=Message}" Width="100">
+                                    <DataGridTextColumn Header="Info" Binding="{Binding Path=Message}" Width="130">
                                         <DataGridTextColumn.HeaderStyle>
                                             <Style TargetType="DataGridColumnHeader">
                                                 <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -146,7 +159,7 @@
                             </DataGrid>
                         </Grid>
 
-                        <Grid Grid.Column="1" Grid.Row="0" Margin="0,0,0.333,0.333">
+                        <Grid Grid.Column="1" Grid.Row="0">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="2*" />
                                 <RowDefinition Height="Auto" />
@@ -154,13 +167,14 @@
                             <Grid Grid.Row="0">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" /> <!-- Spacer -->
                                     <RowDefinition Height="2*" />
                                 </Grid.RowDefinitions>
                                 <Label Grid.Row="0" FontSize="20">
-                                    Packet Details
+                                    Selected Packet
                                 </Label>
                                 <DataGrid 
-                                        Grid.Row="1"
+                                        Grid.Row="2"
                                         x:Name="IndividualPacketGrid"
                                         HeadersVisibility="Column"
                                         GridLinesVisibility="None"
@@ -174,8 +188,14 @@
                                         CanUserSortColumns="False">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Binding="{Binding Path=Property}" Width="200" Header="Property"/>
-                                        <DataGridTextColumn Binding="{Binding Path=Value}" Header="Value"/>
+                                        <DataGridTextColumn Binding="{Binding Path=Value}" Width ="220" Header="Value"/>
                                     </DataGrid.Columns>
+                                    <DataGrid.RowStyle>
+                                        <Style TargetType="{x:Type DataGridRow}">
+                                            <Setter Property="FontSize" Value="14"/>
+                                            <Setter Property="FontFamily" Value="/STAR;component/Resources/Fonts/#Droid Sans Mono"/>
+                                        </Style>
+                                    </DataGrid.RowStyle>
                                 </DataGrid>
                             </Grid>
                             <Button Grid.Row="1" x:Name="btnPrevious" Grid.Column="0" Width="100" HorizontalAlignment="Left" Click="btnPrevious_Click">

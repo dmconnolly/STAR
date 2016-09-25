@@ -33,6 +33,7 @@ namespace STAR.ViewModel {
         public ushort TransactionId { get; private set; }
         public byte ExtendedWriteAddress { get; private set; }
         public uint WriteAddress { get; private set; }
+        public byte ExtendedReadAddress { get; private set; }
         public uint ReadAddress { get; private set; }
         public uint DataLength { get; private set; }
         public byte HeaderCRC { get; private set; }
@@ -40,11 +41,8 @@ namespace STAR.ViewModel {
         public byte DataCRC { get; private set; }
         public byte Status { get; private set; }
         public byte ReplyCRC { get; private set; }
+        public byte[] DestinationPathAddress { get; private set; }
         public byte DestinationLogicalAddress { get; private set; }
-
-        public PacketView() {
-
-        }
 
         // Constructor for PacketView
         // Takes a Packet of any time as a parameter
@@ -94,11 +92,15 @@ namespace STAR.ViewModel {
             if(PacketType == typeof(NonRmapPacket)) {
                 NonRmapPacket pkt = packet as NonRmapPacket;
                 PacketTypeString = "Non RMAP";
+                DestinationPathAddress = pkt.PathAddress;
+                DestinationLogicalAddress = pkt.LogicalAddress;
                 SequenceId = pkt.SequenceNumber;
                 Cargo = pkt.Cargo;
             } else if(PacketType == typeof(WriteCommandPacket)) {
                 WriteCommandPacket pkt = packet as WriteCommandPacket;
                 PacketTypeString = "Write command";
+                DestinationPathAddress = pkt.PathAddress;
+                DestinationLogicalAddress = pkt.LogicalAddress;
                 DestinationKey = pkt.DestinationKey;
                 SourcePathAddress = pkt.SourcePathAddress;
                 SourceLogicalAddress = pkt.SourceLogicalAddress;
@@ -109,9 +111,11 @@ namespace STAR.ViewModel {
                 HeaderCRC = pkt.HeaderCRC;
                 DataBytes = pkt.DataBytes;
                 DataCRC = pkt.DataCRC;
-            } else if(PacketType == typeof(WriteResponsePacket)) {
-                WriteResponsePacket pkt = packet as WriteResponsePacket;
-                PacketTypeString = "Write response";
+            } else if(PacketType == typeof(WriteReplyPacket)) {
+                WriteReplyPacket pkt = packet as WriteReplyPacket;
+                PacketTypeString = "Write reply";
+                SourcePathAddress = pkt.PathAddress;
+                SourceLogicalAddress = pkt.LogicalAddress;
                 Status = pkt.Status;
                 DestinationLogicalAddress = pkt.DestinationLogicalAddress;
                 TransactionId = pkt.TransactionId;
@@ -119,17 +123,21 @@ namespace STAR.ViewModel {
             } else if(PacketType == typeof(ReadCommandPacket)) {
                 ReadCommandPacket pkt = packet as ReadCommandPacket;
                 PacketTypeString = "Read command";
+                DestinationPathAddress = pkt.PathAddress;
+                DestinationLogicalAddress = pkt.LogicalAddress;
                 DestinationKey = pkt.DestinationKey;
                 SourcePathAddress = pkt.SourcePathAddress;
                 SourceLogicalAddress = pkt.SourceLogicalAddress;
                 TransactionId = pkt.TransactionId;
-                ExtendedWriteAddress = pkt.ExtendedWriteAddress;
+                ExtendedReadAddress = pkt.ExtendedReadAddress;
                 ReadAddress = pkt.ReadAddress;
                 DataLength = pkt.DataLength;
                 HeaderCRC = pkt.HeaderCRC;
             } else {
-                ReadResponsePacket pkt = packet as ReadResponsePacket;
-                PacketTypeString = "Read response";
+                ReadReplyPacket pkt = packet as ReadReplyPacket;
+                PacketTypeString = "Read reply";
+                SourcePathAddress = pkt.PathAddress;
+                SourceLogicalAddress = pkt.LogicalAddress;
                 Status = pkt.Status;
                 DestinationLogicalAddress = pkt.DestinationLogicalAddress;
                 TransactionId = pkt.TransactionId;
