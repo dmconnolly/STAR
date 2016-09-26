@@ -358,7 +358,7 @@ namespace STAR.View {
                     new StringPair("Source Path Address", selected.SourcePathAddress),
                     new StringPair("Source Logical Address", selected.SourceLogicalAddress),
                     new StringPair("Transaction ID", selected.TransactionId),
-                    new StringPair("Extended Read Address", selected.ExtendedReadAddress),
+                    new StringPair("Extended Read Address", selected.ExtendedWriteAddress),
                     new StringPair("Read Address", selected.ReadAddress),
                     new StringPair("Data Length", selected.DataLength),
                     new StringPair("Header CRC", selected.HeaderCRC),
@@ -534,6 +534,15 @@ namespace STAR.View {
                 bool converterTester = false;
                 Assert.IsTrue(converterTester);
             }
+
+            [TestMethod]
+            public void testInvalidVariables()
+            {
+                bool isInvalid = true;
+
+                Assert.IsTrue(isInvalid);
+            }
+    }
         }
     }
-}
+

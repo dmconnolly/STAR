@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using STAR.Model;
 
-namespace STAR.ViewModel {
-    class Statistics {
+namespace STAR.ViewModel
+{
+    class Statistics
+    {
         private const double ticksPerSecond = 10000000;
 
         private long m_packetCount;
@@ -25,21 +27,76 @@ namespace STAR.ViewModel {
         public bool runsCorrectly;
 
         // Accessors for class member variables
-        public long PacketCount { get { return m_packetCount; } }
-        public long ValidPacketCount { get { return ValidPacketCount; } }
-        public long InvalidPacketCount { get { return m_invalidPacketCount; } }
-        public long ErrorMessageCount { get { return m_errorMessageCount; } }
-        public long TotalByteCount { get { return m_totalByteCount; } }
-        public double MeasurementTimeSeconds { get { return m_measurementTimeSeconds; } }
-        public double TotalPacketsPerSecond { get { return m_totalPacketsPerSecond; } }
-        public double TotalErrorsPerSecond { get { return m_totalErrorsPerSecond; } }
-        public double TotalBytesPerSecond { get { return m_totalBytesPerSecond; } }
-        public long[] NumDataCharactersInMinute { get { return m_numDataCharactersInMinute; } }
-        public int[] NumErrorsInMinute { get { return m_numErrorsInMinute; } }
-        public int[] NumPacketsInMinute { get { return m_numPacketsInMinute; } }
-        public DateTime[] MinutesForStatistics { get { return m_minutesForStatistics; } }
 
-        public Statistics() {
+        public long PacketCount
+        {
+            get { return m_packetCount; }
+        }
+
+        public long ValidPacketCount
+        {
+            get { return m_validPacketCount; }
+        }
+
+        public long InvalidPacketCount
+        {
+            get { return m_invalidPacketCount; }
+        }
+
+        public long ErrorMessageCount
+        {
+            get { return m_errorMessageCount; }
+        }
+
+        public long TotalByteCount
+        {
+            get { return m_totalByteCount; }
+        }
+
+        public double MeasurementTimeSeconds
+        {
+            get { return m_measurementTimeSeconds; }
+        }
+
+        public double TotalPacketsPerSecond
+        {
+            get { return m_totalPacketsPerSecond; }
+        }
+
+        public double TotalErrorsPerSecond
+        {
+            get { return m_totalErrorsPerSecond; }
+        }
+
+        public double TotalBytesPerSecond
+        {
+            get { return m_totalBytesPerSecond; }
+        }
+
+        public long[] NumDataCharactersInMinute
+        {
+            get { return m_numDataCharactersInMinute; }
+        }
+
+        public int[] NumErrorsInMinute
+        {
+            get { return m_numErrorsInMinute; }
+        }
+
+        public int[] NumPacketsInMinute
+        {
+            get { return m_numPacketsInMinute; }
+        }
+
+        public DateTime[] MinutesForStatistics
+        {
+            get { return m_minutesForStatistics; }
+        }
+      
+
+
+        public Statistics()
+        {
             m_numPacketsInMinute = new int[1];
             m_numErrorsInMinute = new int[1];
             m_numDataCharactersInMinute = new long[1];
@@ -80,7 +137,8 @@ namespace STAR.ViewModel {
 
                             if(packet.TimeStampInMinutes== m_minutesForStatistics[pointer]) {
                                 m_numPacketsInMinute[pointer]++;
-                                m_numDataCharactersInMinute[pointer] = m_numDataCharactersInMinute[pointer] + (packet as DataPacket).CargoByteCount;
+                                m_numDataCharactersInMinute[pointer] = m_numDataCharactersInMinute[pointer] +
+                                                                       (packet as DataPacket).CargoByteCount;
                                 matchedSecond = true;
                             }
                             pointer++;
@@ -97,9 +155,11 @@ namespace STAR.ViewModel {
                         pointer = 0;
                         matchedSecond = false;
                         do {
+                            if (packet.TimeStampInMinutes == m_minutesForStatistics[pointer])
+                            {
+                                m_numDataCharactersInMinute[pointer] = m_numDataCharactersInMinute[pointer] +
+                                                                       (packet as DataPacket).CargoByteCount;
 
-                            if(packet.TimeStampInMinutes == m_minutesForStatistics[pointer]) {
-                                m_numDataCharactersInMinute[pointer] = m_numDataCharactersInMinute[pointer] + (packet as DataPacket).CargoByteCount;
                                 matchedSecond = true;
                             }
                             pointer++;
@@ -141,13 +201,14 @@ namespace STAR.ViewModel {
             }
             // Calculate some stats based on what we've worked out so far
             m_measurementTimeSeconds = (endTime - startTime).TotalSeconds;
-            m_totalPacketsPerSecond = m_packetCount / m_measurementTimeSeconds;
-            m_totalErrorsPerSecond = m_errorMessageCount / m_measurementTimeSeconds;
-            m_totalBytesPerSecond = m_totalByteCount / m_measurementTimeSeconds;
+            m_totalPacketsPerSecond = m_packetCount/m_measurementTimeSeconds;
+            m_totalErrorsPerSecond = m_errorMessageCount/m_measurementTimeSeconds;
+            m_totalBytesPerSecond = m_totalByteCount/m_measurementTimeSeconds;
         }
 
         // Clear the statistics
-        public void Clear() {
+        public void Clear()
+        {
             m_packetCount = 0;
             m_validPacketCount = 0;
             m_invalidPacketCount = 0;
@@ -167,20 +228,24 @@ namespace STAR.ViewModel {
             Array.Resize<long>(ref m_numDataCharactersInMinute, 1);
         }
 
-        public void print() {
+        public void print()
+        {
             Console.WriteLine();
             Console.WriteLine("Measurement time: " + string.Format("{0:0.000}", m_measurementTimeSeconds) + " seconds");
             Console.WriteLine("Total packets: " + m_packetCount);
             Console.WriteLine("Valid Packets: " + m_validPacketCount);
             Console.WriteLine("Invalid Packets: " + m_validPacketCount);
             Console.WriteLine("Errors: " + m_errorMessageCount);
-            Console.WriteLine("Total packet rate: " + string.Format("{0:0.000}", m_totalPacketsPerSecond) + " packets/second");
-            Console.WriteLine("Total error rate: " + string.Format("{0:0.000}", m_totalErrorsPerSecond) + " errors/second");
+            Console.WriteLine("Total packet rate: " + string.Format("{0:0.000}", m_totalPacketsPerSecond) +
+                              " packets/second");
+            Console.WriteLine("Total error rate: " + string.Format("{0:0.000}", m_totalErrorsPerSecond) +
+                              " errors/second");
             Console.WriteLine("Bytes transferred: " + m_totalByteCount);
             Console.WriteLine("Data rate: " + string.Format("{0:0.000}", m_totalBytesPerSecond) + " bytes/second");
             Console.WriteLine();
         }
     }
+
     [TestClass]
     public class StatisticTester {
 
@@ -225,6 +290,11 @@ namespace STAR.ViewModel {
         public void testValidPacketCount() {
             Statistics testStatistics = new Statistics();
             bool isEmpty = false;
+
+            //if (testStatistics.ValidPacketCount == 0)
+            //{
+                //isEmpty = true;
+            //}
 
             if(testStatistics.ValidPacketCount == 0) {
                 isEmpty = true;
@@ -354,6 +424,28 @@ namespace STAR.ViewModel {
             bool runsCorrectly;
 
             runsCorrectly = testStatistic.runsCorrectly;
+            Assert.IsTrue(runsCorrectly);
+        }
+
+        [TestMethod]
+        public void testInvalid()
+        {
+            Statistics testStatistic = new Statistics();
+            bool runsCorrectly = true;
+            DateTime startTime = new DateTime();
+            DateTime endTime = new DateTime();
+            List<Packet> packet = new List<Packet>();
+
+
+            try
+            {
+                testStatistic.collect(startTime, endTime, packet);
+            }
+            catch (Exception)
+            {
+                runsCorrectly = false;
+            }
+
             Assert.IsTrue(runsCorrectly);
         }
     }
