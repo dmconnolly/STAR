@@ -146,7 +146,7 @@
                                 </DataGrid.CellStyle>
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="TimeTicks" Binding="{Binding Path=TimeTicks}" Visibility="Hidden" />
-                                    <DataGridTextColumn Header="Timestamp" Binding="{Binding Path=TimeString}" Width="100">
+                                    <DataGridTextColumn Header="Timestamp" Binding="{Binding Path=TimeString}" Width="110">
                                         <DataGridTextColumn.HeaderStyle>
                                             <Style TargetType="DataGridColumnHeader">
                                                 <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -167,7 +167,7 @@
                                             </Style>
                                         </DataGridTextColumn.HeaderStyle>
                                     </DataGridTextColumn>
-                                    <DataGridTextColumn Header="Type" Binding="{Binding Path=PacketTypeString}" Width="120">
+                                    <DataGridTextColumn Header="Type" Binding="{Binding Path=PacketTypeString}" Width="130">
                                         <DataGridTextColumn.HeaderStyle>
                                             <Style TargetType="DataGridColumnHeader">
                                                 <Setter Property="HorizontalContentAlignment" Value="Center" />
