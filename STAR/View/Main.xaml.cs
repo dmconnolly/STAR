@@ -43,6 +43,7 @@ namespace STAR.View {
         public ICollectionView packetCollectionView;
         public ICollectionView errorCollectionView;
 
+        // Points data points for graphs
         public IList<DataPoint> packetRatePoints { get; set; }
         public IList<DataPoint> dataRatePoints { get; set; }
         public IList<DataPoint> errorRatePoints { get; set; }
@@ -415,7 +416,6 @@ namespace STAR.View {
             }
         }
 
-
         private void drawGraphs() {
             packetRatePoints.Clear();
             BackgroundWorker[] workers = {
@@ -536,13 +536,12 @@ namespace STAR.View {
             }
 
             [TestMethod]
-            public void testInvalidVariables()
-            {
+            public void testInvalidVariables() {
                 bool isInvalid = true;
 
                 Assert.IsTrue(isInvalid);
             }
-    }
         }
     }
+}
 
