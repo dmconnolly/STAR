@@ -11,21 +11,21 @@ namespace STAR.ViewModel {
     class PacketView {
         private const string timeFormatUI = "HH:mm:ss.fff";
 
-        public long TimeTicks { get; private set; }
-        public string TimeString { get; private set; }
-        public string EntryPort { get; private set; }
-        public string ExitPort { get; private set; }
-        public Type PacketType { get; private set; }
-        public bool DataPacket { get; private set; }
-        public string PacketTypeString { get; private set; }
-        public string Message { get; private set; }
-        public string EndCode { get; private set; }
         public bool Valid { get; private set; }
         public bool CRCError { get; private set; }
         public bool SequenceIdError { get; private set; }
         public bool DuplicatePacketError { get; private set; }
-        public string Cargo { get; private set; }
+        public bool DataPacket { get; private set; }
+        public Type PacketType { get; private set; }
+        public long TimeTicks { get; private set; }
 
+        public string TimeString { get; private set; }
+        public string EntryPort { get; private set; }
+        public string ExitPort { get; private set; }
+        public string PacketTypeString { get; private set; }
+        public string Message { get; private set; }
+        public string EndCode { get; private set; }
+        public string Cargo { get; private set; }
         public string ProtocolId { get; private set; }
         public string DestinationKey { get; private set; }
         public string SequenceId { get; private set; }

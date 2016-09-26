@@ -43,10 +43,9 @@ namespace STAR.View {
         // used when updating packet view filter
         private CheckBox[] portFilterCheckbox;
 
-        public IList<DataPoint> packetRatePoints { get; private set; }
-        public IList<DataPoint> dataRatePoints { get; private set; }
-        public IList<DataPoint> errorRatePoints { get; private set; }
-        public bool loadTester;
+        private IList<DataPoint> packetRatePoints { get; set; }
+        private IList<DataPoint> dataRatePoints { get; set; }
+        private IList<DataPoint> errorRatePoints { get; set; }
 
         public Main() {
             InitializeComponent();
@@ -157,7 +156,6 @@ namespace STAR.View {
 
         // Allow user to select files to parse using file dialog
         private void OpenFilesButton_Click(object sender, RoutedEventArgs e) {
-            loadTester = false;
             if(openFileDialog.ShowDialog() == true) {
                 capture.Clear();
                 packetView.Clear();
@@ -177,8 +175,6 @@ namespace STAR.View {
                 };
                 bgWorker.RunWorkerCompleted += ParseFileWorkerCompleted;
                 bgWorker.RunWorkerAsync();
-
-                loadTester = true;
             }
         }
 
@@ -277,8 +273,8 @@ namespace STAR.View {
             lblTotalPackets.Content = stats.PacketCount;
             lblTotalErrors.Content = stats.ErrorMessageCount;
             lblTotalDataCharacters.Content = stats.TotalByteCount;
-            lblStartTime.Content = capture.GetStartTime.ToString("hh:mm:ss:fff");
-            lblEndTime.Content = capture.GetEndTime.ToString("hh:mm:ss:fff");
+            lblStartTime.Content = capture.StartTime.ToString("hh:mm:ss:fff");
+            lblEndTime.Content = capture.EndTime.ToString("hh:mm:ss:fff");
         }
 
         //Method for displaying packet data when clicked on datagrid

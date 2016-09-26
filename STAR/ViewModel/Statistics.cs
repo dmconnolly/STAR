@@ -21,6 +21,9 @@ namespace STAR.ViewModel {
         private long[] m_numDataCharactersInMinute;
         private DateTime[] m_minutesForStatistics;
 
+        // For testing
+        private bool runsCorrectly;
+
         // Accessors for class member variables
         public long PacketCount { get { return m_packetCount; } }
         public long ValidPacketCount { get { return ValidPacketCount; } }
@@ -35,7 +38,6 @@ namespace STAR.ViewModel {
         public int[] NumErrorsInMinute { get { return m_numErrorsInMinute; } }
         public int[] NumPacketsInMinute { get { return m_numPacketsInMinute; } }
         public DateTime[] MinutesForStatistics { get { return m_minutesForStatistics; } }
-        public bool runsCorrectly;
 
         public Statistics() {
             m_numPacketsInMinute = new int[1];
