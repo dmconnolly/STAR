@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:STAR.View"
         xmlns:GraphTools="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
         mc:Ignorable="d"
-        Title="Main" Height="836" MinHeight="500" Width="1152" MinWidth="1152"
+        Title="Main" Height="836" MinHeight="530" Width="1215" MinWidth="1215"
         xmlns:oxy="http://oxyplot.org/wpf">
     <Window.Resources>
         <CollectionViewSource x:Key="PacketCollectionViewSource" CollectionViewType="ListCollectionView" />
