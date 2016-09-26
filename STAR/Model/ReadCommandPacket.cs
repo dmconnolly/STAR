@@ -8,7 +8,7 @@ namespace STAR.Model {
         private byte[] m_sourcePathAddress;
         private byte   m_sourceLogicalAddress;
         private ushort m_transactionId;
-        private byte   m_extendedWriteAddress;
+        private byte   m_extendedReadAddress;
         private uint   m_readAddress;
         private uint   m_dataLength;
         private byte   m_headerCRC;
@@ -18,7 +18,7 @@ namespace STAR.Model {
         public byte[] SourcePathAddress { get { return m_sourcePathAddress; } }
         public byte SourceLogicalAddress { get { return m_sourceLogicalAddress; } }
         public ushort TransactionId { get { return m_transactionId; } }
-        public byte ExtendedWriteAddress { get { return m_extendedWriteAddress; } }
+        public byte ExtendedReadAddress { get { return m_extendedReadAddress; } }
         public uint ReadAddress { get { return m_readAddress; } }
         public uint DataLength { get { return m_dataLength; } }
         public byte HeaderCRC { get { return m_headerCRC; } }
@@ -84,7 +84,7 @@ namespace STAR.Model {
             if(++byteIndex >= byteCount) {
                 return;
             }
-            m_extendedWriteAddress = m_remainingBytes[byteIndex];
+            m_extendedReadAddress = m_remainingBytes[byteIndex];
 
             // Write address
             {

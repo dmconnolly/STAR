@@ -17,7 +17,7 @@ namespace STAR.ViewModel {
         private Statistics m_stats; // Storage of statistics for the whole data set
         private List<byte> m_portsLoaded; // List of the entry ports we have loaded data from
 
-        public DateTime startTime = DateTime.MinValue;
+        private DateTime startTime = DateTime.MinValue;
         private DateTime endTime = DateTime.MinValue;
 
         // Accessors for class member data
@@ -33,12 +33,14 @@ namespace STAR.ViewModel {
             get { return m_portsLoaded.ToArray(); }
         }
 
-        public DateTime GetStartTime {
+        public DateTime StartTime {
             get { return startTime; }
+            set { startTime = value; }
         }
 
-        public DateTime GetEndTime {
+        public DateTime EndTime {
             get { return endTime; }
+            set { endTime = value; }
         }
 
         // Constructor
@@ -49,7 +51,7 @@ namespace STAR.ViewModel {
         }
 
         // Clears any stored packet data
-        public void Clear() {
+        public void clear() {
             startTime = DateTime.MinValue;
             endTime = DateTime.MinValue;
             m_packets.Clear();
@@ -272,11 +274,11 @@ namespace STAR.ViewModel {
 
             DateTime testTime = new DateTime();
 
-            testCapture.startTime = testTime;
-            testCapture.Clear();
+            testCapture.StartTime = testTime;
+            testCapture.clear();
 
 
-            testTime = testCapture.startTime;
+            testTime = testCapture.StartTime;
             if(testTime == DateTime.MinValue) {
                 isCleared = true;
             }

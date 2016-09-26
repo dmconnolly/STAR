@@ -2,7 +2,7 @@
 using System.Linq;
 
 namespace STAR.Model {
-    class ReadResponsePacket : DataPacket {
+    class ReadReplyPacket : DataPacket {
         private byte   m_packetTypeByte;
         private byte   m_status;
         private byte   m_destinationLogicalAddress;
@@ -21,7 +21,7 @@ namespace STAR.Model {
         public byte[] DataBytes { get { return m_dataBytes; } }
         public byte DataCRC { get { return m_dataCRC; } }
 
-        public ReadResponsePacket(byte entryPort, byte exitPort, string dateString, List<byte> packetBytes, string endCode)
+        public ReadReplyPacket(byte entryPort, byte exitPort, string dateString, List<byte> packetBytes, string endCode)
                 : base(entryPort, exitPort, dateString, packetBytes, endCode) {
 
             int byteCount = m_remainingBytes.Count;

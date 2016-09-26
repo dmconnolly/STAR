@@ -84,9 +84,9 @@
     <Compile Include="Model\Graphing.cs" />
     <Compile Include="Model\NonRmapPacket.cs" />
     <Compile Include="Model\RmapCRC.cs" />
-    <Compile Include="Model\ReadResponsePacket.cs" />
+    <Compile Include="Model\ReadReplyPacket.cs" />
     <Compile Include="Model\ReadCommandPacket.cs" />
-    <Compile Include="Model\WriteResponsePacket.cs" />
+    <Compile Include="Model\WriteReplyPacket.cs" />
     <Compile Include="Model\WriteCommandPacket.cs" />
     <Compile Include="Help.cs">
       <SubType>Form</SubType>
@@ -146,6 +146,9 @@
     <AppDesigner Include="Properties\" />
     <None Include="Help\Quitting the Program.rtf" />
     <None Include="Help\Searching and Filtering.rtf" />
+    <Resource Include="Resources\Fonts\DroidSansMono.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
