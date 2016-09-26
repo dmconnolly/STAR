@@ -15,7 +15,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="50" />
+            <RowDefinition Height="60" />
         </Grid.RowDefinitions>
         <Menu Grid.Row="0" FontSize="15">
             <MenuItem Header="_File">
@@ -70,9 +70,9 @@
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
-                                <RowDefinition Height="10" />
-                                <!-- Spacer -->
-                                <RowDefinition Height="*" />
+                                <RowDefinition Height="3*" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="1*" />
                             </Grid.RowDefinitions>
                             <Label Grid.Row="0" Grid.Column="0" FontSize="20" Foreground="#984B43">
                                 Filters
@@ -80,7 +80,7 @@
                             <Label Grid.Row="0" Grid.Column="1" FontSize="20" Foreground="#984B43">
                                 Packets
                             </Label>
-                            <StackPanel Grid.Row="2" Grid.Column="0"  Margin="0,0,10,0" >
+                            <StackPanel Grid.Row="1" Grid.Column="0"  Margin="0,0,10,0" >
                                 <CheckBox x:Name="ChkShowValidPackets" Click="PacketFilterCheckbox_Click" Content="Valid Packets" FontSize="15" Margin="0,0,0,10" VerticalAlignment="Top" VerticalContentAlignment="Center" IsEnabled="False" IsChecked="True" />
                                 <CheckBox x:Name="ChkShowInvalidPackets" Click="PacketFilterCheckbox_Click" Content="Invalid Packets" FontSize="15" Margin="0,0,0,10" VerticalAlignment="Top" VerticalContentAlignment="Center" IsEnabled="False" IsChecked="True" />
                                 <CheckBox x:Name="ChkShowErrors" Click="PacketFilterCheckbox_Click" Content="Errors" FontSize="15" Margin="0,0,0,25" VerticalAlignment="Top" VerticalContentAlignment="Center" IsEnabled="False" IsChecked="True" />
@@ -93,6 +93,26 @@
                                 <CheckBox x:Name="ChkPort7" Click="PacketFilterCheckbox_Click" Content="Port 7" FontSize="15" Margin="0,0,0,10" VerticalAlignment="Top" VerticalContentAlignment="Center" IsEnabled="False" IsChecked="True" />
                                 <CheckBox x:Name="ChkPort8" Click="PacketFilterCheckbox_Click" Content="Port 8" FontSize="15" Margin="0,0,0,10" VerticalAlignment="Top" VerticalContentAlignment="Center" IsEnabled="False" IsChecked="True" />
                             </StackPanel>
+                            <Label Grid.Row="2" Grid.Column="0" FontSize="20" Foreground="#984B43">
+                                Key
+                            </Label>
+                            <Grid Grid.Row="3" Grid.Column="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Rectangle Grid.Column="0" Grid.Row="0" Fill="#FFA2B6FB" Stroke="Gray" Width="20" Height="20" />
+                                <Label Grid.Column="1" Grid.Row="0" FontSize="15">Packet</Label>
+                                <Rectangle Grid.Column="0" Grid.Row="1" Fill="#FFFB8C4D" Stroke="Gray" Width="20" Height="20" />
+                                <Label Grid.Column="1" Grid.Row="1" FontSize="15">...req...</Label>
+                                <Rectangle Grid.Column="0" Grid.Row="2" Fill="#FFFF4242" Stroke="Gray" Width="20" Height="20" />
+                                <Label Grid.Column="1" Grid.Row="2" FontSize="15">Error</Label>
+                            </Grid>
                             <DataGrid
                                     DataContext="{DynamicResource PacketCollectionViewSource}"
                                     ItemsSource="{Binding}"
@@ -107,7 +127,8 @@
                                     HeadersVisibility="Column"
                                     HorizontalAlignment="Left"
                                     IsReadOnly="True"
-                                    Grid.Row="2"
+                                    Grid.Row="1"
+                                    Grid.RowSpan="4"
                                     Background="WhiteSmoke"
                                     Grid.Column="1"
                                     Width="600"
@@ -192,8 +213,6 @@
                             <Grid Grid.Row="0">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="10" />
-                                    <!-- Spacer -->
                                     <RowDefinition Height="2*" />
                                 </Grid.RowDefinitions>
                                 <Label Grid.Row="0" FontSize="20" Foreground="#984B43">
@@ -330,8 +349,8 @@
             </TabItem>
         </TabControl>
         <StackPanel Orientation="Horizontal" Grid.Row="2" Background="White">
-            <Image Source="..\Resources\Images\StaRMAP-Logo.jpg" Margin="10,10,10,10" />
-            <Image Source="..\Resources\Images\STAR.png" Margin="10,10,10,10" />
+            <Image Source="..\Resources\Images\StaRMAP-Logo.jpg" Margin="7,7,7,7" />
+            <Image Source="..\Resources\Images\STAR.png" Margin="7,7,7,7" />
         </StackPanel>
     </Grid>
 </Window>
