@@ -51,7 +51,7 @@ namespace STAR.ViewModel {
         }
 
         // Clears any stored packet data
-        public void Clear() {
+        public void clear() {
             startTime = DateTime.MinValue;
             endTime = DateTime.MinValue;
             m_packets.Clear();
@@ -275,7 +275,7 @@ namespace STAR.ViewModel {
             DateTime testTime = new DateTime();
 
             testCapture.StartTime = testTime;
-            testCapture.Clear();
+            testCapture.clear();
 
 
             testTime = testCapture.StartTime;

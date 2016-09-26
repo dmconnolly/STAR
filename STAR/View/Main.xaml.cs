@@ -25,12 +25,6 @@ namespace STAR.View {
         private RangeObservableCollection<PacketView> packetView;
         private RangeObservableCollection<StringPair> packetProperties;
 
-        // Interface to the packet collection which is bound to the
-        // UI and supports filtering, sorting and grouping. For this
-        // reason we bind to this instead of the ObservableCollection
-        private ICollectionView packetCollectionView;
-        private ICollectionView errorCollectionView;
-
         // Sorting method for CollectionViewSource
         private SortDescription packetCollectionViewSort;
 
@@ -43,9 +37,15 @@ namespace STAR.View {
         // used when updating packet view filter
         private CheckBox[] portFilterCheckbox;
 
-        private IList<DataPoint> packetRatePoints { get; set; }
-        private IList<DataPoint> dataRatePoints { get; set; }
-        private IList<DataPoint> errorRatePoints { get; set; }
+        // Interface to the packet collection which is bound to the
+        // UI and supports filtering, sorting and grouping. For this
+        // reason we bind to this instead of the ObservableCollection
+        public ICollectionView packetCollectionView;
+        public ICollectionView errorCollectionView;
+
+        public IList<DataPoint> packetRatePoints { get; set; }
+        public IList<DataPoint> dataRatePoints { get; set; }
+        public IList<DataPoint> errorRatePoints { get; set; }
 
         public Main() {
             InitializeComponent();
@@ -157,7 +157,7 @@ namespace STAR.View {
         // Allow user to select files to parse using file dialog
         private void OpenFilesButton_Click(object sender, RoutedEventArgs e) {
             if(openFileDialog.ShowDialog() == true) {
-                capture.Clear();
+                capture.clear();
                 packetView.Clear();
 
                 ChkShowValidPackets.IsEnabled = true;

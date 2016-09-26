@@ -22,7 +22,7 @@ namespace STAR.ViewModel {
         private DateTime[] m_minutesForStatistics;
 
         // For testing
-        private bool runsCorrectly;
+        public bool runsCorrectly;
 
         // Accessors for class member variables
         public long PacketCount { get { return m_packetCount; } }
