@@ -30,6 +30,9 @@ namespace STAR.Model {
             get {
                 return m_timestamp;
             }
+            set {
+                m_timestamp = value;
+            }
         }
 
         public DateTime TimeStampInMinutes {

@@ -142,6 +142,7 @@ namespace STAR.ViewModel {
                         // This is an error packet
                         errorText = lines[lineIndex];
                         ErrorPacket errorMessage = new ErrorPacket(entryPort, exitPort, time, errorText);
+                        errorMessage.TimeStamp = errorMessage.TimeStamp.AddTicks(2);
                         m_packets.Add(errorMessage);
                     } else if(startCode.Equals("P", StringComparison.Ordinal)) {
                         // This is a packet
@@ -200,8 +201,7 @@ namespace STAR.ViewModel {
                             sequenceIdIndex
                         };
                     } else {
-                        args = new object[]
-                        {
+                        args = new object[] {
                             entryPort,
                             exitPort,
                             allPacketTimes[i],
@@ -212,6 +212,9 @@ namespace STAR.ViewModel {
                     dynamic packet = Activator.CreateInstance(packetType, args);
                     packet.SequenceIdError = sequenceIdError;
                     packet.DuplicatePacketError = duplicatePacket[i];
+                    if(!packet.Valid) {
+                        packet.TimeStamp = packet.TimeStamp.AddTicks(1);
+                    }
                     m_packets.Add(packet);
                 }
             }
