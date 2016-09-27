@@ -11,21 +11,21 @@ namespace STAR.ViewModel {
     class PacketView {
         private const string timeFormatUI = "HH:mm:ss.fff";
 
-        public long TimeTicks { get; private set; }
-        public string TimeString { get; private set; }
-        public string EntryPort { get; private set; }
-        public string ExitPort { get; private set; }
-        public Type PacketType { get; private set; }
-        public bool DataPacket { get; private set; }
-        public string PacketTypeString { get; private set; }
-        public string Message { get; private set; }
-        public string EndCode { get; private set; }
         public bool Valid { get; private set; }
         public bool CRCError { get; private set; }
         public bool SequenceIdError { get; private set; }
         public bool DuplicatePacketError { get; private set; }
-        public string Cargo { get; private set; }
+        public bool DataPacket { get; private set; }
+        public Type PacketType { get; private set; }
+        public long TimeTicks { get; private set; }
 
+        public string TimeString { get; private set; }
+        public string EntryPort { get; private set; }
+        public string ExitPort { get; private set; }
+        public string PacketTypeString { get; private set; }
+        public string Message { get; private set; }
+        public string EndCode { get; private set; }
+        public string Cargo { get; private set; }
         public string ProtocolId { get; private set; }
         public string DestinationKey { get; private set; }
         public string SequenceId { get; private set; }
@@ -148,22 +148,36 @@ namespace STAR.ViewModel {
                 DataCRC = byteToString(pkt.DataCRC);
             }
         }
-        
+
         // Method to convert byte array to string
         private string byteToString(byte[] bytes) {
-            string tmp = bytes == null ? "" : string.Concat(bytes.Select(b => b.ToString("x2")));
+            string tmp = (bytes == null || bytes.Length == 0) ? 
+                "" : string.Concat(bytes.Select(b => b.ToString("x2")));
             if(tmp.Length > 2) {
                 tmp = tmp.TrimStart('0');
             }
             if(tmp.Length % 2 != 0) {
                 tmp = "0" + tmp;
             }
+            if(tmp.Length == 0) {
+                return "00";
+            }
             return tmp;
         }
 
         // Overload for single byte
         private string byteToString(byte b) {
-            return b.ToString("x2");
+            string tmp = b.ToString("x2");
+            if(tmp.Length > 2) {
+                tmp = tmp.TrimStart('0');
+            }
+            if(tmp.Length % 2 != 0) {
+                tmp = "0" + tmp;
+            }
+            if(tmp.Length == 0) {
+                return "00";
+            }
+            return tmp;
         }
 
         // Overload for uint

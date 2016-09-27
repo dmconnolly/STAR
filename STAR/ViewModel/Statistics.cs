@@ -16,10 +16,9 @@ namespace STAR.ViewModel {
         private double m_totalPacketsPerSecond;
         private double m_totalErrorsPerSecond;
         private double m_totalBytesPerSecond;
-        private int[] m_numPacketsInMinute;
-        private int[] m_numErrorsInMinute;
-        private long[] m_numDataCharactersInMinute;
-        private DateTime[] m_minutesForStatistics;
+
+        // For testing
+        public bool runsCorrectly;
 
         // Accessors for class member variables
         public long PacketCount { get { return m_packetCount; } }
@@ -31,29 +30,15 @@ namespace STAR.ViewModel {
         public double TotalPacketsPerSecond { get { return m_totalPacketsPerSecond; } }
         public double TotalErrorsPerSecond { get { return m_totalErrorsPerSecond; } }
         public double TotalBytesPerSecond { get { return m_totalBytesPerSecond; } }
-        public long[] NumDataCharactersInMinute { get { return m_numDataCharactersInMinute; } }
-        public int[] NumErrorsInMinute { get { return m_numErrorsInMinute; } }
-        public int[] NumPacketsInMinute { get { return m_numPacketsInMinute; } }
-        public DateTime[] MinutesForStatistics { get { return m_minutesForStatistics; } }
-        public bool runsCorrectly;
 
         public Statistics() {
-            m_numPacketsInMinute = new int[1];
-            m_numErrorsInMinute = new int[1];
-            m_numDataCharactersInMinute = new long[1];
-            m_minutesForStatistics = new DateTime[2];
             runsCorrectly = true;
             Clear();
         }
 
         // Collect statistics from the entire data set provided
         public void collect(DateTime startTime, DateTime endTime, List<Packet> packets) {
-            int pointer = 0;
-            bool matchedSecond;
-            m_minutesForStatistics[0] = DateTime.MinValue;
             Clear();
-
-
 
             // No packets
             if(packets.Count == 0) {
@@ -72,69 +57,12 @@ namespace STAR.ViewModel {
                     // Add to counters of valid or invalid packets
                     if((packet as DataPacket).Valid) {
                         m_validPacketCount++;
-                        pointer = 0;
-                        matchedSecond = false;
-                        do {
-
-                            if(packet.TimeStampInMinutes== m_minutesForStatistics[pointer]) {
-                                m_numPacketsInMinute[pointer]++;
-                                m_numDataCharactersInMinute[pointer] = m_numDataCharactersInMinute[pointer] + (packet as DataPacket).CargoByteCount;
-                                matchedSecond = true;
-                            }
-                            pointer++;
-                        } while((pointer < m_minutesForStatistics.Length) && (matchedSecond != true));
-                        if(matchedSecond == false) {
-                            Array.Resize<DateTime>(ref m_minutesForStatistics, m_minutesForStatistics.Length + 1);
-                            Array.Resize<int>(ref m_numPacketsInMinute, m_minutesForStatistics.Length + 1);
-                            Array.Resize<long>(ref m_numDataCharactersInMinute, m_minutesForStatistics.Length + 1);
-                            m_minutesForStatistics[pointer] = packet.TimeStampInMinutes;
-                            m_numDataCharactersInMinute[pointer] = (packet as DataPacket).CargoByteCount;
-                            m_numPacketsInMinute[pointer]++;
-                        }
                     } else {
-                        pointer = 0;
-                        matchedSecond = false;
-                        do {
-
-                            if(packet.TimeStampInMinutes == m_minutesForStatistics[pointer]) {
-                                m_numDataCharactersInMinute[pointer] = m_numDataCharactersInMinute[pointer] + (packet as DataPacket).CargoByteCount;
-                                matchedSecond = true;
-                            }
-                            pointer++;
-                        } while((pointer < m_minutesForStatistics.Length) && (matchedSecond != true));
-                        if(matchedSecond == false) {
-                            Array.Resize<DateTime>(ref m_minutesForStatistics, m_minutesForStatistics.Length + 1);
-                            Array.Resize<int>(ref m_numPacketsInMinute, m_minutesForStatistics.Length + 1);
-                            Array.Resize<long>(ref m_numDataCharactersInMinute, m_minutesForStatistics.Length + 1);
-                            Array.Resize<int>(ref m_numErrorsInMinute, m_minutesForStatistics.Length + 1);
-                            m_minutesForStatistics[pointer] = packet.TimeStampInMinutes;
-                            m_numDataCharactersInMinute[pointer] = (packet as DataPacket).CargoByteCount;
-                            m_numPacketsInMinute[pointer]++;
-                        }
                         m_invalidPacketCount++;
                     }
-                    //Console.WriteLine(m_numDataCharactersInSecond[0]);
                 } else {
                     // Increment error count
                     m_errorMessageCount++;
-
-                    pointer = 0;
-                    matchedSecond = false;
-                    do {
-                        if(packet.TimeStampInMinutes == m_minutesForStatistics[pointer]) {
-                            m_numErrorsInMinute[pointer]++;
-                            matchedSecond = true;
-                        }
-                        pointer++;
-                    } while((pointer < m_minutesForStatistics.Length) && (matchedSecond != true));
-                    if(matchedSecond == false) {
-                        Array.Resize<DateTime>(ref m_minutesForStatistics, m_minutesForStatistics.Length + 1);
-                        Array.Resize<int>(ref m_numPacketsInMinute, m_minutesForStatistics.Length + 1);
-                        Array.Resize<long>(ref m_numDataCharactersInMinute, m_minutesForStatistics.Length + 1);
-                        Array.Resize<int>(ref m_numErrorsInMinute, m_minutesForStatistics.Length + 1);
-                        m_minutesForStatistics[pointer] = packet.TimeStampInMinutes;
-                        m_numErrorsInMinute[pointer] = 1;
-                    }
                 }
             }
             // Calculate some stats based on what we've worked out so far
@@ -155,14 +83,6 @@ namespace STAR.ViewModel {
             m_totalPacketsPerSecond = 0;
             m_totalErrorsPerSecond = 0;
             m_totalBytesPerSecond = 0;
-            Array.Clear(m_numDataCharactersInMinute, 0, m_numDataCharactersInMinute.Length);
-            Array.Clear(m_numErrorsInMinute, 0, m_numErrorsInMinute.Length);
-            Array.Clear(m_numPacketsInMinute, 0, NumPacketsInMinute.Length);
-            Array.Clear(m_minutesForStatistics, 0, m_minutesForStatistics.Length);
-            Array.Resize<int>(ref m_numErrorsInMinute, 1);
-            Array.Resize<DateTime>(ref m_minutesForStatistics, 2);
-            Array.Resize<int>(ref m_numPacketsInMinute, 1);
-            Array.Resize<long>(ref m_numDataCharactersInMinute, 1);
         }
 
         public void print() {
@@ -254,95 +174,6 @@ namespace STAR.ViewModel {
             }
 
             Assert.IsTrue(isEmpty);
-
-        }
-
-        [TestMethod]
-        public void testPacketsPerSecond() {
-            Statistics testStatistics = new Statistics();
-            bool isEmpty = false;
-
-            if(testStatistics.TotalPacketsPerSecond == 0) {
-                isEmpty = true;
-            }
-
-            Assert.IsTrue(isEmpty);
-        }
-
-        [TestMethod]
-        public void testErrorsPerSecond() {
-            Statistics testStatistics = new Statistics();
-            bool isEmpty = false;
-
-            if(testStatistics.TotalErrorsPerSecond == 0) {
-                isEmpty = true;
-            }
-
-            Assert.IsTrue(isEmpty);
-
-        }
-
-        [TestMethod]
-        public void testCharactersPerSecond() {
-            Statistics testStatistics = new Statistics();
-            bool isEmpty = false;
-
-            if(testStatistics.TotalBytesPerSecond == 0) {
-                isEmpty = true;
-            }
-
-            Assert.IsTrue(isEmpty);
-        }
-
-        [TestMethod]
-        public void testDataCharactersInMinute() {
-            Statistics testStatistics = new Statistics();
-            bool isEmpty = false;
-
-            if(testStatistics.NumDataCharactersInMinute[0] == 0) {
-                isEmpty = true;
-            }
-
-            Assert.IsTrue(isEmpty);
-
-        }
-
-        [TestMethod]
-        public void testPacketsInMinute() {
-            Statistics testStatistics = new Statistics();
-            bool isEmpty = false;
-
-            if(testStatistics.NumPacketsInMinute[0] == 0) {
-                isEmpty = true;
-            }
-
-            Assert.IsTrue(isEmpty);
-        }
-
-        [TestMethod]
-        public void testErrorsInMinute() {
-            Statistics testStatistics = new Statistics();
-            bool isEmpty = false;
-
-            if(testStatistics.NumErrorsInMinute[0] == 0) {
-                isEmpty = true;
-            }
-
-            Assert.IsTrue(isEmpty);
-
-        }
-
-        [TestMethod]
-        public void testEmptyMinutesForStatistics() {
-            Statistics testStatistics = new Statistics();
-            bool isEmpty = false;
-
-            if(testStatistics.MinutesForStatistics.Length == 2) {
-                isEmpty = true;
-            }
-
-            Assert.IsTrue(isEmpty);
-
 
         }
 
