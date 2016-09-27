@@ -25,6 +25,7 @@ namespace STARMAP
             //Be warned! If the introduction doesn't load when this form opens, it's because of this.
             //Just in case :)
             lstHelpList.SelectedIndex = 0;
+            picBoxPic.Image = null;
         }
 
         private void lstHelpList_SelectedIndexChanged(object sender, EventArgs e)
@@ -42,23 +43,30 @@ namespace STARMAP
             {
                 case "Introduction":
                     txtHelp.Rtf = Properties.Resources.Introduction;
+                    picBoxPic.Image = null;
                     break;
                 case "Main Window Overview":
                     txtHelp.Rtf = Properties.Resources.Main_Window_Overview;
+                    picBoxPic.Image = Properties.Resources.mainwindowpic;
                     break;
                 case "Opening Files":
                     txtHelp.Rtf = Properties.Resources.Opening_Files;
+                    picBoxPic.Image = null;
                     break;
                 case "Searching and Filtering":
                     txtHelp.Rtf = Properties.Resources.Searching_and_Filtering;
+                    picBoxPic.Image = null;
                     break;
                 case "Statistics Window Overview":
                     txtHelp.Rtf = Properties.Resources.Graph_Window_Overview;
+                    picBoxPic.Image = Properties.Resources.graphwindowpic;
                     break;
                 case "Further Help":
                     txtHelp.Rtf = Properties.Resources.Further_Help;
+                    picBoxPic.Image = null;
                     break;
                 default:
+                    picBoxPic.Image = null;
                     break;
             }
 

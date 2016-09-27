@@ -121,11 +121,17 @@
   <data name="Further_Help" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\help\further help.rtf;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="graphwindowpic" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\graphwindowpic.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Graph_Window_Overview" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\help\graph window overview.rtf;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="Introduction" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\help\introduction.rtf;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="mainwindowpic" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\mainwindowpic.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Main_Window_Overview" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\help\main window overview.rtf;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
