@@ -346,7 +346,6 @@
                         <Label Grid.Column="2" Grid.Row="5" FontSize="15" Content="End Time" Margin="10,10,10,10"/>
                         <Label Grid.Column="3" Grid.Row="5" FontSize="15" x:Name="lblEndTime" Content="---" Margin="10,10,10,10"/>
                     </Grid>
-                    <Label Content="Label" HorizontalAlignment="Left" Margin="406,47,0,0" VerticalAlignment="Top"/>
                 </Grid>
             </TabItem>
         </TabControl>
