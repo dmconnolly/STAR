@@ -254,10 +254,10 @@
                                     </DataGrid.RowStyle>
                                 </DataGrid>
                             </Grid>
-                            <Button Grid.Row="1" x:Name="btnPrevious" Grid.Column="0" Width="100" HorizontalAlignment="Left" Click="btnPrevious_Click">
+                            <Button Grid.Row="1" x:Name="btnPrevious" Grid.Column="0" Width="100" Background="LightGray" HorizontalAlignment="Left" Click="btnPrevious_Click">
                                 Previous
                             </Button>
-                            <Button Grid.Row="1" x:Name="btnNext" Grid.Column="2" Width="100" HorizontalAlignment="Right" Click="btnNext_Click" Grid.ColumnSpan="2">
+                            <Button Grid.Row="1" x:Name="btnNext" Grid.Column="2" Width="100" Background="LightGray" HorizontalAlignment="Right" Click="btnNext_Click" Grid.ColumnSpan="2">
                                 Next
                             </Button>
                         </Grid>
@@ -337,14 +337,14 @@
                         <Label FontSize="20" Foreground="#984B43">Statistics</Label>
                         <Label Grid.Column="0" Grid.Row="1" FontSize="15" Margin="10,10,10,10" >Total Data Characters</Label>
                         <Label Grid.Column="1" Grid.Row="1" FontSize="15" x:Name="lblTotalDataCharacters" Content="---" Margin="10,10,10,10" />
-                        <Label Grid.Column="2" Grid.Row="1" FontSize="15" Margin="10,10,10,10" >Total Packets</Label>
-                        <Label Grid.Column="3" Grid.Row="1" FontSize="15" x:Name="lblTotalPackets" Content="---" Margin="10,10,10,10" />
+                        <Label Grid.Column="2" Grid.Row="1" FontSize="15" Margin="10,10,10,10" >Packet Rate (p/s)</Label>
+                        <Label Grid.Column="3" Grid.Row="1" FontSize="15" x:Name="lblPacketRate" Content="---" Margin="10,10,10,10" />
                         <Label Grid.Column="0" Grid.Row="2" FontSize="15" Margin="10,10,10,10" >Total Errors</Label>
                         <Label Grid.Column="1" Grid.Row="2" FontSize="15" x:Name="lblTotalErrors" Content="---" Margin="10,10,10,10" />
                         <Label Grid.Column="2" Grid.Row="2" FontSize="15" Margin="10,10,10,10" >Data Rate (bytes/s)</Label>
                         <Label Grid.Column="3" Grid.Row="2" FontSize="15" x:Name="lblDataRate" Content="---" Margin="10,10,10,10" />
-                        <Label Grid.Column="0" Grid.Row="3" FontSize="15" Margin="10,10,10,10" >Packet Rate (p/s)</Label>
-                        <Label Grid.Column="1" Grid.Row="3" FontSize="15" x:Name="lblPacketRate" Content="---" Margin="10,10,10,10" />
+                        <Label Grid.Column="0" Grid.Row="3" FontSize="15" Margin="10,10,10,10" >Total Packets</Label>
+                        <Label Grid.Column="1" Grid.Row="3" FontSize="15" x:Name="lblTotalPackets" Content="---" Margin="10,10,10,10" />
                         <Label Grid.Column="2" Grid.Row="3" FontSize="15" Margin="10,10,10,10" >Error Rate (e/s)</Label>
                         <Label Grid.Column="3" Grid.Row="3" FontSize="15" x:Name="lblErrorRate" Content="---" Margin="10,10,10,10" />
                         <Label Grid.Column="0" Grid.Row="5" FontSize="15" Content="Start Time" Margin="10,10,10,10"/>
