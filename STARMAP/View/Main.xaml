@@ -7,7 +7,8 @@
         xmlns:GraphTools="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
         mc:Ignorable="d"
         Title="STARMAP" Height="820" MinHeight="695" Width="1215" MinWidth="1215"
-        xmlns:oxy="http://oxyplot.org/wpf">
+        xmlns:oxy="http://oxyplot.org/wpf"
+        Icon="/STARMAP;component/Resources/Images/starmap_icon_AYw_icon.ico">
     <Window.Resources>
         <CollectionViewSource x:Key="PacketCollectionViewSource" CollectionViewType="ListCollectionView" />
     </Window.Resources>
