@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:STAR.View"
         xmlns:GraphTools="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
         mc:Ignorable="d"
-        Title="Main" Height="836" MinHeight="530" Width="1215" MinWidth="1215"
+        Title="Main" Height="810" MinHeight="695" Width="1215" MinWidth="1215"
         xmlns:oxy="http://oxyplot.org/wpf">
     <Window.Resources>
         <CollectionViewSource x:Key="PacketCollectionViewSource" CollectionViewType="ListCollectionView" />
@@ -195,7 +195,7 @@
                                             </Style>
                                         </DataGridTextColumn.HeaderStyle>
                                     </DataGridTextColumn>
-                                    <DataGridTextColumn Header="Info" Binding="{Binding Path=Message}" Width="*">
+                                    <DataGridTextColumn Header="Info" Binding="{Binding Path=Message}" Width="140">
                                         <DataGridTextColumn.HeaderStyle>
                                             <Style TargetType="DataGridColumnHeader">
                                                 <Setter Property="HorizontalContentAlignment" Value="Center" />
