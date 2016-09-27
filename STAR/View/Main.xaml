@@ -109,7 +109,7 @@
                                 <Rectangle Grid.Column="0" Grid.Row="0" Fill="#FFA2B6FB" Stroke="Gray" Width="20" Height="20" />
                                 <Label Grid.Column="1" Grid.Row="0" FontSize="15">Packet</Label>
                                 <Rectangle Grid.Column="0" Grid.Row="1" Fill="#FFFB8C4D" Stroke="Gray" Width="20" Height="20" />
-                                <Label Grid.Column="1" Grid.Row="1" FontSize="15">...req...</Label>
+                                <Label Grid.Column="1" Grid.Row="1" FontSize="15">Invalid</Label>
                                 <Rectangle Grid.Column="0" Grid.Row="2" Fill="#FFFF4242" Stroke="Gray" Width="20" Height="20" />
                                 <Label Grid.Column="1" Grid.Row="2" FontSize="15">Error</Label>
                             </Grid>
