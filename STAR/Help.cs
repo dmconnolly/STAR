@@ -52,7 +52,7 @@ namespace STAR
                 case "Searching and Filtering":
                     txtHelp.Rtf = Properties.Resources.Searching_and_Filtering;
                     break;
-                case "Graph Window Overview":
+                case "Statistics Window Overview":
                     txtHelp.Rtf = Properties.Resources.Graph_Window_Overview;
                     break;
                 case "Further Help":
