@@ -119,5 +119,15 @@ namespace STAR.Properties {
                 return ResourceManager.GetString("Searching_and_Filtering", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon starmap_icon_AYw_icon {
+            get {
+                object obj = ResourceManager.GetObject("starmap_icon_AYw_icon", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
     }
 }

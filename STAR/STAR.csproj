@@ -34,7 +34,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>starmap_icon_AYw_icon.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\starmap_icon_AYw_icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
@@ -160,11 +160,13 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="starmap_icon_AYw_icon.ico" />
     <Resource Include="Resources\Images\STAR.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\StaRMAP-Logo.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\starmap_icon_AYw_icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
