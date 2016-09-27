@@ -297,21 +297,21 @@
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
-                    <oxy:Plot Grid.Row="0" Grid.Column="0" Name="packetRateGraph" Title="Packet Rate" Margin="10,10,10,10">
+                    <oxy:Plot Grid.Row="0" Grid.Column="0" Name="packetRateGraph" Title="Packet Rate (packets/s)" Margin="10,10,10,10">
                         <oxy:Plot.Series>
                             <oxy:LineSeries ItemsSource="{Binding packetRatePoints}" >
                                 <oxy:LineSeries.Color>Blue</oxy:LineSeries.Color>
                             </oxy:LineSeries>
                         </oxy:Plot.Series>
                     </oxy:Plot>
-                    <oxy:Plot Grid.Row="0" Grid.Column="1" Name="dataRateGraph" Title="Data Rate" Margin="10,10,10,10">
+                    <oxy:Plot Grid.Row="0" Grid.Column="1" Name="dataRateGraph" Title="Data Rate (bytes/s)" Margin="10,10,10,10">
                         <oxy:Plot.Series>
                             <oxy:LineSeries ItemsSource="{Binding dataRatePoints}">
                                 <oxy:LineSeries.Color>Green</oxy:LineSeries.Color>
                             </oxy:LineSeries>
                         </oxy:Plot.Series>
                     </oxy:Plot>
-                    <oxy:Plot Grid.Row="1" Grid.Column="0" Name="errorRateGraph" Title="Error Rate" Margin="10,10,10,10">
+                    <oxy:Plot Grid.Row="1" Grid.Column="0" Name="errorRateGraph" Title="Error Rate (errors/s)" Margin="10,10,10,10">
                         <oxy:Plot.Series>
                             <oxy:LineSeries ItemsSource="{Binding errorRatePoints}">
                                 <oxy:LineSeries.Color>Red</oxy:LineSeries.Color>
@@ -352,6 +352,7 @@
                         <Label Grid.Column="2" Grid.Row="5" FontSize="15" Content="End Time" Margin="10,10,10,10"/>
                         <Label Grid.Column="3" Grid.Row="5" FontSize="15" x:Name="lblEndTime" Content="---" Margin="10,10,10,10"/>
                     </Grid>
+                    <Label Content="Label" HorizontalAlignment="Left" Margin="406,47,0,0" VerticalAlignment="Top"/>
                 </Grid>
             </TabItem>
         </TabControl>
