@@ -6,12 +6,12 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using STAR.ViewModel;
-using STAR.Model;
+using STARMAP.ViewModel;
+using STARMAP.Model;
 using OxyPlot;
 using System.Linq;
 
-namespace STAR.View {
+namespace STARMAP.View {
     public partial class Main : Window {
         // Storage for all data read in from files and processed
         private Capture capture;

@@ -1,9 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using STAR.Model;
+using STARMAP.Model;
 using System;
 using System.Linq;
 
-namespace STAR.ViewModel {
+namespace STARMAP.ViewModel {
     /*
      * Used as an interface to the list of packets
      * in order to display information on the UI

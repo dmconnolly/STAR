@@ -1,4 +1,4 @@
-﻿namespace STAR.Model {
+﻿namespace STARMAP.Model {
     class RmapCRC {
         private static readonly byte[] CRCTable = {
             0x00, 0x91, 0xe3, 0x72, 0x07, 0x96, 0xe4, 0x75,

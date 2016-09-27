@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 
-namespace STAR.Model {
+namespace STARMAP.Model {
     class Packet {
         private const string timeFormatInput = "dd-MM-yyyy HH:mm:ss.fff";
 

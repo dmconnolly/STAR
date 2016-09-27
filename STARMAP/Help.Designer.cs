@@ -1,4 +1,4 @@
-﻿namespace STAR
+﻿namespace STARMAP
 {
     partial class Help
     {

@@ -1,12 +1,12 @@
-﻿<Window x:Class="STAR.View.Main"
+﻿<Window x:Class="STARMAP.View.Main"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:STAR.View"
+        xmlns:local="clr-namespace:STARMAP.View"
         xmlns:GraphTools="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
         mc:Ignorable="d"
-        Title="Main" Height="810" MinHeight="695" Width="1215" MinWidth="1215"
+        Title="STARMAP" Height="810" MinHeight="695" Width="1215" MinWidth="1215"
         xmlns:oxy="http://oxyplot.org/wpf">
     <Window.Resources>
         <CollectionViewSource x:Key="PacketCollectionViewSource" CollectionViewType="ListCollectionView" />

@@ -2,7 +2,7 @@
 using OxyPlot;
 using System;
 
-namespace STAR.Model {
+namespace STARMAP.Model {
     class Graphing {
         public enum GraphType { PacketRate, DataRate, ErrorRate }
 

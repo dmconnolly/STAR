@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using STAR.Model;
+using STARMAP.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace STAR.ViewModel {
+namespace STARMAP.ViewModel {
     /*
      * Class responsible for handling captured packet data
      * files from multiple ports can be loaded, parsed and their contents

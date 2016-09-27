@@ -1,4 +1,4 @@
-﻿namespace STAR.Model {
+﻿namespace STARMAP.Model {
     /*
      * Packet which has a timestamp and error message
      */

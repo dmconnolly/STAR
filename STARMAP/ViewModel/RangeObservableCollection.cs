@@ -2,7 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 
-namespace STAR.ViewModel {
+namespace STARMAP.ViewModel {
     // Extension method modified from the following stackoverflow answer:
     // http://stackoverflow.com/a/8607159
     class RangeObservableCollection<T> : ObservableCollection<T> {

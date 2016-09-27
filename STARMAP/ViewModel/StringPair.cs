@@ -1,4 +1,4 @@
-﻿namespace STAR.ViewModel {
+﻿namespace STARMAP.ViewModel {
     public class StringPair {
 
         public StringPair(string property, string value) {

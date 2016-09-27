@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
 
-namespace STAR.Model {
+namespace STARMAP.Model {
     class NonRmapPacket : DataPacket {
         public uint SequenceNumber { get; private set; }
         public byte[] Cargo { get; private set; }

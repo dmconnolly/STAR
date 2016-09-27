@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace STAR.Model {
+namespace STARMAP.Model {
     class WriteReplyPacket : DataPacket {
         private byte   m_packetTypeByte;
         private byte   m_status;

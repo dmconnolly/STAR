@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using STAR.Model;
+using STARMAP.Model;
 
-namespace STAR.ViewModel {
+namespace STARMAP.ViewModel {
     class Statistics {
         private const double ticksPerSecond = 10000000;
 

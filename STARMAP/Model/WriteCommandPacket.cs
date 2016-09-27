@@ -1,32 +1,37 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace STAR.Model {
-    class ReadCommandPacket : DataPacket {
+namespace STARMAP.Model {
+    class WriteCommandPacket : DataPacket {
         private byte   m_packetTypeByte;
         private byte   m_destinationKey;
         private byte[] m_sourcePathAddress;
         private byte   m_sourceLogicalAddress;
         private ushort m_transactionId;
-        private byte   m_extendedReadAddress;
-        private uint   m_readAddress;
+        private byte   m_extendedWriteAddress;
+        private uint   m_writeAddress;
         private uint   m_dataLength;
         private byte   m_headerCRC;
+        private byte[] m_dataBytes;
+        private byte   m_dataCRC;
 
         public byte PacketTypeByte { get { return m_packetTypeByte; } }
         public byte DestinationKey { get { return m_destinationKey; } }
         public byte[] SourcePathAddress { get { return m_sourcePathAddress; } }
         public byte SourceLogicalAddress { get { return m_sourceLogicalAddress; } }
         public ushort TransactionId { get { return m_transactionId; } }
-        public byte ExtendedReadAddress { get { return m_extendedReadAddress; } }
-        public uint ReadAddress { get { return m_readAddress; } }
+        public byte ExtendedWriteAddress { get { return m_extendedWriteAddress; } }
+        public uint WriteAddress { get { return m_writeAddress; } }
         public uint DataLength { get { return m_dataLength; } }
         public byte HeaderCRC { get { return m_headerCRC; } }
+        public byte[] DataBytes { get { return m_dataBytes; } }
+        public byte DataCRC { get { return m_dataCRC; } }
 
-        public ReadCommandPacket(byte entryPort, byte exitPort, string dateString, List<byte> packetBytes, string endCode)
+        public WriteCommandPacket(byte entryPort, byte exitPort, string dateString, List<byte> packetBytes, string endCode)
                 : base(entryPort, exitPort, dateString, packetBytes, endCode) {
 
             m_sourcePathAddress = new byte[0];
+            m_dataBytes = new byte[0];
 
             int byteCount = m_remainingBytes.Count;
             int byteIndex = 0;
@@ -84,7 +89,7 @@ namespace STAR.Model {
             if(++byteIndex >= byteCount) {
                 return;
             }
-            m_extendedReadAddress = m_remainingBytes[byteIndex];
+            m_extendedWriteAddress = m_remainingBytes[byteIndex];
 
             // Write address
             {
@@ -92,7 +97,7 @@ namespace STAR.Model {
                     return;
                 }
 
-                m_readAddress = (uint)(
+                m_writeAddress = (uint)(
                     m_remainingBytes[4+byteIndex] +
                     (m_remainingBytes[3+byteIndex] << 8) +
                     (m_remainingBytes[2+byteIndex] << 16) +
@@ -117,7 +122,7 @@ namespace STAR.Model {
                 byteIndex += 3;
             }
 
-            if(++byteIndex >= byteCount) {
+            if((++byteIndex) >= byteCount) {
                 return;
             }
 
@@ -130,6 +135,26 @@ namespace STAR.Model {
             headerBytes.AddRange(m_remainingBytes.Take(byteIndex));
 
             if(!m_CRCError && !RmapCRC.validCRC(headerBytes.ToArray(), m_headerCRC)) {
+                m_CRCError = true;
+            }
+
+            if(byteIndex + 2 >= byteCount) {
+                return;
+            }
+
+            // Data
+            {
+                List<byte> tmpBytes = new List<byte>();
+                for(++byteIndex; byteIndex<(byteCount-1); ++byteIndex) {
+                    tmpBytes.Add(m_remainingBytes[byteIndex]);
+                }
+                m_dataBytes = tmpBytes.ToArray();
+            }
+
+            // Data RmapCRC
+            m_dataCRC = m_remainingBytes[byteIndex];
+
+            if(!m_CRCError && !RmapCRC.validCRC(DataBytes, m_dataCRC)) {
                 m_CRCError = true;
             }
 

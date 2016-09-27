@@ -10,7 +10,7 @@ using System.Reflection;
 using System.IO;
 using System.Windows.Forms;
 
-namespace STAR
+namespace STARMAP
 {
     public partial class Help : Form
     {

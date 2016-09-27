@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace STAR.Model {
+namespace STARMAP.Model {
     /*
      * Packet containing write or read command or response
      * This class contains variables and methods pertaining to only
