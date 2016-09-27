@@ -160,14 +160,11 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
     <Resource Include="starmap_icon_AYw_icon.ico" />
-=======
     <Resource Include="Resources\Images\STAR.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\StaRMAP-Logo.jpg" />
->>>>>>> a6c86d971579bcca9fada63ab8006eaee89de770
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
