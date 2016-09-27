@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:STARMAP.View"
         xmlns:GraphTools="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
         mc:Ignorable="d"
-        Title="STARMAP" Height="810" MinHeight="695" Width="1215" MinWidth="1215"
+        Title="STARMAP" Height="820" MinHeight="695" Width="1215" MinWidth="1215"
         xmlns:oxy="http://oxyplot.org/wpf">
     <Window.Resources>
         <CollectionViewSource x:Key="PacketCollectionViewSource" CollectionViewType="ListCollectionView" />

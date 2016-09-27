@@ -121,17 +121,11 @@
   <data name="Further_Help" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\help\further help.rtf;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="graphwindowpic" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\graphwindowpic.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="Graph_Window_Overview" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\help\graph window overview.rtf;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="Introduction" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\help\introduction.rtf;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="mainwindowpic" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\mainwindowpic.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Main_Window_Overview" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\help\main window overview.rtf;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
@@ -144,5 +138,17 @@
   </data>
   <data name="starmap_icon_AYw_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Images\starmap_icon_AYw_icon.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="graphwindowpic" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Images\graphwindowpic.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="mainwindowpic" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Images\mainwindowpic.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="STAR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Images\STAR.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="StaRMAP_Logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Images\StaRMAP-Logo.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

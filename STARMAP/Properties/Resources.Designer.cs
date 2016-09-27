@@ -141,12 +141,32 @@ namespace STARMAP.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap STAR {
+            get {
+                object obj = ResourceManager.GetObject("STAR", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
         internal static System.Drawing.Icon starmap_icon_AYw_icon {
             get {
                 object obj = ResourceManager.GetObject("starmap_icon_AYw_icon", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap StaRMAP_Logo {
+            get {
+                object obj = ResourceManager.GetObject("StaRMAP_Logo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }
