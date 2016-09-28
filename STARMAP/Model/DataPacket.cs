@@ -21,6 +21,7 @@ namespace STARMAP.Model {
         protected bool m_CRCError = false;
         protected bool m_duplicatePacketError = false;
         protected bool m_sequenceIdError = false;
+        protected bool m_FormatError = false;
         protected List<byte> m_remainingBytes;
 
         // Accessors for class member variables
@@ -30,18 +31,44 @@ namespace STARMAP.Model {
         public bool Valid { get { return m_valid; } }
         public string EndCode { get { return m_endCode; } }
         public long CargoByteCount { get { return m_cargoByteCount; } }
-        public bool CRCError { get { return m_CRCError; } }
+        public bool CRCError {
+            get {
+                return m_CRCError;
+            }
+        }
         public bool DuplicatePacketError {
-            set { m_duplicatePacketError = value; }
+            set {
+                m_duplicatePacketError = value;
+                if(m_duplicatePacketError) {
+                    m_valid = false;
+                }
+            }
             get { return m_duplicatePacketError; }
         }
         public bool SequenceIdError {
-            set { m_sequenceIdError = value; }
+            set { 
+                m_sequenceIdError = value;
+                if(m_sequenceIdError) {
+                    m_valid = false;
+                }
+            }
             get { return m_sequenceIdError; }
+        }
+        public bool FormatError {
+            set {
+                m_FormatError = value;
+                if(m_FormatError) {
+                    m_valid = false;
+                }
+            }
+            get { return m_FormatError; }
         }
         public bool Error {
             get {
-                return SequenceIdError || DuplicatePacketError || (!Valid);
+                return SequenceIdError ||
+                       DuplicatePacketError ||
+                       FormatError ||
+                       !Valid;
             }
         }
 

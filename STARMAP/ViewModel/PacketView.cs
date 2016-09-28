@@ -15,6 +15,7 @@ namespace STARMAP.ViewModel {
         public bool CRCError { get; private set; }
         public bool SequenceIdError { get; private set; }
         public bool DuplicatePacketError { get; private set; }
+        public bool FormatError { get; private set; }
         public bool DataPacket { get; private set; }
         public Type PacketType { get; private set; }
         public long TimeTicks { get; private set; }
@@ -73,20 +74,21 @@ namespace STARMAP.ViewModel {
             Message = Valid ? "" : "No EOP";
 
             SequenceIdError = (packet as DataPacket).SequenceIdError;
-            if(SequenceIdError) {
-                Message = "Out of sequence";
-                Valid = false;
-            }
-
             DuplicatePacketError = (packet as DataPacket).DuplicatePacketError;
-            if(DuplicatePacketError) {
+            CRCError = (packet as DataPacket).CRCError;
+            FormatError = (packet as DataPacket).FormatError;
+
+            if(FormatError) {
+                Message = "Format Error";
+                Valid = false;
+            } else if(CRCError) {
+                Message = "CRC Error";
+                Valid = false;
+            } else if(DuplicatePacketError) {
                 Message = "Duplicate";
                 Valid = false;
-            }
-
-            CRCError = (packet as DataPacket).CRCError;
-            if(CRCError) {
-                Message = "CRC Error";
+            } else if(SequenceIdError) {
+                Message = "Out of sequence";
                 Valid = false;
             }
 

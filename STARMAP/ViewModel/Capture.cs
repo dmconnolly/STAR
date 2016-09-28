@@ -11,7 +11,6 @@ namespace STARMAP.ViewModel {
      * files from multiple ports can be loaded, parsed and their contents
      * stored in a meaningful format.
      */
-
     class Capture {
         private List<Packet> m_packets; // List of all captured packets
         private Statistics m_stats; // Storage of statistics for the whole data set
@@ -177,7 +176,7 @@ namespace STARMAP.ViewModel {
 
                 int sequenceIdIndex = -1;
                 int lastSequenceId = -1;
-                for(int i = 0; i<allPacketBytes.Count; i++) {
+                for(int i=0; i<allPacketBytes.Count; ++i) {
                     bool sequenceIdError = false;
                     Type packetType = DataPacket.GetPacketType(allPacketBytes[i]);
                     object[] args;
@@ -185,7 +184,9 @@ namespace STARMAP.ViewModel {
                         if(sequenceIdIndex == -1) {
                             sequenceIdIndex = getSequenceIdIndex(allPacketBytes);
                         }
-                        int sequenceId = allPacketBytes[i][sequenceIdIndex];
+
+                        int sequenceId = sequenceIdIndex == -1 ? 0 : allPacketBytes[i][sequenceIdIndex];
+                        
                         if(lastSequenceId == -1) {
                             lastSequenceId = sequenceId;
                         } else {
@@ -215,29 +216,32 @@ namespace STARMAP.ViewModel {
                     if(!packet.Valid) {
                         packet.TimeStamp = packet.TimeStamp.AddTicks(1);
                     }
+                    if(packet.GetType() == typeof(DataPacket)) {
+                        packet.FormatError = true;
+                    }
                     m_packets.Add(packet);
                 }
             }
         }
 
         private int getSequenceIdIndex(List<List<byte>> allPacketBytes) {
-            const int sequenceCountReq = 5;
-            const int bytesToCheck = 10;
-            const int packetsToCheck = 6;
+            int bytesToCheck = 10;
+            int sequenceCountReq = Math.Min(4, allPacketBytes.Count-1);
+            int packetsToCheck = Math.Min(6, allPacketBytes.Count);
 
-            for(int i = 0; i < (bytesToCheck + 1); ++i) {
+            for(int i=0; i<(bytesToCheck + 1); ++i) {
                 byte sequenceCount = 0;
                 byte lastValue = 0;
                 byte firstValue = 0;
 
-                for(int j = 0; j < packetsToCheck; ++j) {
+                for(int j=0; j<packetsToCheck; ++j) {
                     List<byte> packetBytes = allPacketBytes[j];
                     if(i >= packetBytes.Count()) {
                         return -1;
                     }
 
                     int k = 0;
-                    for(; k < packetBytes.Count(); ++k) {
+                    for(; k<packetBytes.Count(); ++k) {
                         if(packetBytes[k] >= 32) {
                             ++k;
                             break;
@@ -249,7 +253,7 @@ namespace STARMAP.ViewModel {
                         lastValue = firstValue;
                     } else {
                         if((packetBytes[k + i] == firstValue + j) ||
-                            ((lastValue == 255) && (packetBytes[k + i] == 0))) {
+                                ((lastValue == 255) && (packetBytes[k + i] == 0))) {
                             ++sequenceCount;
                             lastValue = packetBytes[k + i];
                             if(lastValue == 255) {
@@ -316,7 +320,6 @@ namespace STARMAP.ViewModel {
             isCorrect = true;
 
             Assert.IsTrue(isCorrect);
-
         }
     }
 }
